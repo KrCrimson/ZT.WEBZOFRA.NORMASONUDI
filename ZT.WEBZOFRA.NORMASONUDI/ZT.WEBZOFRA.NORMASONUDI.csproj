@@ -79,10 +79,6 @@
       <DependentUpon>Dashboard.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Content Include="App_Code\DAL\DocumentoDAL.cs" />
-    <Content Include="App_Code\DAL\ObservacionDAL.cs" />
-    <Content Include="App_Code\DAL\NotificacionDAL.cs" />
-    <Content Include="App_Code\BLL\NotificacionBLL.cs" />
     <Compile Include="Tramites\Bandeja.aspx.cs">
       <DependentUpon>Bandeja.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

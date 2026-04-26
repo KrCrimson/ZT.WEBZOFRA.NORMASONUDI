@@ -2,10 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
-using ZT.WEBZOFRA.FIRMADOR.DAL;
-using ZT.WEBZOFRA.NORMASONUDI.Entities;
+using ZT.WEBZOFRA.NORMASONUDI;
 
-namespace ZT.WEBZOFRA.NORMASONUDI.DAL
+namespace ZT.WEBZOFRA.NORMASONUDI
 {
     public class MaestroDAL
     {

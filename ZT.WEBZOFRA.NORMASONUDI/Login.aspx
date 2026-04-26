@@ -1,4 +1,4 @@
-<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Login.aspx.cs" Inherits="ZT.WEBZOFRA.NORMASONUDI.Login" Title="Acceso - Sistema Firmador" %>
+<%@ Page Language="C#" AutoEventWireup="true" CodeFile="Login.aspx.cs" Inherits="Login" Title="Acceso - Sistema Firmador" %>
 
 <!DOCTYPE html>
 <html>

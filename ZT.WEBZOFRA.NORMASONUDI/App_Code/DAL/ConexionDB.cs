@@ -2,7 +2,7 @@ using System;
 using System.Configuration;
 using System.Data.SqlClient;
 
-namespace ZT.WEBZOFRA.FIRMADOR.DAL
+namespace ZT.WEBZOFRA.NORMASONUDI
 {
     public static class ConexionDB
     {

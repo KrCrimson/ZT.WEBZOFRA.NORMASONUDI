@@ -1,4 +1,4 @@
-<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="MasterPage.master.cs" Inherits="ZT.WEBZOFRA.NORMASONUDI.Shared.MasterPage" %>
+<%@ Master Language="C#" AutoEventWireup="true" CodeFile="MasterPage.master.cs" Inherits="Shared_MasterPage" %>
 
 <!DOCTYPE html>
 <html>

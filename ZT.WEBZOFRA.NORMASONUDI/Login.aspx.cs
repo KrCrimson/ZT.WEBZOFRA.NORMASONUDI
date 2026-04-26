@@ -1,62 +1,91 @@
 using System;
-using ZT.WEBZOFRA.NORMASONUDI.BLL;
-using ZT.WEBZOFRA.NORMASONUDI.Entities;
-using ZT.WEBZOFRA.NORMASONUDI.Helpers;
+using System.Data;
+using System.Data.SqlClient;
 using System.Web.UI.WebControls;
 
-namespace ZT.WEBZOFRA.NORMASONUDI
+public partial class Login : System.Web.UI.Page
 {
-    public partial class Login : System.Web.UI.Page
+    protected void Page_Load(object sender, EventArgs e)
     {
-        protected void Page_Load(object sender, EventArgs e)
+        if (!IsPostBack)
         {
-            if (!IsPostBack)
+            CargarUsuariosActivos();
+        }
+    }
+
+    private void CargarUsuariosActivos()
+    {
+        try
+        {
+            using (SqlConnection conn = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["Firmador"].ConnectionString))
             {
-                CargarUsuariosActivos();
+                using (SqlCommand cmd = new SqlCommand("FIR_S_UsuariosPrueba", conn))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    SqlDataAdapter da = new SqlDataAdapter(cmd);
+                    DataTable dt = new DataTable();
+                    da.Fill(dt);
+
+                    CbxUsuario.DataSource = dt;
+                    CbxUsuario.DataTextField = "NombreCompleto";
+                    CbxUsuario.DataValueField = "LoginUsuario";
+                    CbxUsuario.DataBind();
+
+                    CbxUsuario.Items.Insert(0, new ListItem("-- Seleccione su usuario --", ""));
+                }
             }
         }
-
-        private void CargarUsuariosActivos()
+        catch (Exception ex)
         {
-            try
-            {
-                var usuarios = SesionBLL.ObtenerUsuariosActivos();
-                CbxUsuario.DataSource = usuarios;
-                CbxUsuario.DataTextField = "NombreCompleto";
-                CbxUsuario.DataValueField = "LoginUsuario";
-                CbxUsuario.DataBind();
+            LblError.Text = "Error al cargar usuarios: " + ex.Message;
+            LblError.Visible = true;
+        }
+    }
 
-                CbxUsuario.Items.Insert(0, new ListItem("-- Seleccione su usuario --", ""));
-            }
-            catch (Exception ex)
+    protected void BtnIngresar_Click(object sender, EventArgs e)
+    {
+        string strLogin = CbxUsuario.SelectedValue;
+        if (string.IsNullOrEmpty(strLogin))
+        {
+            LblError.Text = "Seleccione un usuario.";
+            LblError.Visible = true;
+            return;
+        }
+        try
+        {
+            using (SqlConnection conn = new SqlConnection(
+                System.Configuration.ConfigurationManager
+                .ConnectionStrings["Firmador"].ConnectionString))
             {
-                LblError.Text = "Error al cargar usuarios: " + ex.Message;
-                LblError.Visible = true;
+                using (SqlCommand cmd = new SqlCommand("FIR_S_ObtenerSesion", conn))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@LoginUsuario", strLogin);
+                    conn.Open();
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            Session["strUsuario"] = reader["LoginUsuario"].ToString();
+                            Session["strRol"] = reader["CodigoRol"].ToString();
+                            Session["strNombre"] = reader["NombreCompleto"].ToString();
+                            Session["strEmail"] = reader["Email"].ToString();
+                            string urlDashboard = reader["UrlDashboard"].ToString();
+                            Response.Redirect(urlDashboard);
+                        }
+                        else
+                        {
+                            LblError.Text = "Usuario sin acceso al sistema.";
+                            LblError.Visible = true;
+                        }
+                    }
+                }
             }
         }
-
-        protected void BtnIngresar_Click(object sender, EventArgs e)
+        catch (Exception ex)
         {
-            string strLogin = CbxUsuario.SelectedValue;
-
-            if (string.IsNullOrEmpty(strLogin))
-            {
-                LblError.Text = "Seleccione un usuario.";
-                LblError.Visible = true;
-                return;
-            }
-
-            try
-            {
-                UsuarioSesion usuario = SesionBLL.ValidarAcceso(strLogin);
-                SesionHelper.Guardar(usuario, Session);
-                SesionHelper.RedirigirSegunRol(usuario, Response);
-            }
-            catch (Exception ex)
-            {
-                LblError.Text = ex.Message;
-                LblError.Visible = true;
-            }
+            LblError.Text = ex.Message;
+            LblError.Visible = true;
         }
     }
 }

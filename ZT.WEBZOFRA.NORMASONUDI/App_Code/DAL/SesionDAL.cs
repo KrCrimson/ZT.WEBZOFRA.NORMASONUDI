@@ -1,11 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
+using ZT.WEBZOFRA.NORMASONUDI;
 using System.Data.SqlClient;
-using ZT.WEBZOFRA.FIRMADOR.DAL;
-using ZT.WEBZOFRA.NORMASONUDI.Entities;
 
-namespace ZT.WEBZOFRA.NORMASONUDI.DAL
+namespace ZT.WEBZOFRA.NORMASONUDI
 {
     public class SesionDAL
     {

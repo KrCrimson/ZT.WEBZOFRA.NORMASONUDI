@@ -1,9 +1,9 @@
 using System.Web.SessionState;
 using System.Web;
 using System.Web.SessionState;
-using ZT.WEBZOFRA.NORMASONUDI.Entities;
+using ZT.WEBZOFRA.NORMASONUDI;
 
-namespace ZT.WEBZOFRA.NORMASONUDI.Helpers
+namespace ZT.WEBZOFRA.NORMASONUDI
 {
     public static class SesionHelper
     {

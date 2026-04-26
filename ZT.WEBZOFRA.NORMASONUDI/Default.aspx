@@ -1,4 +1,4 @@
-<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Default.aspx.cs" Inherits="ZT.WEBZOFRA.NORMASONUDI.Default" %>
+<%@ Page Language="C#" AutoEventWireup="true" CodeFile="Default.aspx.cs" Inherits="ZT.WEBZOFRA.NORMASONUDI.Default" %>
 
 <!DOCTYPE html>
 <html>

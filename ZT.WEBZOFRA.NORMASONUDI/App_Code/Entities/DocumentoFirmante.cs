@@ -1,4 +1,4 @@
-namespace ZT.WEBZOFRA.NORMASONUDI.Entities
+namespace ZT.WEBZOFRA.NORMASONUDI
 {
     public class DocumentoFirmante
     {

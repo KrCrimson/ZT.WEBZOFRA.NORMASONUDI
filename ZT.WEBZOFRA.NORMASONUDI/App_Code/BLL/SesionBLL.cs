@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
-using ZT.WEBZOFRA.NORMASONUDI.DAL;
-using ZT.WEBZOFRA.NORMASONUDI.Entities;
+using ZT.WEBZOFRA.NORMASONUDI;
+using ZT.WEBZOFRA.NORMASONUDI;
 
-namespace ZT.WEBZOFRA.NORMASONUDI.BLL
+namespace ZT.WEBZOFRA.NORMASONUDI
 {
     public class SesionBLL
     {
