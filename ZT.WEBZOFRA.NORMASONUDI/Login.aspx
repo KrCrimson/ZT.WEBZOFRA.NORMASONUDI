@@ -3,6 +3,7 @@
 <!DOCTYPE html>
 <html>
 <head runat="server">
+    <meta charset="utf-8" />
     <title>Acceso - Sistema Firmador</title>
     <link rel="stylesheet" href="styles.css" />
 </head>

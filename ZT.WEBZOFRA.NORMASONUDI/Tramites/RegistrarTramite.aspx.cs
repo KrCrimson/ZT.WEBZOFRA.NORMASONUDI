@@ -25,8 +25,62 @@ public partial class RegistrarTramite : System.Web.UI.Page
         if (!IsPostBack)
         {
             CargarTipos();
+            
+            DateTime fechaActual = DateTime.Now;
+            LblFechaDocumento.Text = fechaActual.ToString("dd/MM/yyyy");
+            ViewState["FechaDocumento"] = fechaActual;
+            
+            GenerarCodigoDocumento();
+            
             InicializarGridView();
         }
+    }
+
+    private void GenerarCodigoDocumento()
+    {
+        string codigoTipo = "";
+        if (CbxTipoDocumento.SelectedIndex > 0)
+        {
+            codigoTipo = CbxTipoDocumento.SelectedValue;
+        }
+        else
+        {
+            codigoTipo = "DOC";
+        }
+
+        int siguienteId = 1;
+        string connStr = ConfigurationManager.ConnectionStrings["Firmador"].ConnectionString;
+        try
+        {
+            using (SqlConnection conn = new SqlConnection(connStr))
+            {
+                using (SqlCommand cmd = new SqlCommand("SELECT ISNULL(MAX(IDDocumento),0)+1 FROM FIR_Documento", conn))
+                {
+                    conn.Open();
+                    object result = cmd.ExecuteScalar();
+                    if (result != null && result != DBNull.Value)
+                    {
+                        siguienteId = Convert.ToInt32(result);
+                    }
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            // Omitir error de generación silenciosamente
+        }
+
+        string anio = DateTime.Now.Year.ToString();
+        string numeroSecuencial = siguienteId.ToString().PadLeft(4, '0');
+        
+        string codigoGenerado = codigoTipo + "-" + anio + "-" + numeroSecuencial;
+        LblCodigoDocumento.Text = codigoGenerado;
+        ViewState["CodigoDocumento"] = codigoGenerado;
+    }
+
+    protected void CbxTipoDocumento_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        GenerarCodigoDocumento();
     }
 
     private void CargarTipos()
@@ -78,6 +132,7 @@ public partial class RegistrarTramite : System.Web.UI.Page
 
     private string ObtenerEmailPorLogin(string loginUsuario)
     {
+        if (string.IsNullOrWhiteSpace(loginUsuario)) return "";
         string email = "";
         string connStr = ConfigurationManager.ConnectionStrings["Firmador"].ConnectionString;
         using (SqlConnection conn = new SqlConnection(connStr))
@@ -150,7 +205,7 @@ public partial class RegistrarTramite : System.Web.UI.Page
                 DdlFirmante.DataBind();
                 DdlFirmante.Items.Insert(0, new ListItem("-- Seleccione empleado --", ""));
 
-                if (HfLoginUsuario != null && !string.IsNullOrEmpty(HfLoginUsuario.Value))
+                if (HfLoginUsuario != null && !string.IsNullOrWhiteSpace(HfLoginUsuario.Value))
                 {
                     DdlFirmante.SelectedValue = HfLoginUsuario.Value;
                 }
@@ -164,12 +219,32 @@ public partial class RegistrarTramite : System.Web.UI.Page
                     DdlOrden.Items.Add(new ListItem(i.ToString(), i.ToString()));
                 }
 
-                if (HfOrdenFirma != null && !string.IsNullOrEmpty(HfOrdenFirma.Value))
+                if (HfOrdenFirma != null && !string.IsNullOrWhiteSpace(HfOrdenFirma.Value))
                 {
                     DdlOrden.SelectedValue = HfOrdenFirma.Value;
                 }
             }
         }
+    }
+
+    protected void DdlFirmante_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        DropDownList ddl = (DropDownList)sender;
+        GridViewRow row = (GridViewRow)ddl.NamingContainer;
+        Label lblCorreo = (Label)row.FindControl("LblCorreo");
+        
+        string login = ddl.SelectedValue;
+        if (!string.IsNullOrWhiteSpace(login))
+        {
+            lblCorreo.Text = ObtenerEmailPorLogin(login);
+        }
+        else
+        {
+            lblCorreo.Text = "";
+        }
+        
+        DataTable dt = ObtenerDatosFirmantes();
+        ViewState["Firmantes"] = dt;
     }
 
     protected void BtnAgregarFirmante_Click(object sender, EventArgs e)
@@ -195,14 +270,18 @@ public partial class RegistrarTramite : System.Web.UI.Page
         LblError.Visible = false;
         LblExito.Visible = false;
 
-        // Validaciones Básicas
         if (string.IsNullOrWhiteSpace(TxtAsunto.Text) ||
             string.IsNullOrWhiteSpace(CbxTipoDocumento.SelectedValue) ||
-            string.IsNullOrWhiteSpace(TxtAreaResponsable.Text) ||
-            string.IsNullOrWhiteSpace(TxtCodigoDocumento.Text) ||
-            string.IsNullOrWhiteSpace(TxtFechaDocumento.Text))
+            string.IsNullOrWhiteSpace(TxtAreaResponsable.Text))
         {
             LblError.Text = "Debe completar todos los campos del documento.";
+            LblError.Visible = true;
+            return;
+        }
+
+        if (ViewState["CodigoDocumento"] == null || ViewState["FechaDocumento"] == null)
+        {
+            LblError.Text = "Faltan datos internos del documento.";
             LblError.Visible = true;
             return;
         }
@@ -264,7 +343,17 @@ public partial class RegistrarTramite : System.Web.UI.Page
             ordenes.Add(orden);
         }
 
-        // Proceso de Registro
+        ordenes.Sort();
+        for (int i = 0; i < ordenes.Count; i++)
+        {
+            if (ordenes[i] != i + 1)
+            {
+                LblError.Text = "El orden de firmas debe ser secuencial y sin saltos empezando desde 1 (ej: 1, 2, 3...).";
+                LblError.Visible = true;
+                return;
+            }
+        }
+
         try
         {
             byte[] archivoPDF = FuPdf.FileBytes;
@@ -273,7 +362,6 @@ public partial class RegistrarTramite : System.Web.UI.Page
             string nombreActivo = Session["strNombre"].ToString();
             string ipEquipo = Request.UserHostAddress;
 
-            // 1. Guardar PDF
             string connArchivosStr = ConfigurationManager.ConnectionStrings["FirmadorArchivos"].ConnectionString;
             using (SqlConnection conn = new SqlConnection(connArchivosStr))
             {
@@ -296,36 +384,43 @@ public partial class RegistrarTramite : System.Web.UI.Page
             }
 
             int idDocumento = 0;
-            string connFirmadorStr = ConfigurationManager.ConnectionStrings["Firmador"].ConnectionString;
-
-            // 2. Registrar Documento
-            using (SqlConnection conn = new SqlConnection(connFirmadorStr))
+            
+            using (SqlConnection conn = new SqlConnection(
+                ConfigurationManager.ConnectionStrings["Firmador"].ConnectionString))
             {
                 conn.Open();
                 using (SqlCommand cmd = new SqlCommand("FIR_I_Documento_OUT", conn))
                 {
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@Asunto", TxtAsunto.Text.Trim());
-                    cmd.Parameters.AddWithValue("@CodigoTipoDocumento", CbxTipoDocumento.SelectedValue);
-                    cmd.Parameters.AddWithValue("@AreaResponsable", TxtAreaResponsable.Text.Trim());
-                    cmd.Parameters.AddWithValue("@FechaDocumento", Convert.ToDateTime(TxtFechaDocumento.Text));
-                    cmd.Parameters.AddWithValue("@CodigoDocumento", TxtCodigoDocumento.Text.Trim());
-                    cmd.Parameters.AddWithValue("@RutaArchivoPDF", "ARC::" + idArchivo);
+                    cmd.Parameters.AddWithValue("@CodigoTipoDocumento", 
+                        CbxTipoDocumento.SelectedValue);
+                    cmd.Parameters.AddWithValue("@AreaResponsable", 
+                        TxtAreaResponsable.Text.Trim());
+                    cmd.Parameters.AddWithValue("@FechaDocumento", 
+                        (DateTime)ViewState["FechaDocumento"]);
+                    cmd.Parameters.AddWithValue("@CodigoDocumento", 
+                        ViewState["CodigoDocumento"].ToString());
+                    cmd.Parameters.AddWithValue("@RutaArchivoPDF", 
+                        "ARC::" + idArchivo);
                     cmd.Parameters.AddWithValue("@Orientacion", "V");
-                    cmd.Parameters.AddWithValue("@LoginRegistrador", usuarioActivo);
-                    cmd.Parameters.AddWithValue("@IDEquipo", ipEquipo);
+                    cmd.Parameters.AddWithValue("@LoginRegistrador", 
+                        Session["strUsuario"].ToString());
+                    cmd.Parameters.AddWithValue("@IDEquipo", 
+                        Request.UserHostAddress);
 
-                    SqlParameter pout = new SqlParameter("@IDDocumento", SqlDbType.Int);
-                    pout.Direction = ParameterDirection.Output;
-                    cmd.Parameters.Add(pout);
+                    SqlParameter paramIDDocumento = new SqlParameter(
+                        "@IDDocumento", SqlDbType.Int);
+                    paramIDDocumento.Direction = ParameterDirection.Output;
+                    cmd.Parameters.Add(paramIDDocumento);
 
                     cmd.ExecuteNonQuery();
-                    idDocumento = Convert.ToInt32(pout.Value);
+
+                    idDocumento = Convert.ToInt32(paramIDDocumento.Value);
                 }
 
                 string correoActivo = ObtenerEmailPorLogin(usuarioActivo);
 
-                // 3. Insertar registrador como AUTOR
                 using (SqlCommand cmdRev = new SqlCommand("FIR_I_DocumentoRevisor", conn))
                 {
                     cmdRev.CommandType = CommandType.StoredProcedure;
@@ -352,7 +447,6 @@ public partial class RegistrarTramite : System.Web.UI.Page
                     cmdFir.ExecuteNonQuery();
                 }
 
-                // 4. Insertar Firmantes del Grid (Todos como VB)
                 foreach (GridViewRow row in GvFirmantes.Rows)
                 {
                     DropDownList DdlFirmante = (DropDownList)row.FindControl("DdlFirmante");
@@ -360,10 +454,11 @@ public partial class RegistrarTramite : System.Web.UI.Page
 
                     string loginFirmante = DdlFirmante.SelectedValue;
                     string nombreFirmante = DdlFirmante.SelectedItem.Text;
+                    
                     string correoFirmante = ObtenerEmailPorLogin(loginFirmante);
+                    
                     int ordenFirma = Convert.ToInt32(DdlOrden.SelectedValue);
 
-                    // Revisor
                     using (SqlCommand cmdRev = new SqlCommand("FIR_I_DocumentoRevisor", conn))
                     {
                         cmdRev.CommandType = CommandType.StoredProcedure;
@@ -377,7 +472,6 @@ public partial class RegistrarTramite : System.Web.UI.Page
                         cmdRev.ExecuteNonQuery();
                     }
 
-                    // Firmante
                     using (SqlCommand cmdFir = new SqlCommand("FIR_I_DocumentoFirmante", conn))
                     {
                         cmdFir.CommandType = CommandType.StoredProcedure;
@@ -392,7 +486,6 @@ public partial class RegistrarTramite : System.Web.UI.Page
                     }
                 }
 
-                // 5. Iniciar Revisión
                 using (SqlCommand cmdInit = new SqlCommand("FIR_U_IniciarRevision", conn))
                 {
                     cmdInit.CommandType = CommandType.StoredProcedure;
@@ -403,7 +496,6 @@ public partial class RegistrarTramite : System.Web.UI.Page
                 }
             }
 
-            // Redirigir en caso de éxito
             Response.Redirect("~/Tramites/Bandeja.aspx");
         }
         catch (Exception ex)

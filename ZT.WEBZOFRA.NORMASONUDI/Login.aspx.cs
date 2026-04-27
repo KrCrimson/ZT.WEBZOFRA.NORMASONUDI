@@ -17,21 +17,25 @@ public partial class Login : System.Web.UI.Page
     {
         try
         {
-            using (SqlConnection conn = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["Firmador"].ConnectionString))
+            using (SqlConnection conn = new SqlConnection(
+                System.Configuration.ConfigurationManager
+                .ConnectionStrings["Firmador"].ConnectionString))
             {
-                using (SqlCommand cmd = new SqlCommand("FIR_S_UsuariosPrueba", conn))
+                using (SqlCommand cmd = new SqlCommand(
+                    "SELECT LoginUsuario, NombreCompleto FROM FIR_VW_UsuarioSesion ORDER BY NombreCompleto", conn))
                 {
-                    cmd.CommandType = CommandType.StoredProcedure;
-                    SqlDataAdapter da = new SqlDataAdapter(cmd);
-                    DataTable dt = new DataTable();
+                    cmd.CommandType = System.Data.CommandType.Text;
+                    System.Data.SqlClient.SqlDataAdapter da =
+                        new System.Data.SqlClient.SqlDataAdapter(cmd);
+                    System.Data.DataTable dt = new System.Data.DataTable();
                     da.Fill(dt);
-
                     CbxUsuario.DataSource = dt;
                     CbxUsuario.DataTextField = "NombreCompleto";
                     CbxUsuario.DataValueField = "LoginUsuario";
                     CbxUsuario.DataBind();
-
-                    CbxUsuario.Items.Insert(0, new ListItem("-- Seleccione su usuario --", ""));
+                    CbxUsuario.Items.Insert(0,
+                        new System.Web.UI.WebControls.ListItem(
+                            "-- Seleccione su usuario --", ""));
                 }
             }
         }
