@@ -10,7 +10,7 @@ namespace ZT.WEBZOFRA.NORMASONUDI
         {
             if (string.IsNullOrEmpty(tipo))
             {
-                throw new ArgumentException("El tipo no puede ser nulo o vacío.", nameof(tipo));
+                throw new ArgumentException("El tipo no puede ser nulo o vacío.", "tipo");
             }
 
             return MaestroDAL.ObtenerPorTipo(tipo);

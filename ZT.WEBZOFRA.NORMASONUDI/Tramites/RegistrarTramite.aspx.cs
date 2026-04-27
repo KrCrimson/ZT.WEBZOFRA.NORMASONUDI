@@ -65,7 +65,7 @@ public partial class RegistrarTramite : System.Web.UI.Page
                 }
             }
         }
-        catch (Exception ex)
+        catch (Exception)
         {
             // Omitir error de generación silenciosamente
         }
