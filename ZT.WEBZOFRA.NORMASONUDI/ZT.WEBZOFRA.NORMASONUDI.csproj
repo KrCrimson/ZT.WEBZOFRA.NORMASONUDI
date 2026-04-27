@@ -72,6 +72,7 @@
     <Content Include="Global.asax" />
     <Content Include="Login.aspx" />
     <Content Include="Tramites\Bandeja.aspx" />
+    <Content Include="Tramites\RegistrarTramite.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -81,6 +82,10 @@
     </Compile>
     <Compile Include="Tramites\Bandeja.aspx.cs">
       <DependentUpon>Bandeja.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Tramites\RegistrarTramite.aspx.cs">
+      <DependentUpon>RegistrarTramite.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Content Include="App_Code\DAL\SesionDAL.cs" />

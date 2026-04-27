@@ -4,17 +4,17 @@
 <html>
 <head runat="server">
     <title>Acceso - Sistema Firmador</title>
+    <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
     <form id="form1" runat="server">
-        <div>
-            <h2>Acceso - Sistema Firmador</h2>
-            <asp:DropDownList ID="CbxUsuario" runat="server">
-            </asp:DropDownList>
+        <div class="container" style="max-width: 400px; margin-top: 5rem;">
+            <h2>Acceso al Sistema</h2>
+            <label>Seleccione Usuario:</label>
+            <asp:DropDownList ID="CbxUsuario" runat="server"></asp:DropDownList>
+            <asp:Button ID="BtnIngresar" runat="server" Text="Ingresar" OnClick="BtnIngresar_Click" CssClass="btn" Width="100%" />
             <br /><br />
-            <asp:Button ID="BtnIngresar" runat="server" Text="Ingresar" OnClick="BtnIngresar_Click" />
-            <br /><br />
-            <asp:Label ID="LblError" runat="server" ForeColor="Red" Visible="false"></asp:Label>
+            <asp:Label ID="LblError" runat="server" Visible="false"></asp:Label>
         </div>
     </form>
 </body>

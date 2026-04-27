@@ -4,11 +4,14 @@
 <html>
 <head runat="server">
     <title>Bandeja de Trámites</title>
+    <link rel="stylesheet" href="../styles.css" />
 </head>
 <body>
     <form id="form1" runat="server">
-        <div>
+        <div class="container">
             <h2><asp:Label ID="LblBienvenida" runat="server"></asp:Label></h2>
+            <br />
+            <asp:Button ID="BtnNuevoTramite" runat="server" Text="+ Nuevo Trámite" OnClick="BtnNuevoTramite_Click" CssClass="btn" />
         </div>
     </form>
 </body>
