@@ -1,4 +1,4 @@
-﻿<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -72,7 +72,9 @@
     <Content Include="Global.asax" />
     <Content Include="Login.aspx" />
     <Content Include="Tramites\Bandeja.aspx" />
+    <Content Include="Tramites\Detalle.aspx" />
     <Content Include="Tramites\RegistrarTramite.aspx" />
+    <Content Include="Handlers\VerPDF.ashx" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -82,6 +84,10 @@
     </Compile>
     <Compile Include="Tramites\Bandeja.aspx.cs">
       <DependentUpon>Bandeja.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Tramites\Detalle.aspx.cs">
+      <DependentUpon>Detalle.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Tramites\RegistrarTramite.aspx.cs">
