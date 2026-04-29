@@ -134,7 +134,7 @@
                     <asp:Label ID="LblCodigoDoc" runat="server"></asp:Label>
                     <asp:Label ID="LblEstadoBadge" runat="server"></asp:Label>
                 </h2>
-                <asp:Button ID="BtnVolver" runat="server" Text="&#8592; Volver a Bandeja" CssClass="btn btn-volver"
+                <asp:Button ID="BtnVolver" runat="server" Text="<- Volver a Bandeja" CssClass="btn btn-volver"
                     OnClick="BtnVolver_Click" CausesValidation="false" />
             </div>
 
@@ -143,7 +143,7 @@
 
             <!-- SECCIÓN 1: INFO DEL TRÁMITE -->
             <div class="section-card">
-                <h3>&#128196; Información del Documento</h3>
+                <h3>Informacion del Documento</h3>
                 <div class="info-grid">
                     <div class="info-item">
                         <label>Asunto</label>
@@ -154,7 +154,7 @@
                         <div class="info-value"><asp:Label ID="LblTipoDoc" runat="server"></asp:Label></div>
                     </div>
                     <div class="info-item">
-                        <label>Área Responsable</label>
+                        <label>Area Responsable</label>
                         <div class="info-value"><asp:Label ID="LblArea" runat="server"></asp:Label></div>
                     </div>
                     <div class="info-item">
@@ -162,7 +162,7 @@
                         <div class="info-value"><asp:Label ID="LblFechaDoc" runat="server"></asp:Label></div>
                     </div>
                     <div class="info-item">
-                        <label>Versión</label>
+                        <label>Version</label>
                         <div class="info-value"><asp:Label ID="LblVersion" runat="server"></asp:Label></div>
                     </div>
                     <div class="info-item">
@@ -170,7 +170,7 @@
                         <div class="info-value"><asp:Label ID="LblRegistrador" runat="server"></asp:Label></div>
                     </div>
                     <div class="info-item">
-                        <label>Fecha Límite de Revisión</label>
+                        <label>Fecha Limite de Revision</label>
                         <div class="info-value"><asp:Label ID="LblFechaLimite" runat="server"></asp:Label></div>
                     </div>
                 </div>
@@ -178,14 +178,14 @@
 
             <!-- SECCIÓN 2: PDF PREVIEW -->
             <div class="section-card">
-                <h3>&#128441; Vista Previa del Documento</h3>
+                <h3>Vista Previa del Documento</h3>
                 <asp:HiddenField ID="HfRutaPDF" runat="server" />
                 <iframe id="IframePDF" runat="server" class="pdf-frame" src="about:blank"></iframe>
             </div>
 
             <!-- SECCIÓN 3: REVISORES -->
             <div class="section-card">
-                <h3>&#128101; Revisores y Estado de Revisión</h3>
+                <h3>Revisores y Estado de Revision</h3>
                 <asp:GridView ID="GvRevisores" runat="server" AutoGenerateColumns="false"
                     CssClass="grid-view" OnRowDataBound="GvRevisores_RowDataBound"
                     EmptyDataText="Sin revisores asignados.">
@@ -194,7 +194,7 @@
                         <asp:BoundField DataField="CorreoRevisor" HeaderText="Correo" />
                         <asp:TemplateField HeaderText="Completado">
                             <ItemTemplate>
-                                <%# Convert.ToBoolean(Eval("Completado")) ? "Sí" : "No" %>
+                                <%# Convert.ToBoolean(Eval("Completado")) ? "Si" : "No" %>
                             </ItemTemplate>
                         </asp:TemplateField>
                         <asp:TemplateField HeaderText="Resultado">
@@ -209,7 +209,7 @@
             <!-- SECCIÓN 3B: OBSERVACIONES -->
             <asp:Panel ID="PnlObservaciones" runat="server" Visible="false">
                 <div class="section-card">
-                    <h3>&#128172; Observaciones</h3>
+                    <h3>Observaciones</h3>
                     <asp:Repeater ID="RptObservaciones" runat="server">
                         <ItemTemplate>
                             <div class="obs-card">
@@ -225,19 +225,21 @@
             <!-- SECCIÓN 4A: ACCIONES FIRMADOR -->
             <asp:Panel ID="PnlAccionesFirmador" runat="server" Visible="false">
                 <div class="section-card">
-                    <h3>&#9997; Acciones de Revisión</h3>
+                    <h3>Acciones de Revision</h3>
                     <div class="acciones-panel">
                         <div style="flex: 1; min-width: 250px;">
-                            <label>Observación (opcional para dar conformidad):</label>
+                            <label>Observacion (opcional para dar conformidad):</label>
                             <asp:TextBox ID="TxtObservacion" runat="server" TextMode="MultiLine" MaxLength="2000"
-                                placeholder="Escriba su observación..." Rows="3"></asp:TextBox>
+                                placeholder="Escriba su observacion..." Rows="3"></asp:TextBox>
                         </div>
                     </div>
                     <div style="margin-top: 1rem; display: flex; gap: 0.8rem;">
-                        <asp:Button ID="BtnObservar" runat="server" Text="&#9888; Registrar Observación"
+                        <asp:Button ID="BtnObservar" runat="server" Text="Registrar Observacion"
                             CssClass="btn btn-danger" OnClick="BtnObservar_Click" CausesValidation="false" />
-                        <asp:Button ID="BtnConforme" runat="server" Text="&#10003; Dar Visto Bueno"
+                        <asp:Button ID="BtnConforme" runat="server" Text="Dar Visto Bueno"
                             CssClass="btn btn-success" OnClick="BtnConforme_Click" CausesValidation="false" />
+                        <asp:Button ID="BtnIrAFirmar" runat="server" Text="Proceder a Firmar"
+                            CssClass="btn" style="background:#1e3a8a;" OnClick="BtnIrAFirmar_Click" CausesValidation="false" Visible="false" />
                     </div>
                 </div>
             </asp:Panel>
@@ -245,16 +247,16 @@
             <!-- SECCIÓN 4B: ACCIONES REGISTRADOR -->
             <asp:Panel ID="PnlAccionesRegistrador" runat="server" Visible="false">
                 <div class="section-card">
-                    <h3>&#128736; Acciones del Registrador</h3>
+                    <h3>Acciones del Registrador</h3>
 
-                    <asp:Button ID="BtnRecordar" runat="server" Text="&#128231; Enviar Recordatorio"
+                    <asp:Button ID="BtnRecordar" runat="server" Text="Enviar Recordatorio"
                         CssClass="btn btn-warning" OnClick="BtnRecordar_Click" CausesValidation="false" Visible="false" />
 
                     <asp:Panel ID="PnlCorreccion" runat="server" Visible="false">
                         <div style="margin-top: 1rem;">
                             <label>Subir PDF Corregido:</label>
                             <asp:FileUpload ID="FuPdfCorregido" runat="server" accept=".pdf" />
-                            <asp:Button ID="BtnCorregir" runat="server" Text="&#128206; Subir PDF Corregido"
+                            <asp:Button ID="BtnCorregir" runat="server" Text="Subir PDF Corregido"
                                 CssClass="btn" OnClick="BtnCorregir_Click" CausesValidation="false" style="margin-top: 0.8rem;" />
                         </div>
                     </asp:Panel>

@@ -26,7 +26,7 @@ public partial class Bandeja : System.Web.UI.Page
             if (Session["AlertasPendientes"] != null)
             {
                 int pendientes = (int)Session["AlertasPendientes"];
-                LblError.Text = "⚠️ Tiene " + pendientes + " revisión(es) pendiente(s) o vencida(s). Por favor, revise sus trámites.";
+                LblError.Text = "Tiene " + pendientes + " revision(es) pendiente(s) o vencida(s). Por favor, revise sus tramites.";
                 LblError.Visible = true;
                 Session.Remove("AlertasPendientes");
             }
@@ -130,7 +130,7 @@ public partial class Bandeja : System.Web.UI.Page
         }
         catch (Exception ex)
         {
-            LblError.Text = "Error al cargar trámites: " + ex.Message;
+            LblError.Text = "Error al cargar tramites: " + ex.Message;
             LblError.Visible = true;
         }
     }
@@ -161,7 +161,7 @@ public partial class Bandeja : System.Web.UI.Page
         if (fechas != null && fechas.Contains(e.Day.Date))
         {
             e.Cell.CssClass = "cal-highlight";
-            e.Cell.ToolTip = "Hay trámites en esta fecha";
+            e.Cell.ToolTip = "Hay tramites en esta fecha";
         }
 
         DataTable dt = ViewState["dtTramites"] as DataTable;
@@ -190,7 +190,7 @@ public partial class Bandeja : System.Web.UI.Page
                         else
                         {
                             e.Cell.BackColor = Color.LightBlue;
-                            e.Cell.ToolTip = "Límite: " + codigo;
+                            e.Cell.ToolTip = "Limite: " + codigo;
                         }
                         break;
                     }
@@ -214,8 +214,8 @@ public partial class Bandeja : System.Web.UI.Page
 
         GvTramites.DataSource = dtFiltrado;
         GvTramites.DataBind();
-
-        LblTituloBandeja.Text = "Trámites del " + fechaSeleccionada.ToString("dd/MM/yyyy");
+ 
+        LblTituloBandeja.Text = "Tramites del " + fechaSeleccionada.ToString("dd/MM/yyyy");
     }
 
     protected void LnkLimpiarFiltroFecha_Click(object sender, EventArgs e)
@@ -223,7 +223,7 @@ public partial class Bandeja : System.Web.UI.Page
         ViewState["FiltroEstado"] = null;
         CargarTramites();
         BindCalendario();
-        LblTituloBandeja.Text = "Todos los trámites";
+        LblTituloBandeja.Text = "Todos los tramites";
     }
 
     protected void GvTramites_RowCommand(object sender, GridViewCommandEventArgs e)

@@ -89,20 +89,20 @@ public partial class Detalle : System.Web.UI.Page
                                 TimeSpan diff = fechaLimite - DateTime.Now;
                                 if (diff.Days <= 0)
                                 {
-                                    LblFechaLimite.Text = "<span style='color:#dc2626;font-weight:700;'>⚠️ VENCIDA (" + fechaLimite.ToString("dd/MM/yyyy") + ")</span>";
+                                    LblFechaLimite.Text = "<span style='color:#dc2626;font-weight:700;'>VENCIDA (" + fechaLimite.ToString("dd/MM/yyyy") + ")</span>";
                                 }
                                 else if (diff.Days <= 7)
                                 {
-                                    LblFechaLimite.Text = "<span style='color:#dc2626;font-weight:600;'>⚠️ " + fechaLimite.ToString("dd/MM/yyyy") + " (" + diff.Days + " días restantes)</span>";
+                                    LblFechaLimite.Text = "<span style='color:#dc2626;font-weight:600;'>" + fechaLimite.ToString("dd/MM/yyyy") + " (" + diff.Days + " dias restantes)</span>";
                                 }
                                 else
                                 {
-                                    LblFechaLimite.Text = fechaLimite.ToString("dd/MM/yyyy") + " (" + diff.Days + " días restantes)";
+                                    LblFechaLimite.Text = fechaLimite.ToString("dd/MM/yyyy") + " (" + diff.Days + " dias restantes)";
                                 }
                             }
                             else
                             {
-                                LblFechaLimite.Text = "<span style='color:#64748b;'>Sin fecha límite</span>";
+                                LblFechaLimite.Text = "<span style='color:#64748b;'>Sin fecha limite</span>";
                             }
                         }
                         else
@@ -213,11 +213,73 @@ public partial class Detalle : System.Web.UI.Page
         string loginRegistrador = ViewState["LoginRegistrador"] != null ? ViewState["LoginRegistrador"].ToString() : "";
         bool yaReviso = ViewState["YaReviso"] != null && (bool)ViewState["YaReviso"];
 
+        // Acciones de Revisión
         PnlAccionesFirmador.Visible = (rol == "FIRMADOR") && (estado == "EN_REV") && !yaReviso;
+
+        // Acciones de Firma (Nuevo)
+        bool esTurnoFirma = false;
+        if (rol == "FIRMADOR" && (estado == "APR_FIRMA" || estado == "EN_FIRMA" || estado == "FPAR"))
+        {
+            string connStr = ConfigurationManager.ConnectionStrings["Firmador"].ConnectionString;
+            using (SqlConnection conn = new SqlConnection(connStr))
+            {
+                string sql = "SELECT COUNT(1) FROM FIR_DocumentoFirmante WHERE IDDocumento=@IDD AND LoginUsuario=@LU AND Habilitado=1 AND CodigoEstadoFirma='PEN'";
+                using (SqlCommand cmd = new SqlCommand(sql, conn))
+                {
+                    cmd.Parameters.AddWithValue("@IDD", idDoc);
+                    cmd.Parameters.AddWithValue("@LU", loginActual);
+                    conn.Open();
+                    esTurnoFirma = Convert.ToInt32(cmd.ExecuteScalar()) > 0;
+                }
+            }
+        }
+        
+        if (esTurnoFirma)
+        {
+            PnlAccionesFirmador.Visible = true;
+            BtnIrAFirmar.Visible = true;
+            BtnConforme.Visible = false;
+            BtnObservar.Visible = false;
+            TxtObservacion.Visible = false;
+        }
 
         PnlAccionesRegistrador.Visible = ((rol == "REGISTRADOR") || (rol == "ADMIN")) && (loginRegistrador == loginActual || rol == "ADMIN");
         BtnRecordar.Visible = (estado == "EN_REV");
         PnlCorreccion.Visible = (estado == "OBS");
+    }
+
+    protected void BtnIrAFirmar_Click(object sender, EventArgs e)
+    {
+        int idDoc = (int)ViewState["IDDocumento"];
+        string loginActual = Session["strUsuario"].ToString();
+        string connStr = ConfigurationManager.ConnectionStrings["Firmador"].ConnectionString;
+
+        try
+        {
+            using (SqlConnection conn = new SqlConnection(connStr))
+            {
+                using (SqlCommand cmd = new SqlCommand("FIR_X_IniciarFirmado_OUT", conn))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@IDDocumento", idDoc);
+                    cmd.Parameters.AddWithValue("@LoginUsuario", loginActual);
+                    cmd.Parameters.AddWithValue("@IDEquipo", Request.UserHostAddress);
+                    
+                    SqlParameter pOut = new SqlParameter("@Iniciado", SqlDbType.Bit);
+                    pOut.Direction = ParameterDirection.Output;
+                    cmd.Parameters.Add(pOut);
+
+                    conn.Open();
+                    cmd.ExecuteNonQuery();
+                }
+            }
+            Response.Redirect("~/Tramites/FirmaDigital.aspx?id=" + idDoc);
+        }
+        catch (Exception ex)
+        {
+            LblError.Text = "Error al iniciar proceso de firma: " + ex.Message;
+            LblError.Visible = true;
+        }
     }
 
     protected void GvRevisores_RowDataBound(object sender, GridViewRowEventArgs e)

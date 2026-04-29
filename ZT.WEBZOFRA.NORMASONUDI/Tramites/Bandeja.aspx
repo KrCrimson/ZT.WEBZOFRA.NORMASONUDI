@@ -1,10 +1,10 @@
-<%@ Page Language="C#" AutoEventWireup="true" CodeFile="Bandeja.aspx.cs" Inherits="Bandeja" Title="Bandeja de Trámites" %>
+<%@ Page Language="C#" AutoEventWireup="true" CodeFile="Bandeja.aspx.cs" Inherits="Bandeja" Title="Bandeja de Tramites" %>
 
 <!DOCTYPE html>
 <html>
 <head runat="server">
     <meta charset="utf-8" />
-    <title>Bandeja de Trámites</title>
+    <title>Bandeja de Tramites</title>
     <link rel="stylesheet" href="../styles.css" />
     <style>
         body { display: block; padding: 0; }
@@ -171,31 +171,31 @@
             <div class="sidebar">
                 <div class="sidebar-header">
                     <h3>ZOFRATACNA</h3>
-                    <small>Sistema de Gestión</small>
+                    <small>Sistema de Gestion</small>
                 </div>
                 <div class="sidebar-nav">
                     <asp:Panel ID="PnlSidebar" runat="server">
                         
                         <asp:Panel ID="PnlMenuRegistrador" runat="server" Visible="false">
-                            <asp:LinkButton ID="LnkNuevoTramite" runat="server" CssClass="nav-link" OnClick="LnkNuevoTramite_Click">&#128196; Registrar Documento</asp:LinkButton>
-                            <asp:LinkButton ID="LnkMisTramites" runat="server" CssClass="nav-link active" OnClick="LnkMisTramites_Click">&#128203; Mis Trámites</asp:LinkButton>
+                            <asp:LinkButton ID="LnkNuevoTramite" runat="server" CssClass="nav-link" OnClick="LnkNuevoTramite_Click">Registrar Documento</asp:LinkButton>
+                            <asp:LinkButton ID="LnkMisTramites" runat="server" CssClass="nav-link active" OnClick="LnkMisTramites_Click">Mis Tramites</asp:LinkButton>
                         </asp:Panel>
-
+ 
                         <asp:Panel ID="PnlMenuFirmador" runat="server" Visible="false">
-                            <asp:LinkButton ID="LnkPendientesRev" runat="server" CssClass="nav-link active" OnClick="LnkPendientesRev_Click">&#128269; Pendientes de Revisión</asp:LinkButton>
-                            <asp:LinkButton ID="LnkPendientesFirma" runat="server" CssClass="nav-link" OnClick="LnkPendientesFirma_Click">&#9997; Pendientes de Firma</asp:LinkButton>
-                            <asp:LinkButton ID="LnkCompletados" runat="server" CssClass="nav-link" OnClick="LnkCompletados_Click">&#9989; Completados</asp:LinkButton>
+                            <asp:LinkButton ID="LnkPendientesRev" runat="server" CssClass="nav-link active" OnClick="LnkPendientesRev_Click">Pendientes de Revision</asp:LinkButton>
+                            <asp:LinkButton ID="LnkPendientesFirma" runat="server" CssClass="nav-link" OnClick="LnkPendientesFirma_Click">Pendientes de Firma</asp:LinkButton>
+                            <asp:LinkButton ID="LnkCompletados" runat="server" CssClass="nav-link" OnClick="LnkCompletados_Click">Completados</asp:LinkButton>
                         </asp:Panel>
-
+ 
                         <asp:Panel ID="PnlMenuAdmin" runat="server" Visible="false">
-                            <asp:LinkButton ID="LnkTodosTramites" runat="server" CssClass="nav-link active" OnClick="LnkTodosTramites_Click">&#128203; Todos los Trámites</asp:LinkButton>
-                            <asp:LinkButton ID="LnkGestionarRoles" runat="server" CssClass="nav-link" OnClick="LnkGestionarRoles_Click">&#128100; Gestionar Roles</asp:LinkButton>
+                            <asp:LinkButton ID="LnkTodosTramites" runat="server" CssClass="nav-link active" OnClick="LnkTodosTramites_Click">Todos los Tramites</asp:LinkButton>
+                            <asp:LinkButton ID="LnkGestionarRoles" runat="server" CssClass="nav-link" OnClick="LnkGestionarRoles_Click">Gestionar Roles</asp:LinkButton>
                         </asp:Panel>
 
                     </asp:Panel>
                 </div>
                 <div class="sidebar-footer">
-                    <asp:LinkButton ID="LnkCerrarSesion" runat="server" CssClass="nav-link" OnClick="LnkCerrarSesion_Click">&#128682; Cerrar Sesión</asp:LinkButton>
+                    <asp:LinkButton ID="LnkCerrarSesion" runat="server" CssClass="nav-link" OnClick="LnkCerrarSesion_Click">Cerrar Sesion</asp:LinkButton>
                 </div>
             </div>
 
@@ -213,12 +213,12 @@
 
                             <asp:GridView ID="GvTramites" runat="server" AutoGenerateColumns="false"
                                 CssClass="grid-view gv-tramites" OnRowCommand="GvTramites_RowCommand"
-                                OnRowDataBound="GvTramites_RowDataBound" EmptyDataText="No se encontraron trámites.">
+                                OnRowDataBound="GvTramites_RowDataBound" EmptyDataText="No se encontraron tramites.">
                                 <Columns>
-                                    <asp:BoundField DataField="CodigoDocumento" HeaderText="Código" />
+                                    <asp:BoundField DataField="CodigoDocumento" HeaderText="Codigo" />
                                     <asp:BoundField DataField="Asunto" HeaderText="Asunto" />
                                     <asp:BoundField DataField="TipoDocumento" HeaderText="Tipo" />
-                                    <asp:BoundField DataField="AreaResponsable" HeaderText="Área" />
+                                    <asp:BoundField DataField="AreaResponsable" HeaderText="Area" />
                                     <asp:BoundField DataField="FechaDocumento" HeaderText="Fecha" DataFormatString="{0:dd/MM/yyyy}" />
                                     <asp:TemplateField HeaderText="Estado">
                                         <ItemTemplate>
@@ -227,7 +227,7 @@
                                             </span>
                                         </ItemTemplate>
                                     </asp:TemplateField>
-                                    <asp:TemplateField HeaderText="Acción">
+                                    <asp:TemplateField HeaderText="Accion">
                                         <ItemTemplate>
                                             <asp:LinkButton ID="LnkVerDetalle" runat="server" CommandName="VerDetalle"
                                                 CommandArgument='<%# Eval("IDDocumento") %>' Text="Ver Detalle"></asp:LinkButton>
@@ -260,7 +260,7 @@
                                 <div style="margin-top: 0.5rem;">
                                     <asp:LinkButton ID="LnkLimpiarFiltroFecha" runat="server" OnClick="LnkLimpiarFiltroFecha_Click"
                                         CssClass="nav-link" style="color: var(--primary); font-size: 0.8rem; padding: 0.3rem 0;">
-                                        &#128260; Quitar filtro de fecha
+                                        Quitar filtro de fecha
                                     </asp:LinkButton>
                                 </div>
                             </div>
