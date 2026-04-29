@@ -44,7 +44,8 @@ public partial class Detalle : System.Web.UI.Page
                                         d.CodigoTipoDocumento, m.Descripcion AS TipoDocumento,
                                         d.AreaResponsable, d.FechaDocumento, d.CodigoEstado,
                                         me.Descripcion AS Estado, d.Version,
-                                        d.RutaArchivoPDF, d.IDArchivoPDF, d.LoginRegistrador
+                                        d.RutaArchivoPDF, d.IDArchivoPDF, d.LoginRegistrador,
+                                        d.FechaLimiteRevision
                                  FROM FIR_Documento d
                                  LEFT JOIN FIR_Maestro m ON m.Tipo='TIPO_DOC' AND m.Codigo=d.CodigoTipoDocumento
                                  LEFT JOIN FIR_Maestro me ON me.Tipo='ESTADO_DOC' AND me.Codigo=d.CodigoEstado
@@ -80,6 +81,28 @@ public partial class Detalle : System.Web.UI.Page
                                 string idArchivo = rutaPDF.Replace("ARC::", "");
                                 HfRutaPDF.Value = idArchivo;
                                 IframePDF.Attributes["src"] = ResolveUrl("~/Handlers/VerPDF.ashx?id=" + idArchivo);
+                            }
+
+                            if (dr["FechaLimiteRevision"] != DBNull.Value)
+                            {
+                                DateTime fechaLimite = Convert.ToDateTime(dr["FechaLimiteRevision"]);
+                                TimeSpan diff = fechaLimite - DateTime.Now;
+                                if (diff.Days <= 0)
+                                {
+                                    LblFechaLimite.Text = "<span style='color:#dc2626;font-weight:700;'>⚠️ VENCIDA (" + fechaLimite.ToString("dd/MM/yyyy") + ")</span>";
+                                }
+                                else if (diff.Days <= 7)
+                                {
+                                    LblFechaLimite.Text = "<span style='color:#dc2626;font-weight:600;'>⚠️ " + fechaLimite.ToString("dd/MM/yyyy") + " (" + diff.Days + " días restantes)</span>";
+                                }
+                                else
+                                {
+                                    LblFechaLimite.Text = fechaLimite.ToString("dd/MM/yyyy") + " (" + diff.Days + " días restantes)";
+                                }
+                            }
+                            else
+                            {
+                                LblFechaLimite.Text = "<span style='color:#64748b;'>Sin fecha límite</span>";
                             }
                         }
                         else
@@ -255,7 +278,7 @@ public partial class Detalle : System.Web.UI.Page
                     cmd.Parameters.AddWithValue("@LoginUsuario", loginActual);
                     cmd.Parameters.AddWithValue("@NombreRevisor", nombreActual);
                     cmd.Parameters.AddWithValue("@Descripcion", TxtObservacion.Text.Trim());
-                    cmd.Parameters.AddWithValue("@IDUsuarioCreador", loginActual);
+                    cmd.Parameters.AddWithValue("@IDEquipo", Request.UserHostAddress);
                     cmd.ExecuteNonQuery();
                 }
             }
@@ -294,7 +317,9 @@ public partial class Detalle : System.Web.UI.Page
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@IDDocumento", idDoc);
                     cmd.Parameters.AddWithValue("@LoginUsuario", loginActual);
-                    cmd.Parameters.AddWithValue("@IDUsuarioCreador", loginActual);
+                    cmd.Parameters.AddWithValue("@NombreRevisor", Session["strNombre"].ToString());
+                    cmd.Parameters.AddWithValue("@Comentario", "CONFORME");
+                    cmd.Parameters.AddWithValue("@IDEquipo", Request.UserHostAddress);
                     cmd.ExecuteNonQuery();
                 }
 
@@ -302,7 +327,6 @@ public partial class Detalle : System.Web.UI.Page
                 {
                     cmdCierre.CommandType = CommandType.StoredProcedure;
                     cmdCierre.Parameters.AddWithValue("@IDDocumento", idDoc);
-                    cmdCierre.Parameters.AddWithValue("@LoginUsuario", loginActual);
 
                     SqlParameter pCerrado = new SqlParameter("@Cerrado", SqlDbType.Bit);
                     pCerrado.Direction = ParameterDirection.Output;
@@ -314,6 +338,47 @@ public partial class Detalle : System.Web.UI.Page
                     if (cerrado)
                     {
                         LblExito.Text = "Visto bueno registrado. Todos los revisores están conformes — el documento pasó a fase de firma.";
+
+                        try
+                        {
+                            string queryPrimerFirmante = @"SELECT TOP 1 df.LoginUsuario, df.NombreFirmante, df.CorreoFirmante
+                                                           FROM FIR_DocumentoFirmante df
+                                                           WHERE df.IDDocumento = @IDDocumento AND df.OrdenFirma = 1";
+                            using (SqlCommand cmdFir = new SqlCommand(queryPrimerFirmante, conn))
+                            {
+                                cmdFir.Parameters.AddWithValue("@IDDocumento", idDoc);
+                                using (SqlDataReader drFir = cmdFir.ExecuteReader())
+                                {
+                                    if (drFir.Read())
+                                    {
+                                        string correoFirmante = drFir["CorreoFirmante"].ToString();
+                                        string nombreFirmante = drFir["NombreFirmante"].ToString();
+                                        string codigoDoc = LblCodigoDoc.Text;
+                                        drFir.Close();
+
+                                        if (!string.IsNullOrWhiteSpace(correoFirmante))
+                                        {
+                                            string mensajeHtml = "<p>Estimado(a) <b>" + nombreFirmante + "</b>,</p>"
+                                                + "<p>El documento <b>" + codigoDoc + "</b> ha sido aprobado por todos los revisores y está listo para su firma.</p>"
+                                                + "<p>Por favor, ingrese al sistema para proceder con la firma digital.</p>"
+                                                + "<p>Atentamente,<br/>Sistema de Gestión - ZOFRATACNA</p>";
+
+                                            using (SqlCommand cmdMail = new SqlCommand("GEN_X_EnviarMail", conn))
+                                            {
+                                                cmdMail.CommandType = CommandType.StoredProcedure;
+                                                cmdMail.Parameters.AddWithValue("@Para", correoFirmante);
+                                                cmdMail.Parameters.AddWithValue("@Asunto", "Documento listo para firma: " + codigoDoc);
+                                                cmdMail.Parameters.AddWithValue("@Mensaje", mensajeHtml);
+                                                cmdMail.ExecuteNonQuery();
+                                            }
+
+                                            LblExito.Text += " Se notificó a " + nombreFirmante + " para iniciar la firma.";
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        catch { }
                     }
                     else
                     {

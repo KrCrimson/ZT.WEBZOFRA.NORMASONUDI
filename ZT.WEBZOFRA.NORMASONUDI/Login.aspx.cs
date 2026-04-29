@@ -44,7 +44,7 @@ public partial class Login : System.Web.UI.Page
             LblError.Text = "Error al cargar usuarios: " + ex.Message;
             LblError.Visible = true;
         }
-    }
+    }   
 
     protected void BtnIngresar_Click(object sender, EventArgs e)
     {
@@ -75,6 +75,30 @@ public partial class Login : System.Web.UI.Page
                             Session["strNombre"] = reader["NombreCompleto"].ToString();
                             Session["strEmail"] = reader["Email"].ToString();
                             string urlDashboard = reader["UrlDashboard"].ToString();
+
+                            reader.Close();
+
+                            int alertasPendientes = 0;
+                            try
+                            {
+                                using (SqlCommand cmdAlerta = new SqlCommand("FIR_S_AlertaRevisorPendiente", conn))
+                                {
+                                    cmdAlerta.CommandType = CommandType.StoredProcedure;
+                                    cmdAlerta.Parameters.AddWithValue("@LoginUsuario", strLogin);
+                                    object result = cmdAlerta.ExecuteScalar();
+                                    if (result != null && result != DBNull.Value)
+                                    {
+                                        alertasPendientes = Convert.ToInt32(result);
+                                    }
+                                }
+                            }
+                            catch { }
+
+                            if (alertasPendientes > 0)
+                            {
+                                Session["AlertasPendientes"] = alertasPendientes;
+                            }
+
                             Response.Redirect(urlDashboard);
                         }
                         else

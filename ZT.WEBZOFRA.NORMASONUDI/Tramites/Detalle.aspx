@@ -169,6 +169,10 @@
                         <label>Registrador</label>
                         <div class="info-value"><asp:Label ID="LblRegistrador" runat="server"></asp:Label></div>
                     </div>
+                    <div class="info-item">
+                        <label>Fecha Límite de Revisión</label>
+                        <div class="info-value"><asp:Label ID="LblFechaLimite" runat="server"></asp:Label></div>
+                    </div>
                 </div>
             </div>
 

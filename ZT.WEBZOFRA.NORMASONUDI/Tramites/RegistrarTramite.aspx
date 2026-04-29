@@ -59,6 +59,13 @@
                             ErrorMessage="Caracteres no válidos." ForeColor="Red" CssClass="text-danger" Display="Dynamic"></asp:RegularExpressionValidator>
                     </div>
                 </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <label>Fecha límite de revisión (opcional):</label>
+                        <asp:TextBox ID="TxtFechaLimite" runat="server" TextMode="Date"></asp:TextBox>
+                    </div>
+                    <div class="col-md-6"></div>
+                </div>
             </div>
 
             <div class="section-card">

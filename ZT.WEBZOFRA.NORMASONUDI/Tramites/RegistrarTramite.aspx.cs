@@ -118,11 +118,14 @@ public partial class RegistrarTramite : System.Web.UI.Page
     {
         DataTable dt = new DataTable();
         string connStr = ConfigurationManager.ConnectionStrings["Firmador"].ConnectionString;
+        string usuarioActual = Session["strUsuario"] != null ? Session["strUsuario"].ToString() : "";
+
         using (SqlConnection conn = new SqlConnection(connStr))
         {
-            string query = "SELECT LoginUsuario, NombreCompleto, Email FROM FIR_VW_EmpleadosActivos ORDER BY NombreCompleto";
+            string query = "SELECT LoginUsuario, NombreCompleto, Email FROM FIR_VW_EmpleadosActivos WHERE LoginUsuario != @UsuarioActual ORDER BY NombreCompleto";
             using (SqlCommand cmd = new SqlCommand(query, conn))
             {
+                cmd.Parameters.AddWithValue("@UsuarioActual", usuarioActual);
                 SqlDataAdapter da = new SqlDataAdapter(cmd);
                 da.Fill(dt);
             }
@@ -409,6 +412,11 @@ public partial class RegistrarTramite : System.Web.UI.Page
                     cmd.Parameters.AddWithValue("@IDEquipo", 
                         Request.UserHostAddress);
 
+                    if (!string.IsNullOrWhiteSpace(TxtFechaLimite.Text))
+                        cmd.Parameters.AddWithValue("@FechaLimiteRevision", Convert.ToDateTime(TxtFechaLimite.Text));
+                    else
+                        cmd.Parameters.AddWithValue("@FechaLimiteRevision", DBNull.Value);
+
                     SqlParameter paramIDDocumento = new SqlParameter(
                         "@IDDocumento", SqlDbType.Int);
                     paramIDDocumento.Direction = ParameterDirection.Output;
@@ -419,33 +427,7 @@ public partial class RegistrarTramite : System.Web.UI.Page
                     idDocumento = Convert.ToInt32(paramIDDocumento.Value);
                 }
 
-                string correoActivo = ObtenerEmailPorLogin(usuarioActivo);
-
-                using (SqlCommand cmdRev = new SqlCommand("FIR_I_DocumentoRevisor", conn))
-                {
-                    cmdRev.CommandType = CommandType.StoredProcedure;
-                    cmdRev.Parameters.AddWithValue("@IDDocumento", idDocumento);
-                    cmdRev.Parameters.AddWithValue("@LoginUsuario", usuarioActivo);
-                    cmdRev.Parameters.AddWithValue("@NombreRevisor", nombreActivo);
-                    cmdRev.Parameters.AddWithValue("@CorreoRevisor", correoActivo);
-                    cmdRev.Parameters.AddWithValue("@DiasMaxRevision", 3);
-                    cmdRev.Parameters.AddWithValue("@Version", 1);
-                    cmdRev.Parameters.AddWithValue("@IDUsuarioCreador", usuarioActivo);
-                    cmdRev.ExecuteNonQuery();
-                }
-
-                using (SqlCommand cmdFir = new SqlCommand("FIR_I_DocumentoFirmante", conn))
-                {
-                    cmdFir.CommandType = CommandType.StoredProcedure;
-                    cmdFir.Parameters.AddWithValue("@IDDocumento", idDocumento);
-                    cmdFir.Parameters.AddWithValue("@LoginUsuario", usuarioActivo);
-                    cmdFir.Parameters.AddWithValue("@NombreFirmante", nombreActivo);
-                    cmdFir.Parameters.AddWithValue("@CorreoFirmante", correoActivo);
-                    cmdFir.Parameters.AddWithValue("@OrdenFirma", 0);
-                    cmdFir.Parameters.AddWithValue("@CodigoRolFirmante", "AUT");
-                    cmdFir.Parameters.AddWithValue("@IDUsuarioCreador", usuarioActivo);
-                    cmdFir.ExecuteNonQuery();
-                }
+                // (El registrador ya no se inserta automáticamente como revisor/firmante)
 
                 foreach (GridViewRow row in GvFirmantes.Rows)
                 {

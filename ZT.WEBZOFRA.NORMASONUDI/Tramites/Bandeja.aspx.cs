@@ -22,6 +22,14 @@ public partial class Bandeja : System.Web.UI.Page
             ConfigurarSidebar();
             CargarTramites();
             BindCalendario();
+
+            if (Session["AlertasPendientes"] != null)
+            {
+                int pendientes = (int)Session["AlertasPendientes"];
+                LblError.Text = "⚠️ Tiene " + pendientes + " revisión(es) pendiente(s) o vencida(s). Por favor, revise sus trámites.";
+                LblError.Visible = true;
+                Session.Remove("AlertasPendientes");
+            }
         }
     }
 
@@ -55,7 +63,7 @@ public partial class Bandeja : System.Web.UI.Page
                                      m.Descripcion AS TipoDocumento, d.AreaResponsable,
                                      d.FechaDocumento, d.CodigoEstado,
                                      me.Descripcion AS Estado, d.Version,
-                                     d.LoginRegistrador
+                                     d.LoginRegistrador, d.FechaLimiteRevision
                               FROM FIR_Documento d
                               LEFT JOIN FIR_Maestro m ON m.Tipo='TIPO_DOC' AND m.Codigo=d.CodigoTipoDocumento
                               LEFT JOIN FIR_Maestro me ON me.Tipo='ESTADO_DOC' AND me.Codigo=d.CodigoEstado
@@ -66,7 +74,8 @@ public partial class Bandeja : System.Web.UI.Page
                     query = @"SELECT DISTINCT d.IDDocumento, d.CodigoDocumento, d.Asunto,
                                      m.Descripcion AS TipoDocumento, d.AreaResponsable,
                                      d.FechaDocumento, d.CodigoEstado,
-                                     me.Descripcion AS Estado, d.Version
+                                     me.Descripcion AS Estado, d.Version,
+                                     d.FechaLimiteRevision, d.FechaCreacion
                               FROM FIR_Documento d
                               INNER JOIN FIR_DocumentoFirmante df ON df.IDDocumento=d.IDDocumento AND df.LoginUsuario=@LoginUsuario
                               LEFT JOIN FIR_Maestro m ON m.Tipo='TIPO_DOC' AND m.Codigo=d.CodigoTipoDocumento
@@ -78,7 +87,8 @@ public partial class Bandeja : System.Web.UI.Page
                     query = @"SELECT d.IDDocumento, d.CodigoDocumento, d.Asunto,
                                      m.Descripcion AS TipoDocumento, d.AreaResponsable,
                                      d.FechaDocumento, d.CodigoEstado,
-                                     me.Descripcion AS Estado, d.Version
+                                     me.Descripcion AS Estado, d.Version,
+                                     d.FechaLimiteRevision
                               FROM FIR_Documento d
                               LEFT JOIN FIR_Maestro m ON m.Tipo='TIPO_DOC' AND m.Codigo=d.CodigoTipoDocumento
                               LEFT JOIN FIR_Maestro me ON me.Tipo='ESTADO_DOC' AND me.Codigo=d.CodigoEstado
@@ -153,6 +163,40 @@ public partial class Bandeja : System.Web.UI.Page
             e.Cell.CssClass = "cal-highlight";
             e.Cell.ToolTip = "Hay trámites en esta fecha";
         }
+
+        DataTable dt = ViewState["dtTramites"] as DataTable;
+        if (dt != null && dt.Columns.Contains("FechaLimiteRevision"))
+        {
+            foreach (DataRow row in dt.Rows)
+            {
+                if (row["FechaLimiteRevision"] != DBNull.Value && row["CodigoEstado"].ToString() == "EN_REV")
+                {
+                    DateTime fechaLimite = Convert.ToDateTime(row["FechaLimiteRevision"]).Date;
+                    if (fechaLimite == e.Day.Date)
+                    {
+                        TimeSpan diff = fechaLimite - DateTime.Now.Date;
+                        string codigo = row["CodigoDocumento"].ToString();
+                        if (diff.Days <= 0)
+                        {
+                            e.Cell.BackColor = Color.Red;
+                            e.Cell.ForeColor = Color.White;
+                            e.Cell.ToolTip = "VENCIDO: " + codigo;
+                        }
+                        else if (diff.Days <= 7)
+                        {
+                            e.Cell.BackColor = Color.LightCoral;
+                            e.Cell.ToolTip = "Vence: " + codigo;
+                        }
+                        else
+                        {
+                            e.Cell.BackColor = Color.LightBlue;
+                            e.Cell.ToolTip = "Límite: " + codigo;
+                        }
+                        break;
+                    }
+                }
+            }
+        }
     }
 
     protected void CalBandeja_SelectionChanged(object sender, EventArgs e)
@@ -192,7 +236,27 @@ public partial class Bandeja : System.Web.UI.Page
 
     protected void GvTramites_RowDataBound(object sender, GridViewRowEventArgs e)
     {
-        // Nada extra por ahora; badges de estado se manejan por CSS en el template
+        if (e.Row.RowType == DataControlRowType.DataRow)
+        {
+            DataRowView drv = (DataRowView)e.Row.DataItem;
+            string codigoEstado = drv["CodigoEstado"] != DBNull.Value ? drv["CodigoEstado"].ToString() : "";
+
+            if (codigoEstado == "EN_REV" && drv.DataView.Table.Columns.Contains("FechaLimiteRevision") && drv["FechaLimiteRevision"] != DBNull.Value)
+            {
+                DateTime fechaLimite = Convert.ToDateTime(drv["FechaLimiteRevision"]);
+                TimeSpan diff = fechaLimite - DateTime.Now;
+
+                if (diff.Days <= 0)
+                {
+                    e.Row.BackColor = Color.Red;
+                    e.Row.ForeColor = Color.White;
+                }
+                else if (diff.Days <= 7)
+                {
+                    e.Row.BackColor = Color.LightCoral;
+                }
+            }
+        }
     }
 
     // ─── SIDEBAR: REGISTRADOR ───
