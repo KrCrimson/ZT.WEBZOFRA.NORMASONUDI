@@ -7,9 +7,9 @@
     <title>Acceso - Sistema Firmador</title>
     <link rel="stylesheet" href="styles.css" />
 </head>
-<body>
+<body class="page-center">
     <form id="form1" runat="server">
-        <div class="container" style="max-width: 400px; margin-top: 5rem;">
+        <div class="container" style="max-width: 420px;">
             <h2>Acceso al Sistema</h2>
             <label>Seleccione Usuario:</label>
             <asp:DropDownList ID="CbxUsuario" runat="server"></asp:DropDownList>

@@ -7,54 +7,6 @@
     <title>Administracion - ZOFRATACNA</title>
     <link rel="stylesheet" href="../styles.css" />
     <style>
-        body { display: block; padding: 0; background: #f1f5f9; }
-        .admin-layout { display: flex; min-height: 100vh; }
-        
-        /* SIDEBAR */
-        .sidebar {
-            width: 240px;
-            min-width: 240px;
-            background: #1e3a8a;
-            color: white;
-            display: flex;
-            flex-direction: column;
-        }
-        .sidebar-header {
-            padding: 1.5rem;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
-            text-align: center;
-        }
-        .sidebar-user {
-            padding: 1rem;
-            background: rgba(0,0,0,0.1);
-            font-size: 0.85rem;
-            text-align: center;
-        }
-        .sidebar-nav { flex: 1; padding: 1rem 0; }
-        .nav-btn {
-            display: block;
-            width: 100%;
-            padding: 0.8rem 1.5rem;
-            color: #cbd5e1;
-            text-decoration: none;
-            background: none;
-            border: none;
-            text-align: left;
-            cursor: pointer;
-            font-size: 0.9rem;
-            transition: all 0.2s;
-            border-left: 4px solid transparent;
-        }
-        .nav-btn:hover { background: rgba(255,255,255,0.05); color: white; }
-        .nav-btn.active {
-            background: rgba(255,255,255,0.1);
-            color: white;
-            border-left-color: #fbbf24;
-            font-weight: 600;
-        }
-        
-        /* MAIN */
-        .main-panel { flex: 1; padding: 2rem; overflow-y: auto; }
         .card-stats-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
@@ -97,11 +49,12 @@
 </head>
 <body>
     <form id="form1" runat="server">
-        <div class="admin-layout">
+        <div class="app-shell">
             
-            <div class="sidebar">
-                <div class="sidebar-header">
-                    <h2 style="color:white; margin:0; border:none; padding:0; font-size:1.2rem;">Panel Admin</h2>
+            <aside class="app-sidebar">
+                <div class="sidebar-brand">
+                    <p class="brand-title">Panel Admin</p>
+                    <p class="brand-subtitle">Control institucional</p>
                 </div>
                 <div class="sidebar-user">
                     Hola, <asp:Label ID="LblAdminName" runat="server" Font-Bold="true"></asp:Label>
@@ -115,10 +68,15 @@
                     <hr style="opacity:0.1; margin: 1rem 0;" />
                     <asp:LinkButton ID="BtnLogout" runat="server" CssClass="nav-btn" OnClick="BtnLogout_Click" style="color:#f87171;">Cerrar Sesion</asp:LinkButton>
                 </div>
-            </div>
+            </aside>
 
-            <div class="main-panel">
-                <asp:Label ID="LblGlobalMsg" runat="server" CssClass="alert alert-success" Visible="false" style="display:block; margin-bottom:1rem;"></asp:Label>
+            <div class="app-main">
+                <div class="app-header">
+                    <p class="page-title">Panel de Administracion</p>
+                    <p class="page-subtitle">Monitoreo y control del flujo documental.</p>
+                </div>
+                <div class="app-content">
+                    <asp:Label ID="LblGlobalMsg" runat="server" CssClass="alert alert-success" Visible="false" style="display:block; margin-bottom:1rem;"></asp:Label>
 
                 <!-- PANEL: ESTADISTICAS -->
                 <asp:Panel ID="PnlStats" runat="server">
@@ -261,7 +219,8 @@
                 <asp:Panel ID="PnlAuditoria" runat="server" Visible="false">
                     <h2>Auditoria de Documentos</h2>
                     <div class="filter-bar">
-                        <div>
+                            </div>
+                        </div>
                             <label>Desde:</label>
                             <asp:TextBox ID="TxtFechaDesde" runat="server" TextMode="Date" style="margin:0;"></asp:TextBox>
                         </div>
@@ -288,6 +247,7 @@
                 </asp:Panel>
 
             </div>
+        </div>
         </div>
     </form>
 </body>

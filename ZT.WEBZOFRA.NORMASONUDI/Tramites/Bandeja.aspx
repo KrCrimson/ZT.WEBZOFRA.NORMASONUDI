@@ -7,101 +7,23 @@
     <title>Bandeja de Tramites</title>
     <link rel="stylesheet" href="../styles.css" />
     <style>
-        body { display: block; padding: 0; }
-
-        .bandeja-layout {
-            display: flex;
-            min-height: 100vh;
-        }
-
-        /* SIDEBAR */
-        .sidebar {
-            width: 220px;
-            min-width: 220px;
-            background: #1E3A8A;
-            color: #fff;
-            display: flex;
-            flex-direction: column;
-            padding: 0;
-        }
-        .sidebar-header {
-            padding: 1.5rem 1rem;
-            border-bottom: 1px solid rgba(255,255,255,0.15);
-            text-align: center;
-        }
-        .sidebar-header h3 {
-            color: #fff;
-            margin: 0;
-            font-size: 1rem;
-            display: block;
-        }
-        .sidebar-header small {
-            color: #93c5fd;
-            font-size: 0.75rem;
-        }
-        .sidebar-nav {
-            flex: 1;
-            padding: 0.5rem 0;
-        }
-        .sidebar-nav .nav-link {
-            display: block;
-            width: 100%;
-            text-align: left;
-            background: none;
-            border: none;
-            color: #cbd5e1;
-            padding: 0.75rem 1.2rem;
-            font-family: 'Roboto', sans-serif;
-            font-size: 0.88rem;
-            cursor: pointer;
-            transition: all 0.15s;
-            text-decoration: none;
-            box-shadow: none;
-        }
-        .sidebar-nav .nav-link:hover {
-            background: rgba(255,255,255,0.1);
-            color: #fff;
-            transform: none;
-        }
-        .sidebar-nav .nav-link.active {
-            background: rgba(255,255,255,0.18);
-            color: #fff;
-            font-weight: 600;
-            border-left: 3px solid #fbbf24;
-        }
-        .sidebar-footer {
-            padding: 1rem;
-            border-top: 1px solid rgba(255,255,255,0.15);
-        }
-        .sidebar-footer .nav-link {
-            color: #fca5a5;
-        }
-
-        /* MAIN CONTENT */
-        .main-content {
-            flex: 1;
-            padding: 1.5rem 2rem;
-            background: var(--background);
-            overflow-y: auto;
-        }
-        .main-content .container {
-            max-width: 100%;
-            animation: none;
-        }
-
         /* CONTENT LAYOUT: tramites + calendario */
         .content-row {
             display: flex;
             gap: 1.5rem;
             align-items: flex-start;
+            flex-wrap: wrap;
         }
         .content-main {
-            flex: 1;
+            flex: 1 1 560px;
             min-width: 0;
+            overflow-x: auto;
         }
         .content-aside {
-            width: 260px;
-            min-width: 260px;
+            flex: 0 1 280px;
+            width: 280px;
+            min-width: 240px;
+            max-width: 100%;
         }
 
         /* GRID TRAMITES */
@@ -153,11 +75,7 @@
             color: var(--text-muted);
         }
 
-        @media (max-width: 900px) {
-            .bandeja-layout { flex-direction: column; }
-            .sidebar { width: 100%; min-width: auto; flex-direction: row; flex-wrap: wrap; }
-            .sidebar-header { padding: 0.8rem; }
-            .sidebar-nav { display: flex; flex-wrap: wrap; }
+        @media (max-width: 1100px) {
             .content-row { flex-direction: column; }
             .content-aside { width: 100%; min-width: auto; }
         }
@@ -165,43 +83,48 @@
 </head>
 <body>
     <form id="form1" runat="server">
-        <div class="bandeja-layout">
+        <div class="app-shell">
 
             <!-- SIDEBAR -->
-            <div class="sidebar">
-                <div class="sidebar-header">
-                    <h3>ZOFRATACNA</h3>
-                    <small>Sistema de Gestion</small>
+            <aside class="app-sidebar">
+                <div class="sidebar-brand">
+                    <p class="brand-title">ZOFRATACNA</p>
+                    <p class="brand-subtitle">Sistema de Gestion</p>
                 </div>
                 <div class="sidebar-nav">
                     <asp:Panel ID="PnlSidebar" runat="server">
                         
                         <asp:Panel ID="PnlMenuRegistrador" runat="server" Visible="false">
-                            <asp:LinkButton ID="LnkNuevoTramite" runat="server" CssClass="nav-link" OnClick="LnkNuevoTramite_Click">Registrar Documento</asp:LinkButton>
-                            <asp:LinkButton ID="LnkMisTramites" runat="server" CssClass="nav-link active" OnClick="LnkMisTramites_Click">Mis Tramites</asp:LinkButton>
+                            <asp:LinkButton ID="LnkNuevoTramite" runat="server" CssClass="sidebar-link" OnClick="LnkNuevoTramite_Click">Registrar Documento</asp:LinkButton>
+                            <asp:LinkButton ID="LnkMisTramites" runat="server" CssClass="sidebar-link" OnClick="LnkMisTramites_Click">Mis Tramites</asp:LinkButton>
                         </asp:Panel>
  
                         <asp:Panel ID="PnlMenuFirmador" runat="server" Visible="false">
-                            <asp:LinkButton ID="LnkPendientesRev" runat="server" CssClass="nav-link active" OnClick="LnkPendientesRev_Click">Pendientes de Revision</asp:LinkButton>
-                            <asp:LinkButton ID="LnkPendientesFirma" runat="server" CssClass="nav-link" OnClick="LnkPendientesFirma_Click">Pendientes de Firma</asp:LinkButton>
-                            <asp:LinkButton ID="LnkCompletados" runat="server" CssClass="nav-link" OnClick="LnkCompletados_Click">Completados</asp:LinkButton>
+                            <asp:LinkButton ID="LnkPendientesRev" runat="server" CssClass="sidebar-link" OnClick="LnkPendientesRev_Click">Pendientes de Revision</asp:LinkButton>
+                            <asp:LinkButton ID="LnkPendientesFirma" runat="server" CssClass="sidebar-link" OnClick="LnkPendientesFirma_Click">Pendientes de Firma</asp:LinkButton>
+                            <asp:LinkButton ID="LnkCompletados" runat="server" CssClass="sidebar-link" OnClick="LnkCompletados_Click">Completados</asp:LinkButton>
                         </asp:Panel>
  
                         <asp:Panel ID="PnlMenuAdmin" runat="server" Visible="false">
-                            <asp:LinkButton ID="LnkTodosTramites" runat="server" CssClass="nav-link active" OnClick="LnkTodosTramites_Click">Todos los Tramites</asp:LinkButton>
-                            <asp:LinkButton ID="LnkGestionarRoles" runat="server" CssClass="nav-link" OnClick="LnkGestionarRoles_Click">Gestionar Roles</asp:LinkButton>
+                            <asp:LinkButton ID="LnkTodosTramites" runat="server" CssClass="sidebar-link" OnClick="LnkTodosTramites_Click">Todos los Tramites</asp:LinkButton>
+                            <asp:LinkButton ID="LnkGestionarRoles" runat="server" CssClass="sidebar-link" OnClick="LnkGestionarRoles_Click">Gestionar Roles</asp:LinkButton>
                         </asp:Panel>
 
                     </asp:Panel>
                 </div>
                 <div class="sidebar-footer">
-                    <asp:LinkButton ID="LnkCerrarSesion" runat="server" CssClass="nav-link" OnClick="LnkCerrarSesion_Click">Cerrar Sesion</asp:LinkButton>
+                    <asp:LinkButton ID="LnkCerrarSesion" runat="server" CssClass="sidebar-link" OnClick="LnkCerrarSesion_Click">Cerrar Sesion</asp:LinkButton>
                 </div>
-            </div>
+            </aside>
 
             <!-- MAIN CONTENT -->
-            <div class="main-content">
-                <div class="container">
+            <div class="app-main">
+                <div class="app-header">
+                    <p class="page-title">Bandeja de Tramites</p>
+                    <p class="page-subtitle">Gestione sus documentos y alertas pendientes.</p>
+                </div>
+                <div class="app-content">
+                    <div class="container container-wide">
                     <h2><asp:Label ID="LblBienvenida" runat="server"></asp:Label></h2>
                     <asp:Label ID="LblError" runat="server" Visible="false"></asp:Label>
                     <asp:Label ID="LblExito" runat="server" Visible="false"></asp:Label>
@@ -259,7 +182,7 @@
                                 </asp:Calendar>
                                 <div style="margin-top: 0.5rem;">
                                     <asp:LinkButton ID="LnkLimpiarFiltroFecha" runat="server" OnClick="LnkLimpiarFiltroFecha_Click"
-                                        CssClass="nav-link" style="color: var(--primary); font-size: 0.8rem; padding: 0.3rem 0;">
+                                        CssClass="inline-link" style="color: var(--primary); font-size: 0.8rem; padding: 0.3rem 0;">
                                         Quitar filtro de fecha
                                     </asp:LinkButton>
                                 </div>
@@ -268,7 +191,6 @@
                     </div>
                 </div>
             </div>
-
         </div>
     </form>
 </body>

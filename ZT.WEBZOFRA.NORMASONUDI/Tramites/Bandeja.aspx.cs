@@ -20,8 +20,10 @@ public partial class Bandeja : System.Web.UI.Page
         {
             LblBienvenida.Text = "Bienvenido, " + Session["strNombre"].ToString();
             ConfigurarSidebar();
+            AplicarFiltroDesdeQuery();
             CargarTramites();
             BindCalendario();
+            ActualizarSidebarActivo();
 
             if (Session["AlertasPendientes"] != null)
             {
@@ -40,6 +42,82 @@ public partial class Bandeja : System.Web.UI.Page
         PnlMenuRegistrador.Visible = (rol == "REGISTRADOR");
         PnlMenuFirmador.Visible = (rol == "FIRMADOR");
         PnlMenuAdmin.Visible = (rol == "ADMIN");
+    }
+
+    private void ActualizarSidebarActivo()
+    {
+        string filtro = ViewState["FiltroEstado"] != null ? ViewState["FiltroEstado"].ToString() : "";
+        string rol = Session["strRol"] != null ? Session["strRol"].ToString() : "";
+
+        LnkNuevoTramite.CssClass = "sidebar-link";
+        LnkMisTramites.CssClass = "sidebar-link";
+        LnkPendientesRev.CssClass = "sidebar-link";
+        LnkPendientesFirma.CssClass = "sidebar-link";
+        LnkCompletados.CssClass = "sidebar-link";
+        LnkTodosTramites.CssClass = "sidebar-link";
+        LnkGestionarRoles.CssClass = "sidebar-link";
+
+        if (rol == "REGISTRADOR")
+        {
+            if (string.IsNullOrWhiteSpace(filtro))
+            {
+                LnkMisTramites.CssClass = "sidebar-link active";
+            }
+        }
+        else if (rol == "FIRMADOR")
+        {
+            if (filtro == "EN_REV")
+            {
+                LnkPendientesRev.CssClass = "sidebar-link active";
+            }
+            else if (filtro == "APR_FIRMA,EN_FIRMA")
+            {
+                LnkPendientesFirma.CssClass = "sidebar-link active";
+            }
+            else if (filtro == "FIRM_COM")
+            {
+                LnkCompletados.CssClass = "sidebar-link active";
+            }
+            else
+            {
+                LnkPendientesRev.CssClass = "sidebar-link active";
+            }
+        }
+        else if (rol == "ADMIN")
+        {
+            if (string.IsNullOrWhiteSpace(filtro))
+            {
+                LnkTodosTramites.CssClass = "sidebar-link active";
+            }
+            else
+            {
+                LnkTodosTramites.CssClass = "sidebar-link active";
+            }
+        }
+    }
+
+    private void AplicarFiltroDesdeQuery()
+    {
+        string filtro = Request.QueryString["filtro"];
+        if (string.IsNullOrWhiteSpace(filtro))
+        {
+            return;
+        }
+
+        ViewState["FiltroEstado"] = filtro;
+
+        if (filtro == "EN_REV")
+        {
+            LblTituloBandeja.Text = "Pendientes de Revision";
+        }
+        else if (filtro == "APR_FIRMA,EN_FIRMA")
+        {
+            LblTituloBandeja.Text = "Pendientes de Firma";
+        }
+        else if (filtro == "FIRM_COM")
+        {
+            LblTituloBandeja.Text = "Completados";
+        }
     }
 
     private void CargarTramites()
@@ -224,6 +302,7 @@ public partial class Bandeja : System.Web.UI.Page
         CargarTramites();
         BindCalendario();
         LblTituloBandeja.Text = "Todos los tramites";
+        ActualizarSidebarActivo();
     }
 
     protected void GvTramites_RowCommand(object sender, GridViewCommandEventArgs e)
@@ -272,6 +351,7 @@ public partial class Bandeja : System.Web.UI.Page
         CargarTramites();
         BindCalendario();
         LblTituloBandeja.Text = "Mis Trámites";
+        ActualizarSidebarActivo();
     }
 
     // ─── SIDEBAR: FIRMADOR ───
@@ -282,6 +362,7 @@ public partial class Bandeja : System.Web.UI.Page
         CargarTramites();
         BindCalendario();
         LblTituloBandeja.Text = "Pendientes de Revisión";
+        ActualizarSidebarActivo();
     }
 
     protected void LnkPendientesFirma_Click(object sender, EventArgs e)
@@ -290,6 +371,7 @@ public partial class Bandeja : System.Web.UI.Page
         CargarTramites();
         BindCalendario();
         LblTituloBandeja.Text = "Pendientes de Firma";
+        ActualizarSidebarActivo();
     }
 
     protected void LnkCompletados_Click(object sender, EventArgs e)
@@ -298,6 +380,7 @@ public partial class Bandeja : System.Web.UI.Page
         CargarTramites();
         BindCalendario();
         LblTituloBandeja.Text = "Completados";
+        ActualizarSidebarActivo();
     }
 
     // ─── SIDEBAR: ADMIN ───
@@ -308,6 +391,7 @@ public partial class Bandeja : System.Web.UI.Page
         CargarTramites();
         BindCalendario();
         LblTituloBandeja.Text = "Todos los Trámites";
+        ActualizarSidebarActivo();
     }
 
     protected void LnkGestionarRoles_Click(object sender, EventArgs e)

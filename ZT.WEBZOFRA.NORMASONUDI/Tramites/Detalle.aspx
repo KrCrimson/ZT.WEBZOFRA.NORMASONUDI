@@ -7,9 +7,6 @@
     <title>Detalle del Documento</title>
     <link rel="stylesheet" href="../styles.css" />
     <style>
-        body { display: block; padding: 1.5rem; }
-        .container { max-width: 1100px; margin: 0 auto; }
-
         .detalle-header {
             display: flex;
             justify-content: space-between;
@@ -123,10 +120,49 @@
         .btn-danger { background: #dc2626; }
         .btn-danger:hover { background: #b91c1c; }
     </style>
+    </style>
 </head>
 <body>
     <form id="form1" runat="server">
-        <div class="container">
+        <div class="app-shell">
+            <aside class="app-sidebar">
+                <div class="sidebar-brand">
+                    <p class="brand-title">ZOFRATACNA</p>
+                    <p class="brand-subtitle">Sistema de Gestion</p>
+                </div>
+                <div class="sidebar-nav">
+                    <% string rol = Session["strRol"] != null ? Session["strRol"].ToString() : ""; %>
+                    <% if (rol == "REGISTRADOR") { %>
+                        <div class="sidebar-section">Registro</div>
+                        <a class="sidebar-link" href="<%= ResolveUrl("~/Tramites/RegistrarTramite.aspx") %>">Registrar Documento</a>
+                        <a class="sidebar-link active" href="<%= ResolveUrl("~/Tramites/Bandeja.aspx") %>">Mis Tramites</a>
+                    <% } %>
+
+                    <% if (rol == "FIRMADOR") { %>
+                        <div class="sidebar-section">Revision</div>
+                        <a class="sidebar-link active" href="<%= ResolveUrl("~/Tramites/Bandeja.aspx?filtro=EN_REV") %>">Pendientes de Revision</a>
+                        <a class="sidebar-link" href="<%= ResolveUrl("~/Tramites/Bandeja.aspx?filtro=APR_FIRMA,EN_FIRMA") %>">Pendientes de Firma</a>
+                        <a class="sidebar-link" href="<%= ResolveUrl("~/Tramites/Bandeja.aspx?filtro=FIRM_COM") %>">Completados</a>
+                    <% } %>
+
+                    <% if (rol == "ADMIN") { %>
+                        <div class="sidebar-section">Administracion</div>
+                        <a class="sidebar-link active" href="<%= ResolveUrl("~/Tramites/Bandeja.aspx") %>">Todos los Tramites</a>
+                        <a class="sidebar-link" href="<%= ResolveUrl("~/Admin/Dashboard.aspx") %>">Gestionar Roles</a>
+                    <% } %>
+                </div>
+                <div class="sidebar-footer">
+                    <a class="sidebar-link" href="<%= ResolveUrl("~/Login.aspx?logout=1") %>">Cerrar Sesion</a>
+                </div>
+            </aside>
+
+            <div class="app-main">
+                <div class="app-header">
+                    <p class="page-title">Detalle del Documento</p>
+                    <p class="page-subtitle">Revise la informacion, observaciones y acciones pendientes.</p>
+                </div>
+                <div class="app-content">
+                    <div class="container">
 
             <!-- HEADER -->
             <div class="detalle-header">
@@ -263,6 +299,9 @@
                 </div>
             </asp:Panel>
 
+                    </div>
+                </div>
+            </div>
         </div>
     </form>
 </body>

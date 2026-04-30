@@ -26,9 +26,9 @@ public partial class RegistrarTramite
 
     protected global::System.Web.UI.WebControls.TextBox TxtFechaLimite;
 
-    protected global::System.Web.UI.WebControls.GridView GvFirmantes;
+    protected global::System.Web.UI.WebControls.DropDownList DdlFirmanteNuevo;
 
-    protected global::System.Web.UI.WebControls.Button BtnAgregarFirmante;
+    protected global::System.Web.UI.WebControls.HiddenField HfFirmantesJson;
 
     protected global::System.Web.UI.WebControls.Button BtnRegistrar;
 }
