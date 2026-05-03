@@ -104,6 +104,10 @@ public partial class Detalle : System.Web.UI.Page
                             {
                                 LblFechaLimite.Text = "<span style='color:#64748b;'>Sin fecha limite</span>";
                             }
+                            if (codigoEstado == "FIRM_COM")
+                            {
+                                PnlDocumentoFinal.Visible = true;
+                            }
                         }
                         else
                         {
@@ -118,6 +122,14 @@ public partial class Detalle : System.Web.UI.Page
         {
             LblError.Text = "Error al cargar documento: " + ex.Message;
             LblError.Visible = true;
+        }
+    }
+
+    protected void BtnDescargarFinal_Click(object sender, EventArgs e)
+    {
+        if (!string.IsNullOrEmpty(HfRutaPDF.Value))
+        {
+            Response.Redirect("~/Handlers/VerPDF.ashx?id=" + HfRutaPDF.Value);
         }
     }
 

@@ -74,7 +74,7 @@ public partial class RegistrarTramite : System.Web.UI.Page
         string numeroSecuencial = siguienteId.ToString().PadLeft(4, '0');
         
         string codigoGenerado = codigoTipo + "-" + anio + "-" + numeroSecuencial;
-        LblCodigoDocumento.Text = codigoGenerado;
+        TxtCodigoDocumento.Text = codigoGenerado;
         ViewState["CodigoDocumento"] = codigoGenerado;
     }
 
@@ -90,11 +90,9 @@ public partial class RegistrarTramite : System.Web.UI.Page
         {
             using (SqlConnection conn = new SqlConnection(connStr))
             {
-                using (SqlCommand cmd = new SqlCommand("FIR_S_MaestroPorTipo", conn))
+                using (SqlCommand cmd = new SqlCommand("SELECT Codigo, Descripcion FROM FIR_Maestro WHERE Tipo='TIPO_DOC' AND Codigo IN ('ACT', 'RES')", conn))
                 {
-                    cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Parameters.AddWithValue("@Tipo", "TIPO_DOC");
-
+                    conn.Open();
                     SqlDataAdapter da = new SqlDataAdapter(cmd);
                     DataTable dt = new DataTable();
                     da.Fill(dt);
@@ -179,12 +177,11 @@ public partial class RegistrarTramite : System.Web.UI.Page
         {
             DropDownList DdlFirmante = (DropDownList)row.FindControl("DdlFirmante");
             Label LblCorreo = (Label)row.FindControl("LblCorreo");
-            DropDownList DdlOrden = (DropDownList)row.FindControl("DdlOrden");
 
             DataRow dr = dt.NewRow();
             dr["LoginUsuario"] = DdlFirmante.SelectedValue;
             dr["CorreoFirmante"] = LblCorreo.Text;
-            dr["OrdenFirma"] = DdlOrden.SelectedValue;
+            dr["OrdenFirma"] = (row.RowIndex + 1).ToString();
             dt.Rows.Add(dr);
         }
         return dt;
@@ -196,7 +193,6 @@ public partial class RegistrarTramite : System.Web.UI.Page
         {
             DropDownList DdlFirmante = (DropDownList)e.Row.FindControl("DdlFirmante");
             HiddenField HfLoginUsuario = (HiddenField)e.Row.FindControl("HfLoginUsuario");
-            DropDownList DdlOrden = (DropDownList)e.Row.FindControl("DdlOrden");
             HiddenField HfOrdenFirma = (HiddenField)e.Row.FindControl("HfOrdenFirma");
 
             if (DdlFirmante != null)
@@ -214,19 +210,6 @@ public partial class RegistrarTramite : System.Web.UI.Page
                 }
             }
 
-            if (DdlOrden != null)
-            {
-                DdlOrden.Items.Insert(0, new ListItem("-- Seleccione --", ""));
-                for (int i = 1; i <= 15; i++)
-                {
-                    DdlOrden.Items.Add(new ListItem(i.ToString(), i.ToString()));
-                }
-
-                if (HfOrdenFirma != null && !string.IsNullOrWhiteSpace(HfOrdenFirma.Value))
-                {
-                    DdlOrden.SelectedValue = HfOrdenFirma.Value;
-                }
-            }
         }
     }
 
@@ -268,6 +251,18 @@ public partial class RegistrarTramite : System.Web.UI.Page
         GvFirmantes.DataBind();
     }
 
+    protected void GvFirmantes_RowDeleting(object sender, GridViewDeleteEventArgs e)
+    {
+        DataTable dt = ObtenerDatosFirmantes();
+        if (dt.Rows.Count > e.RowIndex)
+        {
+            dt.Rows.RemoveAt(e.RowIndex);
+        }
+        ViewState["Firmantes"] = dt;
+        GvFirmantes.DataSource = dt;
+        GvFirmantes.DataBind();
+    }
+
     protected void BtnRegistrar_Click(object sender, EventArgs e)
     {
         LblError.Visible = false;
@@ -275,7 +270,7 @@ public partial class RegistrarTramite : System.Web.UI.Page
 
         if (string.IsNullOrWhiteSpace(TxtAsunto.Text) ||
             string.IsNullOrWhiteSpace(CbxTipoDocumento.SelectedValue) ||
-            string.IsNullOrWhiteSpace(TxtAreaResponsable.Text))
+            string.IsNullOrWhiteSpace(DdlAreaResponsable.SelectedValue))
         {
             LblError.Text = "Debe completar todos los campos del documento.";
             LblError.Visible = true;
@@ -309,10 +304,10 @@ public partial class RegistrarTramite : System.Web.UI.Page
         foreach (GridViewRow row in GvFirmantes.Rows)
         {
             DropDownList DdlFirmante = (DropDownList)row.FindControl("DdlFirmante");
-            DropDownList DdlOrden = (DropDownList)row.FindControl("DdlOrden");
+            HiddenField HfOrdenFirma = (HiddenField)row.FindControl("HfOrdenFirma");
 
             string login = DdlFirmante.SelectedValue;
-            string ordenStr = DdlOrden.SelectedValue;
+            string ordenStr = HfOrdenFirma != null ? HfOrdenFirma.Value : (row.RowIndex + 1).ToString();
 
             if (string.IsNullOrWhiteSpace(login))
             {
@@ -399,7 +394,7 @@ public partial class RegistrarTramite : System.Web.UI.Page
                     cmd.Parameters.AddWithValue("@CodigoTipoDocumento", 
                         CbxTipoDocumento.SelectedValue);
                     cmd.Parameters.AddWithValue("@AreaResponsable", 
-                        TxtAreaResponsable.Text.Trim());
+                        DdlAreaResponsable.SelectedValue.Trim());
                     cmd.Parameters.AddWithValue("@FechaDocumento", 
                         (DateTime)ViewState["FechaDocumento"]);
                     cmd.Parameters.AddWithValue("@CodigoDocumento", 
@@ -432,14 +427,12 @@ public partial class RegistrarTramite : System.Web.UI.Page
                 foreach (GridViewRow row in GvFirmantes.Rows)
                 {
                     DropDownList DdlFirmante = (DropDownList)row.FindControl("DdlFirmante");
-                    DropDownList DdlOrden = (DropDownList)row.FindControl("DdlOrden");
-
                     string loginFirmante = DdlFirmante.SelectedValue;
                     string nombreFirmante = DdlFirmante.SelectedItem.Text;
                     
                     string correoFirmante = ObtenerEmailPorLogin(loginFirmante);
                     
-                    int ordenFirma = Convert.ToInt32(DdlOrden.SelectedValue);
+                    int ordenFirma = row.RowIndex + 1;
 
                     using (SqlCommand cmdRev = new SqlCommand("FIR_I_DocumentoRevisor", conn))
                     {
@@ -468,6 +461,12 @@ public partial class RegistrarTramite : System.Web.UI.Page
                     }
                 }
 
+                using (SqlCommand cmdStatus = new SqlCommand("UPDATE FIR_Documento SET CodigoEstado = 'EN_REV' WHERE IDDocumento = @IDD", conn))
+                {
+                    cmdStatus.Parameters.AddWithValue("@IDD", idDocumento);
+                    cmdStatus.ExecuteNonQuery();
+                }
+
                 using (SqlCommand cmdInit = new SqlCommand("FIR_U_IniciarRevision", conn))
                 {
                     cmdInit.CommandType = CommandType.StoredProcedure;
@@ -478,7 +477,7 @@ public partial class RegistrarTramite : System.Web.UI.Page
                 }
             }
 
-            Response.Redirect("~/Tramites/Bandeja.aspx");
+            Response.Redirect("Bandeja.aspx");
         }
         catch (Exception ex)
         {

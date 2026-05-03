@@ -75,7 +75,7 @@ public partial class FirmaDigital : System.Web.UI.Page
         string connStr = ConfigurationManager.ConnectionStrings["Firmador"].ConnectionString;
         using (SqlConnection conn = new SqlConnection(connStr))
         {
-            string query = "SELECT CodigoDocumento, Asunto, IDArchivoPDF FROM FIR_Documento WHERE IDDocumento = @IDDocumento";
+            string query = "SELECT CodigoDocumento, Asunto, RutaArchivoPDF FROM FIR_Documento WHERE IDDocumento = @IDDocumento";
             using (SqlCommand cmd = new SqlCommand(query, conn))
             {
                 cmd.Parameters.AddWithValue("@IDDocumento", idDoc);
@@ -86,7 +86,16 @@ public partial class FirmaDigital : System.Web.UI.Page
                     {
                         LblCodigoDoc.Text = dr["CodigoDocumento"].ToString();
                         LblAsunto.Text = dr["Asunto"].ToString();
-                        ViewState["IDArchivoPDF"] = dr["IDArchivoPDF"];
+                        
+                        string ruta = dr["RutaArchivoPDF"].ToString();
+                        if (ruta.StartsWith("ARC::"))
+                        {
+                            ViewState["IDArchivoPDF"] = ruta.Replace("ARC::", "");
+                        }
+                        else
+                        {
+                            ViewState["IDArchivoPDF"] = ruta;
+                        }
                     }
                 }
             }
@@ -218,7 +227,7 @@ public partial class FirmaDigital : System.Web.UI.Page
             DataTable dtPersonas = new DataTable();
             string query = @"SELECT CorreoFirmante FROM FIR_DocumentoFirmante WHERE IDDocumento = @IDD
                              UNION
-                             SELECT Email FROM GEN_VW_Usuario WHERE LoginUsuario = (SELECT LoginRegistrador FROM FIR_Documento WHERE IDDocumento = @IDD)";
+                             SELECT Email FROM FIR_VW_EmpleadosActivos WHERE LoginUsuario = (SELECT LoginRegistrador FROM FIR_Documento WHERE IDDocumento = @IDD)";
             using (SqlCommand cmd = new SqlCommand(query, conn))
             {
                 cmd.Parameters.AddWithValue("@IDD", idDoc);

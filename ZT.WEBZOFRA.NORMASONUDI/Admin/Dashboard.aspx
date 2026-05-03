@@ -108,8 +108,6 @@
                 </div>
                 <div class="sidebar-nav">
                     <asp:LinkButton ID="BtnNavStats" runat="server" CssClass="nav-btn active" OnClick="Nav_Click" CommandArgument="Stats">Estadisticas</asp:LinkButton>
-                    <asp:LinkButton ID="BtnNavTramites" runat="server" CssClass="nav-btn" OnClick="Nav_Click" CommandArgument="Tramites">Todos los Tramites</asp:LinkButton>
-                    <asp:LinkButton ID="BtnNavRoles" runat="server" CssClass="nav-btn" OnClick="Nav_Click" CommandArgument="Roles">Gestionar Roles</asp:LinkButton>
                     <asp:LinkButton ID="BtnNavOrden" runat="server" CssClass="nav-btn" OnClick="Nav_Click" CommandArgument="Orden">Modificar Orden</asp:LinkButton>
                     <asp:LinkButton ID="BtnNavAuditoria" runat="server" CssClass="nav-btn" OnClick="Nav_Click" CommandArgument="Auditoria">Auditoria</asp:LinkButton>
                     <hr style="opacity:0.1; margin: 1rem 0;" />
@@ -120,7 +118,7 @@
             <div class="main-panel">
                 <asp:Label ID="LblGlobalMsg" runat="server" CssClass="alert alert-success" Visible="false" style="display:block; margin-bottom:1rem;"></asp:Label>
 
-                <!-- PANEL: ESTADISTICAS -->
+                <!-- PANEL: ESTADISTICAS Y TODOS LOS TRAMITES -->
                 <asp:Panel ID="PnlStats" runat="server">
                     <h2 style="border:none;">Resumen del Sistema</h2>
                     <div class="card-stats-grid">
@@ -153,10 +151,9 @@
                             <span class="stat-lbl">Completados</span>
                         </div>
                     </div>
-                </asp:Panel>
 
-                <!-- PANEL: TODOS LOS TRAMITES -->
-                <asp:Panel ID="PnlTramites" runat="server" Visible="false">
+                    <hr style="margin: 2rem 0; opacity: 0.2; border-color:#cbd5e1" />
+
                     <h2>Listado General de Tramites</h2>
                     <div class="filter-bar">
                         <div style="flex:1;">
@@ -175,29 +172,6 @@
                             <asp:TemplateField HeaderText="Accion">
                                 <ItemTemplate>
                                     <asp:LinkButton ID="LnkVer" runat="server" CommandName="VerDetalle" CommandArgument='<%# Eval("IDDocumento") %>'>Ver Detalle</asp:LinkButton>
-                                </ItemTemplate>
-                            </asp:TemplateField>
-                        </Columns>
-                    </asp:GridView>
-                </asp:Panel>
-
-                <!-- PANEL: GESTIONAR ROLES -->
-                <asp:Panel ID="PnlRoles" runat="server" Visible="false">
-                    <h2>Gestion de Roles de Usuario</h2>
-                    <asp:GridView ID="GvUsuarios" runat="server" AutoGenerateColumns="false" CssClass="grid-view" OnRowCommand="GvUsuarios_RowCommand">
-                        <Columns>
-                            <asp:BoundField DataField="LoginUsuario" HeaderText="Usuario" />
-                            <asp:BoundField DataField="NombreCompleto" HeaderText="Nombre" />
-                            <asp:BoundField DataField="Email" HeaderText="Email" />
-                            <asp:BoundField DataField="CodigoRol" HeaderText="Rol Actual" />
-                            <asp:TemplateField HeaderText="Nuevo Rol">
-                                <ItemTemplate>
-                                    <asp:DropDownList ID="DdlNuevoRol" runat="server" style="margin:0; width:auto;">
-                                        <asp:ListItem Text="ADMIN" Value="ADMIN"></asp:ListItem>
-                                        <asp:ListItem Text="REGISTRADOR" Value="REGISTRADOR"></asp:ListItem>
-                                        <asp:ListItem Text="FIRMADOR" Value="FIRMADOR"></asp:ListItem>
-                                    </asp:DropDownList>
-                                    <asp:Button ID="BtnCambiar" runat="server" Text="Cambiar" CommandName="CambiarRol" CommandArgument='<%# Container.DataItemIndex %>' CssClass="btn" style="padding: 0.4rem 1rem; font-size: 0.8rem;" />
                                 </ItemTemplate>
                             </asp:TemplateField>
                         </Columns>
@@ -246,7 +220,7 @@
                                     <ItemTemplate>
                                         <asp:HiddenField ID="HfIDFirmante" runat="server" Value='<%# Eval("IDDocumentoFirmante") %>' />
                                         <asp:HiddenField ID="HfEstadoFirma" runat="server" Value='<%# Eval("CodigoEstadoFirma") %>' />
-                                        <asp:TextBox ID="TxtNuevoOrden" runat="server" Text='<%# Eval("OrdenFirma") %>' Width="50px" style="margin:0; text-align:center;" TextMode="Number"></asp:TextBox>
+                                        <asp:DropDownList ID="DdlNuevoOrden" runat="server" style="margin:0; text-align:center; padding: 4px;"></asp:DropDownList>
                                     </ItemTemplate>
                                 </asp:TemplateField>
                             </Columns>
@@ -279,7 +253,12 @@
                         <Columns>
                             <asp:BoundField DataField="FechaCambio" HeaderText="Fecha" DataFormatString="{0:dd/MM/yyyy HH:mm}" />
                             <asp:BoundField DataField="CodigoDocumento" HeaderText="Documento" />
-                            <asp:BoundField DataField="NombreUsuario" HeaderText="Usuario" />
+                            <asp:TemplateField HeaderText="Usuario">
+                                <ItemTemplate>
+                                    <strong><%# Eval("IDUsuario") %></strong><br />
+                                    <small><%# Eval("NombreUsuario") %></small>
+                                </ItemTemplate>
+                            </asp:TemplateField>
                             <asp:BoundField DataField="TipoAccion" HeaderText="Accion" />
                             <asp:BoundField DataField="Descripcion" HeaderText="Descripcion" />
                             <asp:BoundField DataField="IDEquipo" HeaderText="IP" />

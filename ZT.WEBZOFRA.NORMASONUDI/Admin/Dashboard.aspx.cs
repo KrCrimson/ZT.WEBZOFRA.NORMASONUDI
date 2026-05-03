@@ -22,6 +22,7 @@ public partial class Dashboard : System.Web.UI.Page
             LblAdminName.Text = Session["strNombre"].ToString();
             CargarEstadisticas();
             CargarEstadosFiltro();
+            CargarTodosTramites();
         }
     }
 
@@ -32,22 +33,19 @@ public partial class Dashboard : System.Web.UI.Page
         string panel = btn.CommandArgument;
 
         PnlStats.Visible = (panel == "Stats");
-        PnlTramites.Visible = (panel == "Tramites");
-        PnlRoles.Visible = (panel == "Roles");
         PnlOrden.Visible = (panel == "Orden");
         PnlAuditoria.Visible = (panel == "Auditoria");
 
         // Actualizar estilos sidebar
         BtnNavStats.CssClass = panel == "Stats" ? "nav-btn active" : "nav-btn";
-        BtnNavTramites.CssClass = panel == "Tramites" ? "nav-btn active" : "nav-btn";
-        BtnNavRoles.CssClass = panel == "Roles" ? "nav-btn active" : "nav-btn";
         BtnNavOrden.CssClass = panel == "Orden" ? "nav-btn active" : "nav-btn";
         BtnNavAuditoria.CssClass = panel == "Auditoria" ? "nav-btn active" : "nav-btn";
 
         // Cargar datos segun panel
-        if (panel == "Stats") CargarEstadisticas();
-        if (panel == "Tramites") CargarTodosTramites();
-        if (panel == "Roles") CargarUsuariosRoles();
+        if (panel == "Stats") {
+            CargarEstadisticas();
+            CargarTodosTramites();
+        }
         if (panel == "Auditoria") CargarAuditoria();
     }
 
@@ -150,81 +148,12 @@ public partial class Dashboard : System.Web.UI.Page
     {
         if (e.CommandName == "VerDetalle")
         {
-            Response.Redirect("~/Tramites/Detalle.aspx?id=" + e.CommandArgument);
+            Response.Redirect("~/Admin/DetalleAdmin.aspx?id=" + e.CommandArgument);
         }
     }
     #endregion
 
-    #region Panel 3: Gestion de Roles
-    private void CargarUsuariosRoles()
-    {
-        string connStr = ConfigurationManager.ConnectionStrings["Firmador"].ConnectionString;
-        using (SqlConnection conn = new SqlConnection(connStr))
-        {
-            string sql = @"SELECT e.LoginUsuario, e.NombreCompleto, e.Email,
-                              CASE e.IdRol
-                                WHEN 1 THEN 'ADMIN'
-                                WHEN 2 THEN 'REGISTRADOR'
-                                WHEN 3 THEN 'FIRMADOR'
-                                ELSE 'SIN ROL'
-                              END AS CodigoRol
-                            FROM FIR_VW_EmpleadosActivos e
-                            ORDER BY e.NombreCompleto";
-            using (SqlCommand cmd = new SqlCommand(sql, conn))
-            {
-                conn.Open();
-                SqlDataAdapter da = new SqlDataAdapter(cmd);
-                DataTable dt = new DataTable();
-                da.Fill(dt);
-                GvUsuarios.DataSource = dt;
-                GvUsuarios.DataBind();
-            }
-        }
-    }
-
-    protected void GvUsuarios_RowCommand(object sender, GridViewCommandEventArgs e)
-    {
-        if (e.CommandName == "CambiarRol")
-        {
-            int index = Convert.ToInt32(e.CommandArgument);
-            GridViewRow row = GvUsuarios.Rows[index];
-            string loginUsuario = row.Cells[0].Text;
-            DropDownList ddl = (DropDownList)row.FindControl("DdlNuevoRol");
-            string nuevoRol = ddl.SelectedValue;
-
-            ActualizarRol(loginUsuario, nuevoRol);
-        }
-    }
-
-    private void ActualizarRol(string login, string rol)
-    {
-        int idRol = 3; // default FIRMADOR
-        if (rol == "ADMIN") idRol = 1;
-        if (rol == "REGISTRADOR") idRol = 2;
-
-        string connAdminStr = ConfigurationManager.ConnectionStrings["Administracion"].ConnectionString;
-        try
-        {
-            using (SqlConnection conn = new SqlConnection(connAdminStr))
-            {
-                string sql = "UPDATE dbo.Empleado SET IdRol = @IdRol WHERE LoginUsuario = @Login";
-                using (SqlCommand cmd = new SqlCommand(sql, conn))
-                {
-                    cmd.Parameters.AddWithValue("@IdRol", idRol);
-                    cmd.Parameters.AddWithValue("@Login", login);
-                    conn.Open();
-                    cmd.ExecuteNonQuery();
-                }
-            }
-            MostrarMensaje("Rol de " + login + " actualizado correctamente a " + rol);
-            CargarUsuariosRoles();
-        }
-        catch (Exception ex)
-        {
-            MostrarMensaje("Error: " + ex.Message, true);
-        }
-    }
-    #endregion
+    // Fin del Panel Todos los Tramites
 
     #region Panel 4: Modificar Orden
     protected void BtnBuscarDoc_Click(object sender, EventArgs e)
@@ -279,6 +208,9 @@ public partial class Dashboard : System.Web.UI.Page
                 SqlDataAdapter da = new SqlDataAdapter(cmd);
                 DataTable dt = new DataTable();
                 da.Fill(dt);
+                // Store count to bind dropdowns 
+                ViewState["CantidadFirmantes"] = dt.Rows.Count;
+                
                 GvFirmantesEditar.DataSource = dt;
                 GvFirmantesEditar.DataBind();
                 
@@ -298,14 +230,29 @@ public partial class Dashboard : System.Web.UI.Page
         if (e.Row.RowType == DataControlRowType.DataRow)
         {
             Label lblEstado = (Label)e.Row.FindControl("LblEstadoFirma");
-            TextBox txtOrden = (TextBox)e.Row.FindControl("TxtNuevoOrden");
+            DropDownList ddlOrden = (DropDownList)e.Row.FindControl("DdlNuevoOrden");
             string estado = lblEstado.Text;
+            int numFirmantes = (int)(ViewState["CantidadFirmantes"] ?? 0);
+
+            // Llenar dropdown
+            if (ddlOrden != null)
+            {
+                for (int i = 1; i <= numFirmantes; i++)
+                {
+                    ddlOrden.Items.Add(new ListItem(i.ToString(), i.ToString()));
+                }
+                string currentOrder = DataBinder.Eval(e.Row.DataItem, "OrdenFirma").ToString();
+                if (ddlOrden.Items.FindByValue(currentOrder) != null)
+                {
+                    ddlOrden.SelectedValue = currentOrder;
+                }
+            }
 
             if (estado == "FIR")
             {
                 lblEstado.Text = "Ya firmo";
                 lblEstado.CssClass = "badge-ya-firmo";
-                txtOrden.Enabled = false;
+                ddlOrden.Enabled = false;
             }
             else
             {
@@ -323,9 +270,9 @@ public partial class Dashboard : System.Web.UI.Page
         // Validar duplicados
         foreach (GridViewRow row in GvFirmantesEditar.Rows)
         {
-            TextBox txt = (TextBox)row.FindControl("TxtNuevoOrden");
+            DropDownList ddl = (DropDownList)row.FindControl("DdlNuevoOrden");
             int val = 0;
-            if (int.TryParse(txt.Text, out val))
+            if (int.TryParse(ddl.SelectedValue, out val))
             {
                 if (nuevosOrdenes.Contains(val))
                 {
@@ -349,37 +296,34 @@ public partial class Dashboard : System.Web.UI.Page
                 {
                     HiddenField hfID = (HiddenField)row.FindControl("HfIDFirmante");
                     HiddenField hfEst = (HiddenField)row.FindControl("HfEstadoFirma");
-                    TextBox txt = (TextBox)row.FindControl("TxtNuevoOrden");
+                    DropDownList ddl = (DropDownList)row.FindControl("DdlNuevoOrden");
 
-                    if (hfEst.Value == "PEN")
+                    if (hfEst.Value == "FIR") continue; // Ya firmo
+
+                    int nuevoOrden = int.Parse(ddl.SelectedValue);
+
+                    // Update
+                    string sqlUp = @"UPDATE FIR_DocumentoFirmante SET OrdenFirma = @O, IDUsuarioModificador = @U, FechaModificacion = GETDATE() 
+                                     WHERE IDDocumentoFirmante = @ID AND CodigoEstadoFirma = 'PEN'";
+                    using (SqlCommand cmdU = new SqlCommand(sqlUp, conn))
                     {
-                        int idFirmante = Convert.ToInt32(hfID.Value);
-                        int nOrden = Convert.ToInt32(txt.Text);
-                        string nombre = row.Cells[0].Text;
+                        cmdU.Parameters.AddWithValue("@O", nuevoOrden);
+                        cmdU.Parameters.AddWithValue("@U", loginAdmin);
+                        cmdU.Parameters.AddWithValue("@ID", hfID.Value);
+                        cmdU.ExecuteNonQuery();
+                    }
 
-                        // Update
-                        string sqlUp = @"UPDATE FIR_DocumentoFirmante SET OrdenFirma = @O, IDUsuarioModificador = @U, FechaModificacion = GETDATE() 
-                                         WHERE IDDocumentoFirmante = @ID AND CodigoEstadoFirma = 'PEN'";
-                        using (SqlCommand cmdU = new SqlCommand(sqlUp, conn))
-                        {
-                            cmdU.Parameters.AddWithValue("@O", nOrden);
-                            cmdU.Parameters.AddWithValue("@U", loginAdmin);
-                            cmdU.Parameters.AddWithValue("@ID", idFirmante);
-                            cmdU.ExecuteNonQuery();
-                        }
-
-                        // Audit
-                        string sqlAud = @"INSERT INTO FIR_DocumentoAuditoria (IDDocumento, IDUsuario, NombreUsuario, IDEquipo, TipoOperacion, TipoAccion, Descripcion, FechaCambio)
-                                          VALUES (@IDD, @U, @N, @IP, 'M', 'CAMBIO_ORDEN_FIRMA', @D, GETDATE())";
-                        using (SqlCommand cmdA = new SqlCommand(sqlAud, conn))
-                        {
-                            cmdA.Parameters.AddWithValue("@IDD", idDoc);
-                            cmdA.Parameters.AddWithValue("@U", loginAdmin);
-                            cmdA.Parameters.AddWithValue("@N", Session["strNombre"]);
-                            cmdA.Parameters.AddWithValue("@IP", ip);
-                            cmdA.Parameters.AddWithValue("@D", "Admin cambio orden de firma de " + nombre + " a " + nOrden);
-                            cmdA.ExecuteNonQuery();
-                        }
+                    // Audit
+                    string sqlAud = @"INSERT INTO FIR_DocumentoAuditoria (IDDocumento, IDUsuario, NombreUsuario, IDEquipo, TipoOperacion, TipoAccion, Descripcion, FechaCambio)
+                                      VALUES (@IDD, @U, @N, @IP, 'M', 'CAMBIO_ORDEN_FIRMA', @D, GETDATE())";
+                    using (SqlCommand cmdA = new SqlCommand(sqlAud, conn))
+                    {
+                        cmdA.Parameters.AddWithValue("@IDD", idDoc);
+                        cmdA.Parameters.AddWithValue("@U", loginAdmin);
+                        cmdA.Parameters.AddWithValue("@N", Session["strNombre"]);
+                        cmdA.Parameters.AddWithValue("@IP", ip);
+                        cmdA.Parameters.AddWithValue("@D", "Admin cambio orden de firma a " + nuevoOrden);
+                        cmdA.ExecuteNonQuery();
                     }
                 }
             }
@@ -404,8 +348,8 @@ public partial class Dashboard : System.Web.UI.Page
                                    a.TipoAccion, a.Descripcion, a.IDEquipo
                             FROM FIR_DocumentoAuditoria a
                             LEFT JOIN FIR_Documento d ON d.IDDocumento=a.IDDocumento
-                            WHERE (@Desde = '' OR a.FechaCambio >= @Desde)
-                              AND (@Hasta = '' OR a.FechaCambio <= @Hasta)
+                            WHERE (@Desde = '' OR CAST(a.FechaCambio as DATE) >= @Desde)
+                              AND (@Hasta = '' OR CAST(a.FechaCambio as DATE) <= @Hasta)
                               AND (@Doc = '' OR d.CodigoDocumento LIKE @DocB)
                             ORDER BY a.FechaCambio DESC";
             using (SqlCommand cmd = new SqlCommand(sql, conn))

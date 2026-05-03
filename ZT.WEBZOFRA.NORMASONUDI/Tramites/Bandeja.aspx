@@ -229,8 +229,18 @@
                                     </asp:TemplateField>
                                     <asp:TemplateField HeaderText="Accion">
                                         <ItemTemplate>
-                                            <asp:LinkButton ID="LnkVerDetalle" runat="server" CommandName="VerDetalle"
-                                                CommandArgument='<%# Eval("IDDocumento") %>' Text="Ver Detalle"></asp:LinkButton>
+                                            <div class="d-flex gap-2 align-items-center">
+                                                <asp:LinkButton ID="LnkVerDetalle" runat="server" CommandName="VerDetalle"
+                                                    CommandArgument='<%# Eval("IDDocumento") %>' CssClass="btn-zf bg-white border text-primary px-3 py-1" style="font-size:0.8rem; text-decoration:none;">
+                                                    <i class="bi bi-eye"></i> Detalle
+                                                </asp:LinkButton>
+                                                <asp:HyperLink ID="LnkEditar" runat="server" 
+                                                    NavigateUrl='<%# "RegistrarTramite.aspx?id=" + Eval("IDDocumento") %>'
+                                                    Visible='<%# Eval("CodigoEstado").ToString() == "REG" %>'
+                                                    CssClass="btn-zf btn-primary-zf px-3 py-1" style="font-size:0.8rem; text-decoration:none;">
+                                                    <i class="bi bi-pencil"></i> Editar
+                                                </asp:HyperLink>
+                                            </div>
                                         </ItemTemplate>
                                     </asp:TemplateField>
                                 </Columns>

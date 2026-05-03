@@ -141,6 +141,23 @@
             <asp:Label ID="LblError" runat="server" Visible="false"></asp:Label>
             <asp:Label ID="LblExito" runat="server" Visible="false"></asp:Label>
 
+            <!-- SECCIÓN: DOCUMENTO FINAL FIRMADO -->
+            <asp:Panel ID="PnlDocumentoFinal" runat="server" Visible="false">
+                <div class="section-card" style="background: #fffbeb; border: 2px solid #fbbf24;">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <div>
+                            <h3 style="color: #92400e; margin: 0;"><i class="bi bi-patch-check-fill"></i> Documento Firmado Digitalmente</h3>
+                            <p style="color: #b45309; margin: 0.5rem 0 0 0; font-size: 0.9rem;">El proceso de firmas ha finalizado correctamente. Ya puede descargar el archivo oficial.</p>
+                        </div>
+                        <asp:LinkButton ID="BtnDescargarFinal" runat="server" CssClass="btn" 
+                            style="background: #d97706; color: white; display: flex; align-items: center; gap: 0.5rem;" 
+                            OnClick="BtnDescargarFinal_Click">
+                            <i class="bi bi-file-earmark-pdf-fill"></i> Descargar PDF Final
+                        </asp:LinkButton>
+                    </div>
+                </div>
+            </asp:Panel>
+
             <!-- SECCIÓN 1: INFO DEL TRÁMITE -->
             <div class="section-card">
                 <h3>Informacion del Documento</h3>
