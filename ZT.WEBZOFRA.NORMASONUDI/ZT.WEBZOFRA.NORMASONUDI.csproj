@@ -43,6 +43,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="itextsharp, Version=5.5.13.0, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
+      <HintPath>..\packages\iTextSharp.5.5.13\lib\itextsharp.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=2.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
     </Reference>
@@ -66,14 +69,18 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Admin\Dashboard.aspx" />
+    <Content Include="Admin\DetalleAdmin.aspx" />
     <Content Include="Default.aspx" />
     <Content Include="Global.asax" />
     <Content Include="Login.aspx" />
     <Content Include="Tramites\Bandeja.aspx" />
     <Content Include="Tramites\Detalle.aspx" />
     <Content Include="Tramites\FirmaDigital.aspx" />
+    <Content Include="Tramites\FirmaUsbToken.aspx" />
     <Content Include="Tramites\RegistrarTramite.aspx" />
     <Content Include="Handlers\VerPDF.ashx" />
+    <Content Include="Handlers\TokenStatus.ashx" />
+    <Content Include="Scripts\token-detector.js" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -84,6 +91,14 @@
     <Compile Include="Admin\Dashboard.aspx.designer.cs">
       <DependentUpon>Dashboard.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Admin\DetalleAdmin.aspx.cs">
+      <DependentUpon>DetalleAdmin.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\DetalleAdmin.aspx.designer.cs">
+      <DependentUpon>DetalleAdmin.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="BLL\CorreoBLL.cs" />
     <Compile Include="Default.aspx.designer.cs">
       <DependentUpon>Default.aspx</DependentUpon>
     </Compile>
@@ -111,6 +126,13 @@
     <Compile Include="Tramites\FirmaDigital.aspx.designer.cs">
       <DependentUpon>FirmaDigital.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Tramites\FirmaUsbToken.aspx.cs">
+      <DependentUpon>FirmaUsbToken.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Tramites\FirmaUsbToken.aspx.designer.cs">
+      <DependentUpon>FirmaUsbToken.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Tramites\RegistrarTramite.aspx.cs">
       <DependentUpon>RegistrarTramite.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -123,6 +145,9 @@
     <Compile Include="Shared\MasterPage.master.cs">
       <DependentUpon>MasterPage.master</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Shared\MasterPage.master.designer.cs">
+      <DependentUpon>MasterPage.master</DependentUpon>
     </Compile>
     <Content Include="App_Code\DAL\ConexionDB.cs" />
     <Content Include="App_Code\Entities\Maestro.cs" />

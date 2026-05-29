@@ -4,10 +4,23 @@ using System.Data.SqlClient;
 using System.Configuration;
 using System.Drawing;
 using System.IO;
+using System.Web.Script.Serialization;
+using ZT.WEBZOFRA.NORMASONUDI;
+using iTextSharp.text;
+using iTextSharp.text.pdf;
 using System.Web.UI.WebControls;
 
 public partial class Detalle : System.Web.UI.Page
 {
+    private class PdfAnnotation
+    {
+        public int page { get; set; }
+        public float x { get; set; }
+        public float y { get; set; }
+        public float w { get; set; }
+        public float h { get; set; }
+    }
+
     protected void Page_Load(object sender, EventArgs e)
     {
         if (Session["strUsuario"] == null)
@@ -27,9 +40,27 @@ public partial class Detalle : System.Web.UI.Page
             int idDoc = Convert.ToInt32(Request.QueryString["id"]);
             ViewState["IDDocumento"] = idDoc;
             CargarDocumento(idDoc);
+            CargarVersiones(idDoc);
             CargarRevisores(idDoc);
+            CargarFirmantes(idDoc);
             CargarObservaciones(idDoc);
             ConfigurarAcciones(idDoc);
+
+            string rol = Session["strRol"] != null ? Session["strRol"].ToString() : "";
+            if (rol == "FIRMADOR")
+            {
+                string estado = ViewState["Estado"] != null ? ViewState["Estado"].ToString() : "";
+                bool puedeObservar = (estado == "EN_REV" || estado == "OBS");
+                if (PnlPdfAnnotator != null) PnlPdfAnnotator.Visible = puedeObservar;
+                if (PnlPdfViewer != null) PnlPdfViewer.Visible = !puedeObservar;
+            }
+            else
+            {
+                if (PnlPdfAnnotator != null) PnlPdfAnnotator.Visible = false;
+                if (PnlPdfViewer != null) PnlPdfViewer.Visible = true;
+            }
+
+            if (PnlVersiones != null) PnlVersiones.Visible = (rol == "ADMIN");
         }
     }
 
@@ -40,16 +71,25 @@ public partial class Detalle : System.Web.UI.Page
         {
             using (SqlConnection conn = new SqlConnection(connStr))
             {
-                string query = @"SELECT d.IDDocumento, d.CodigoDocumento, d.Asunto,
-                                        d.CodigoTipoDocumento, m.Descripcion AS TipoDocumento,
-                                        d.AreaResponsable, d.FechaDocumento, d.CodigoEstado,
-                                        me.Descripcion AS Estado, d.Version,
-                                        d.RutaArchivoPDF, d.IDArchivoPDF, d.LoginRegistrador,
-                                        d.FechaLimiteRevision
-                                 FROM FIR_Documento d
-                                 LEFT JOIN FIR_Maestro m ON m.Tipo='TIPO_DOC' AND m.Codigo=d.CodigoTipoDocumento
-                                 LEFT JOIN FIR_Maestro me ON me.Tipo='ESTADO_DOC' AND me.Codigo=d.CodigoEstado
-                                 WHERE d.IDDocumento = @IDDocumento";
+                  string query = @"SELECT d.IDDocumento, d.CodigoDocumento, d.Asunto,
+                                 d.CodigoTipoDocumento, m.Descripcion AS TipoDocumento,
+                                 d.AreaResponsable, d.FechaDocumento, d.CodigoEstado,
+                                 me.Descripcion AS Estado, d.Version,
+                                 ISNULL(
+                                     (SELECT TOP 1 RutaFirmaParcial
+                                      FROM FIR_DocumentoFirmante
+                                      WHERE IDDocumento = d.IDDocumento AND CodigoEstadoFirma = 'FIR'
+                                      ORDER BY OrdenFirma DESC),
+                                     d.RutaArchivoPDF
+                                 ) AS RutaArchivoPDF,
+                                 d.IDArchivoPDF, d.LoginRegistrador,
+                                 e.NombreCompleto AS NombreRegistrador,
+                                 d.FechaLimiteRevision
+                             FROM FIR_Documento d
+                             LEFT JOIN FIR_Maestro m ON m.Tipo='TIPO_DOC' AND m.Codigo=d.CodigoTipoDocumento
+                             LEFT JOIN FIR_Maestro me ON me.Tipo='ESTADO_DOC' AND me.Codigo=d.CodigoEstado
+                             LEFT JOIN FIR_VW_EmpleadosActivos e ON e.LoginUsuario = d.LoginRegistrador
+                             WHERE d.IDDocumento = @IDDocumento";
 
                 using (SqlCommand cmd = new SqlCommand(query, conn))
                 {
@@ -66,7 +106,10 @@ public partial class Detalle : System.Web.UI.Page
                             LblArea.Text = dr["AreaResponsable"].ToString();
                             LblFechaDoc.Text = Convert.ToDateTime(dr["FechaDocumento"]).ToString("dd/MM/yyyy");
                             LblVersion.Text = "v" + dr["Version"].ToString();
-                            LblRegistrador.Text = dr["LoginRegistrador"].ToString();
+                            ViewState["Version"] = dr["Version"] != DBNull.Value ? Convert.ToInt32(dr["Version"]) : 1;
+                            LblRegistrador.Text = dr["NombreRegistrador"] != DBNull.Value && !string.IsNullOrWhiteSpace(dr["NombreRegistrador"].ToString())
+                                ? dr["NombreRegistrador"].ToString()
+                                : dr["LoginRegistrador"].ToString();
 
                             string codigoEstado = dr["CodigoEstado"].ToString();
                             string descripcionEstado = dr["Estado"] != DBNull.Value ? dr["Estado"].ToString() : codigoEstado;
@@ -104,6 +147,10 @@ public partial class Detalle : System.Web.UI.Page
                             {
                                 LblFechaLimite.Text = "<span style='color:#64748b;'>Sin fecha limite</span>";
                             }
+                            if (codigoEstado == "FIRM_COM")
+                            {
+                                PnlDocumentoFinal.Visible = true;
+                            }
                         }
                         else
                         {
@@ -118,6 +165,67 @@ public partial class Detalle : System.Web.UI.Page
         {
             LblError.Text = "Error al cargar documento: " + ex.Message;
             LblError.Visible = true;
+        }
+    }
+
+    protected void BtnDescargarFinal_Click(object sender, EventArgs e)
+    {
+        if (!string.IsNullOrEmpty(HfRutaPDF.Value))
+        {
+            Response.Redirect("~/Handlers/VerPDF.ashx?id=" + HfRutaPDF.Value);
+        }
+    }
+
+    private void CargarVersiones(int idDoc)
+    {
+        string connStr = ConfigurationManager.ConnectionStrings["Firmador"].ConnectionString;
+        try
+        {
+            using (SqlConnection conn = new SqlConnection(connStr))
+            {
+                string query = @"SELECT v.NumeroVersion, v.RutaArchivo, v.Motivo, v.FechaCreacion
+                                 FROM FIR_VersionDocumento v
+                                 WHERE v.IDDocumento = @IDDocumento
+                                 ORDER BY v.NumeroVersion DESC";
+
+                using (SqlCommand cmd = new SqlCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@IDDocumento", idDoc);
+                    SqlDataAdapter da = new SqlDataAdapter(cmd);
+                    DataTable dt = new DataTable();
+                    da.Fill(dt);
+                    GvVersiones.DataSource = dt;
+                    GvVersiones.DataBind();
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            LblError.Text = "Error al cargar versiones: " + ex.Message;
+            LblError.Visible = true;
+        }
+    }
+
+    protected void GvVersiones_RowDataBound(object sender, GridViewRowEventArgs e)
+    {
+        if (e.Row.RowType == DataControlRowType.DataRow)
+        {
+            Label lblVersionGrid = (Label)e.Row.FindControl("LblVersionGrid");
+            HyperLink lnkVerPDF = (HyperLink)e.Row.FindControl("LnkVerPDF");
+            DataRowView drv = (DataRowView)e.Row.DataItem;
+
+            if (lblVersionGrid != null)
+                lblVersionGrid.Text = "v" + drv["NumeroVersion"].ToString();
+
+            if (lnkVerPDF != null)
+            {
+                string ruta = drv["RutaArchivo"] != DBNull.Value ? drv["RutaArchivo"].ToString() : "";
+                if (ruta.StartsWith("ARC::"))
+                {
+                    string idArchivo = ruta.Replace("ARC::", "");
+                    lnkVerPDF.NavigateUrl = "~/Handlers/VerPDF.ashx?id=" + idArchivo;
+                }
+            }
         }
     }
 
@@ -173,10 +281,25 @@ public partial class Detalle : System.Web.UI.Page
         {
             using (SqlConnection conn = new SqlConnection(connStr))
             {
-                string query = @"SELECT LoginUsuario, NombreRevisor, Descripcion, FechaCreacion
-                                 FROM FIR_Observacion
-                                 WHERE IDDocumento = @IDDocumento
-                                 ORDER BY FechaCreacion DESC";
+                string rol = Session["strRol"] != null ? Session["strRol"].ToString() : "";
+                                string query = @"SELECT o.LoginUsuario, o.NombreRevisor, o.Descripcion, o.FechaCreacion, o.Version,
+                                                                                REPLACE(vx.RutaArchivo, 'ARC::', '') AS RutaObservadaId
+                                                                 FROM FIR_Observacion o
+                                                                 OUTER APPLY (
+                                                                         SELECT TOP 1 v.RutaArchivo
+                                                                         FROM FIR_VersionDocumento v
+                                                                         WHERE v.IDDocumento = o.IDDocumento
+                                                                             AND v.NumeroVersion = o.Version
+                                                                             AND v.Motivo LIKE 'Observaciones v%'
+                                                                             AND v.IDUsuarioCreador = o.LoginUsuario
+                                                                         ORDER BY ABS(DATEDIFF(SECOND, v.FechaCreacion, o.FechaCreacion))
+                                                                 ) vx
+                                                                 WHERE o.IDDocumento = @IDDocumento";
+                if (rol == "FIRMADOR")
+                {
+                    query += " AND Version = (SELECT Version FROM FIR_Documento WHERE IDDocumento = @IDDocumento)";
+                }
+                query += " ORDER BY FechaCreacion DESC";
 
                 using (SqlCommand cmd = new SqlCommand(query, conn))
                 {
@@ -184,6 +307,21 @@ public partial class Detalle : System.Web.UI.Page
                     SqlDataAdapter da = new SqlDataAdapter(cmd);
                     DataTable dt = new DataTable();
                     da.Fill(dt);
+
+                    int versionActual = ViewState["Version"] != null ? (int)ViewState["Version"] : 1;
+                    if (!dt.Columns.Contains("ObservacionCorregida"))
+                    {
+                        dt.Columns.Add("ObservacionCorregida", typeof(bool));
+                    }
+                    foreach (DataRow row in dt.Rows)
+                    {
+                        int versionObs = 1;
+                        if (row["Version"] != DBNull.Value)
+                        {
+                            int.TryParse(row["Version"].ToString(), out versionObs);
+                        }
+                        row["ObservacionCorregida"] = versionActual > versionObs;
+                    }
 
                     if (dt.Rows.Count > 0)
                     {
@@ -205,6 +343,45 @@ public partial class Detalle : System.Web.UI.Page
         }
     }
 
+    private void CargarFirmantes(int idDoc)
+    {
+        string connStr = ConfigurationManager.ConnectionStrings["Firmador"].ConnectionString;
+        try
+        {
+            using (SqlConnection conn = new SqlConnection(connStr))
+            {
+                string query = @"SELECT OrdenFirma, NombreFirmante, CorreoFirmante, CodigoEstadoFirma
+                                 FROM FIR_DocumentoFirmante
+                                 WHERE IDDocumento = @IDDocumento
+                                 ORDER BY OrdenFirma";
+
+                using (SqlCommand cmd = new SqlCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@IDDocumento", idDoc);
+                    SqlDataAdapter da = new SqlDataAdapter(cmd);
+                    DataTable dt = new DataTable();
+                    da.Fill(dt);
+
+                    if (dt.Rows.Count > 0)
+                    {
+                        PnlFirmantesEstado.Visible = true;
+                        GvFirmantesEstado.DataSource = dt;
+                        GvFirmantesEstado.DataBind();
+                    }
+                    else
+                    {
+                        PnlFirmantesEstado.Visible = false;
+                    }
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            LblError.Text = "Error al cargar firmantes: " + ex.Message;
+            LblError.Visible = true;
+        }
+    }
+
     private void ConfigurarAcciones(int idDoc)
     {
         string estado = ViewState["Estado"] != null ? ViewState["Estado"].ToString() : "";
@@ -214,7 +391,7 @@ public partial class Detalle : System.Web.UI.Page
         bool yaReviso = ViewState["YaReviso"] != null && (bool)ViewState["YaReviso"];
 
         // Acciones de Revisión
-        PnlAccionesFirmador.Visible = (rol == "FIRMADOR") && (estado == "EN_REV") && !yaReviso;
+        PnlAccionesFirmador.Visible = (rol == "FIRMADOR") && (estado == "EN_REV" || estado == "OBS") && !yaReviso;
 
         // Acciones de Firma (Nuevo)
         bool esTurnoFirma = false;
@@ -238,9 +415,16 @@ public partial class Detalle : System.Web.UI.Page
         {
             PnlAccionesFirmador.Visible = true;
             BtnIrAFirmar.Visible = true;
+            if (LnkFirmarUsb != null)
+            {
+                LnkFirmarUsb.Visible = true;
+                LnkFirmarUsb.NavigateUrl = "~/Tramites/FirmaUsbToken.aspx?id=" + idDoc;
+            }
             BtnConforme.Visible = false;
             BtnObservar.Visible = false;
             TxtObservacion.Visible = false;
+            if (DivObservacionUI != null) DivObservacionUI.Visible = false;
+            if (TituloAcciones != null) TituloAcciones.InnerText = "Acciones de Firma";
         }
 
         PnlAccionesRegistrador.Visible = ((rol == "REGISTRADOR") || (rol == "ADMIN")) && (loginRegistrador == loginActual || rol == "ADMIN");
@@ -306,9 +490,111 @@ public partial class Detalle : System.Web.UI.Page
         }
     }
 
-    protected void BtnVolver_Click(object sender, EventArgs e)
+    private string PlantillaCorreo(string contenido) {
+        return @"
+<!DOCTYPE html>
+<html>
+<body style='margin:0;padding:0;font-family:Arial,sans-serif;background:#f5f5f5;'>
+  <table width='100%' cellpadding='0' cellspacing='0'>
+    <tr>
+      <td align='center' style='padding:20px;'>
+        <table width='600' cellpadding='0' cellspacing='0' 
+               style='background:#fff;border-radius:8px;overflow:hidden;'>
+          
+          <!-- HEADER -->
+          <tr>
+            <td style='background:#1a5c38;padding:24px;text-align:center;'>
+              <h1 style='color:#fff;margin:0;font-size:18px;
+                         letter-spacing:2px;'>
+                SISTEMA DE FIRMA ZOFRATACNA
+              </h1>
+            </td>
+          </tr>
+          
+          <!-- BODY -->
+          <tr>
+            <td style='padding:32px;color:#333;'>
+              <p>Estimado(a),</p>
+              " + contenido + @"
+              <br/>
+              <p>Atentamente,</p>
+              <p><b>Oficina de Tecnologías de la Información</b><br/>
+              ZOFRATACNA</p>
+            </td>
+          </tr>
+          
+          <!-- FOOTER -->
+          <tr>
+            <td style='background:#222;padding:16px;text-align:center;'>
+              <p style='color:#aaa;margin:0;font-size:12px;'>
+                Este es un correo automático del Sistema Firmador ZOFRATACNA. 
+                Por favor no responda este mensaje.
+              </p>
+            </td>
+          </tr>
+          
+        </table>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>";
+    }
+
+    private void EnviarCorreoInvolucrados(int idDocumento, string asunto, string mensaje)
     {
-        Response.Redirect("~/Tramites/Bandeja.aspx");
+        string connStr = ConfigurationManager.ConnectionStrings["Firmador"].ConnectionString;
+        try
+        {
+            System.Collections.Generic.List<string> correos = new System.Collections.Generic.List<string>();
+            using (SqlConnection conn = new SqlConnection(connStr))
+            {
+                conn.Open();
+                string query = @"SELECT DISTINCT e.Email, e.NombreCompleto
+                                 FROM FIR_VW_EmpleadosActivos e
+                                 WHERE e.LoginUsuario IN (
+                                     SELECT LoginRegistrador FROM FIR_Documento WHERE IDDocumento = @IDDocumento
+                                     UNION
+                                     SELECT LoginUsuario FROM FIR_DocumentoFirmante WHERE IDDocumento = @IDDocumento
+                                 )
+                                 AND (e.Email NOT LIKE '%zofratacna.com.pe' OR e.Email LIKE '%zofratacna.com.pe')";
+
+                using (SqlCommand cmd = new SqlCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@IDDocumento", idDocumento);
+                    using (SqlDataReader dr = cmd.ExecuteReader())
+                    {
+                        while (dr.Read())
+                        {
+                            string email = dr["Email"].ToString();
+                            if (!string.IsNullOrWhiteSpace(email))
+                            {
+                                correos.Add(email);
+                            }
+                        }
+                    }
+                }
+
+                string mensajeHTML = PlantillaCorreo(mensaje);
+
+                foreach (string email in correos)
+                {
+                    try
+                    {
+                        using (SqlCommand cmdMail = new SqlCommand("GEN_X_EnviarMail", conn))
+                        {
+                            cmdMail.CommandType = CommandType.StoredProcedure;
+                            cmdMail.Parameters.AddWithValue("@Para", email);
+                            cmdMail.Parameters.AddWithValue("@Asunto", asunto);
+                            cmdMail.Parameters.AddWithValue("@Mensaje", mensajeHTML);
+                            cmdMail.ExecuteNonQuery();
+                        }
+                    }
+                    catch { }
+                }
+            }
+        }
+        catch { }
     }
 
     protected void BtnObservar_Click(object sender, EventArgs e)
@@ -330,6 +616,8 @@ public partial class Detalle : System.Web.UI.Page
 
         try
         {
+            GuardarPdfConMarcasSiAplica();
+
             using (SqlConnection conn = new SqlConnection(connStr))
             {
                 conn.Open();
@@ -348,7 +636,46 @@ public partial class Detalle : System.Web.UI.Page
             LblExito.Text = "Observación registrada correctamente.";
             LblExito.Visible = true;
             TxtObservacion.Text = "";
+
+            try
+            {
+                System.Collections.Generic.List<string> correosRegistrador = new System.Collections.Generic.List<string>();
+                using (SqlConnection conn = new SqlConnection(connStr))
+                {
+                    conn.Open();
+                    string queryReg = @"SELECT e.Email FROM FIR_VW_EmpleadosActivos e
+                                        WHERE e.LoginUsuario = (
+                                          SELECT LoginRegistrador FROM FIR_Documento 
+                                          WHERE IDDocumento = @IDDocumento
+                                        )";
+                    using (SqlCommand cmdReg = new SqlCommand(queryReg, conn))
+                    {
+                        cmdReg.Parameters.AddWithValue("@IDDocumento", idDoc);
+                        using (SqlDataReader dr = cmdReg.ExecuteReader())
+                        {
+                            if (dr.Read())
+                            {
+                                string email = dr["Email"].ToString();
+                                if (!string.IsNullOrWhiteSpace(email))
+                                    correosRegistrador.Add(email);
+                            }
+                        }
+                    }
+
+                    foreach (string email in correosRegistrador)
+                    {
+                        try
+                        {
+                            CorreoBLL.NotificarObservacion(email, LblCodigoDoc.Text, LblAsunto.Text, nombreActual);
+                        }
+                        catch { }
+                    }
+                }
+            }
+            catch { }
+
             CargarRevisores(idDoc);
+            CargarVersiones(idDoc);
             CargarObservaciones(idDoc);
             ConfigurarAcciones(idDoc);
         }
@@ -356,6 +683,119 @@ public partial class Detalle : System.Web.UI.Page
         {
             LblError.Text = "Error al registrar observación: " + ex.Message;
             LblError.Visible = true;
+        }
+    }
+
+    private void GuardarPdfConMarcasSiAplica()
+    {
+        string rol = Session["strRol"] != null ? Session["strRol"].ToString() : "";
+        if (rol != "FIRMADOR") return;
+
+        if (string.IsNullOrWhiteSpace(HfPdfAnnotations.Value)) return;
+
+        var jss = new JavaScriptSerializer();
+        var marks = jss.Deserialize<System.Collections.Generic.List<PdfAnnotation>>(HfPdfAnnotations.Value);
+        if (marks == null || marks.Count == 0) return;
+
+        int idDoc = (int)ViewState["IDDocumento"];
+        int idArchivo = 0;
+        int.TryParse(HfRutaPDF.Value, out idArchivo);
+        if (idArchivo <= 0) return;
+
+        byte[] pdfBytes = ObtenerArchivoPdf(idArchivo);
+        if (pdfBytes == null || pdfBytes.Length == 0) return;
+
+        byte[] pdfMarcado = AplicarMarcas(pdfBytes, marks);
+        if (pdfMarcado == null || pdfMarcado.Length == 0) return;
+
+        int versionActual = ViewState["Version"] != null ? (int)ViewState["Version"] : 1;
+        string codigoDocumento = LblCodigoDoc.Text;
+        string nombreArchivoG = codigoDocumento + "_obs_v" + versionActual + ".pdf";
+        string loginActual = Session["strUsuario"].ToString();
+
+        int nuevoIdArchivo = GuardarArchivoFirmador(pdfMarcado, nombreArchivoG, loginActual);
+        if (nuevoIdArchivo <= 0) return;
+
+        using (SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["Firmador"].ConnectionString))
+        {
+            conn.Open();
+            using (SqlCommand cmd = new SqlCommand(@"INSERT INTO FIR_VersionDocumento (IDDocumento, NumeroVersion, RutaArchivo, Motivo, IDUsuarioCreador)
+                                                    VALUES (@IDDocumento, @NumeroVersion, @RutaArchivo, @Motivo, @IDUsuarioCreador)", conn))
+            {
+                cmd.Parameters.AddWithValue("@IDDocumento", idDoc);
+                cmd.Parameters.AddWithValue("@NumeroVersion", versionActual);
+                cmd.Parameters.AddWithValue("@RutaArchivo", "ARC::" + nuevoIdArchivo);
+                cmd.Parameters.AddWithValue("@Motivo", "Observaciones v" + versionActual);
+                cmd.Parameters.AddWithValue("@IDUsuarioCreador", loginActual);
+                cmd.ExecuteNonQuery();
+            }
+        }
+    }
+
+    private byte[] ObtenerArchivoPdf(int idArchivo)
+    {
+        string connArchStr = ConfigurationManager.ConnectionStrings["FirmadorArchivos"].ConnectionString;
+        using (SqlConnection conn = new SqlConnection(connArchStr))
+        {
+            using (SqlCommand cmd = new SqlCommand("SELECT Contenido FROM ARC_DocumentoArchivo WHERE IDArchivo = @IDArchivo", conn))
+            {
+                cmd.Parameters.AddWithValue("@IDArchivo", idArchivo);
+                conn.Open();
+                object result = cmd.ExecuteScalar();
+                return result != null ? (byte[])result : null;
+            }
+        }
+    }
+
+    private int GuardarArchivoFirmador(byte[] contenido, string nombreOriginal, string loginActual)
+    {
+        string connArchStr = ConfigurationManager.ConnectionStrings["FirmadorArchivos"].ConnectionString;
+        using (SqlConnection conn = new SqlConnection(connArchStr))
+        {
+            using (SqlCommand cmd = new SqlCommand("ARC_I_GuardarArchivo_OUT", conn))
+            {
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@Contenido", contenido);
+                cmd.Parameters.AddWithValue("@NombreOriginal", nombreOriginal);
+                cmd.Parameters.AddWithValue("@TipoArchivo", "PDF_ORIGINAL");
+                cmd.Parameters.AddWithValue("@IDUsuarioCreador", loginActual);
+
+                SqlParameter pout = new SqlParameter("@IDArchivo", SqlDbType.Int);
+                pout.Direction = ParameterDirection.Output;
+                cmd.Parameters.Add(pout);
+
+                conn.Open();
+                cmd.ExecuteNonQuery();
+                return Convert.ToInt32(pout.Value);
+            }
+        }
+    }
+
+    private byte[] AplicarMarcas(byte[] pdfBytes, System.Collections.Generic.List<PdfAnnotation> marks)
+    {
+        using (PdfReader reader = new PdfReader(pdfBytes))
+        using (MemoryStream ms = new MemoryStream())
+        {
+            using (PdfStamper stamper = new PdfStamper(reader, ms))
+            {
+                foreach (var mark in marks)
+                {
+                    if (mark.page <= 0 || mark.page > reader.NumberOfPages) continue;
+                    iTextSharp.text.Rectangle pageSize = reader.GetPageSize(mark.page);
+
+                    float x = mark.x * pageSize.Width;
+                    float w = mark.w * pageSize.Width;
+                    float h = mark.h * pageSize.Height;
+                    float y = pageSize.Height - ((mark.y + mark.h) * pageSize.Height);
+
+                    PdfContentByte cb = stamper.GetOverContent(mark.page);
+                    cb.SetColorStroke(BaseColor.RED);
+                    cb.SetLineWidth(2f);
+                    cb.Rectangle(x, y, w, h);
+                    cb.Stroke();
+                }
+            }
+            return ms.ToArray();
         }
     }
 
@@ -403,39 +843,21 @@ public partial class Detalle : System.Web.UI.Page
 
                         try
                         {
-                            string queryPrimerFirmante = @"SELECT TOP 1 df.LoginUsuario, df.NombreFirmante, df.CorreoFirmante
-                                                           FROM FIR_DocumentoFirmante df
-                                                           WHERE df.IDDocumento = @IDDocumento AND df.OrdenFirma = 1";
-                            using (SqlCommand cmdFir = new SqlCommand(queryPrimerFirmante, conn))
+                            string queryPrimerFirmante = @"SELECT TOP 1 CorreoFirmante, NombreFirmante, OrdenFirma
+                                                          FROM FIR_DocumentoFirmante
+                                                          WHERE IDDocumento = @IDDocumento AND Habilitado = 1 AND CodigoEstadoFirma = 'PEN'
+                                                          ORDER BY OrdenFirma";
+                            using (SqlCommand cmdFirma = new SqlCommand(queryPrimerFirmante, conn))
                             {
-                                cmdFir.Parameters.AddWithValue("@IDDocumento", idDoc);
-                                using (SqlDataReader drFir = cmdFir.ExecuteReader())
+                                cmdFirma.Parameters.AddWithValue("@IDDocumento", idDoc);
+                                using (SqlDataReader drFirma = cmdFirma.ExecuteReader())
                                 {
-                                    if (drFir.Read())
+                                    if (drFirma.Read())
                                     {
-                                        string correoFirmante = drFir["CorreoFirmante"].ToString();
-                                        string nombreFirmante = drFir["NombreFirmante"].ToString();
-                                        string codigoDoc = LblCodigoDoc.Text;
-                                        drFir.Close();
-
-                                        if (!string.IsNullOrWhiteSpace(correoFirmante))
-                                        {
-                                            string mensajeHtml = "<p>Estimado(a) <b>" + nombreFirmante + "</b>,</p>"
-                                                + "<p>El documento <b>" + codigoDoc + "</b> ha sido aprobado por todos los revisores y está listo para su firma.</p>"
-                                                + "<p>Por favor, ingrese al sistema para proceder con la firma digital.</p>"
-                                                + "<p>Atentamente,<br/>Sistema de Gestión - ZOFRATACNA</p>";
-
-                                            using (SqlCommand cmdMail = new SqlCommand("GEN_X_EnviarMail", conn))
-                                            {
-                                                cmdMail.CommandType = CommandType.StoredProcedure;
-                                                cmdMail.Parameters.AddWithValue("@Para", correoFirmante);
-                                                cmdMail.Parameters.AddWithValue("@Asunto", "Documento listo para firma: " + codigoDoc);
-                                                cmdMail.Parameters.AddWithValue("@Mensaje", mensajeHtml);
-                                                cmdMail.ExecuteNonQuery();
-                                            }
-
-                                            LblExito.Text += " Se notificó a " + nombreFirmante + " para iniciar la firma.";
-                                        }
+                                        string correoFirmante = drFirma["CorreoFirmante"].ToString();
+                                        string nombreFirmante = drFirma["NombreFirmante"].ToString();
+                                        int ordenFirma = drFirma["OrdenFirma"] != DBNull.Value ? Convert.ToInt32(drFirma["OrdenFirma"]) : 1;
+                                        CorreoBLL.NotificarTurnoFirma(correoFirmante, nombreFirmante, LblCodigoDoc.Text, LblAsunto.Text, ordenFirma);
                                     }
                                 }
                             }
@@ -451,6 +873,7 @@ public partial class Detalle : System.Web.UI.Page
             }
 
             CargarDocumento(idDoc);
+            CargarVersiones(idDoc);
             CargarRevisores(idDoc);
             CargarObservaciones(idDoc);
             ConfigurarAcciones(idDoc);
@@ -501,14 +924,14 @@ public partial class Detalle : System.Web.UI.Page
 
                     if (string.IsNullOrWhiteSpace(correo)) continue;
 
-                    string mensajeHtml = "<p>Estimado(a) <b>" + nombre + "</b>,</p>"
-                        + "<p>Se le recuerda que tiene pendiente la revisión del documento:</p>"
-                        + "<ul>"
-                        + "<li><b>Código:</b> " + codigoDoc + "</li>"
-                        + "<li><b>Asunto:</b> " + asunto + "</li>"
-                        + "</ul>"
-                        + "<p>Por favor, ingrese al sistema para completar su revisión.</p>"
-                        + "<p>Atentamente,<br/>Sistema de Gestión - ZOFRATACNA</p>";
+                    string mensajeHtml = PlantillaCorreo(
+                        "<p>Se le recuerda que tiene pendiente la revisión del documento:</p>" +
+                        "<ul>" +
+                        "<li><b>Código:</b> " + codigoDoc + "</li>" +
+                        "<li><b>Asunto:</b> " + asunto + "</li>" +
+                        "</ul>" +
+                        "<p>Por favor, ingrese al sistema para completar su revisión.</p>"
+                    );
 
                     using (SqlCommand cmdMail = new SqlCommand("GEN_X_EnviarMail", conn))
                     {
@@ -560,6 +983,22 @@ public partial class Detalle : System.Web.UI.Page
             byte[] archivoPDF = FuPdfCorregido.FileBytes;
             int nuevoIdArchivo = 0;
 
+            int versionActual = 1;
+            string connFirStr = ConfigurationManager.ConnectionStrings["Firmador"].ConnectionString;
+            using (SqlConnection conn = new SqlConnection(connFirStr))
+            {
+                conn.Open();
+                using (SqlCommand cmdVer = new SqlCommand("SELECT Version FROM FIR_Documento WHERE IDDocumento = @IDDocumento", conn))
+                {
+                    cmdVer.Parameters.AddWithValue("@IDDocumento", idDoc);
+                    object result = cmdVer.ExecuteScalar();
+                    if (result != null) versionActual = Convert.ToInt32(result);
+                }
+            }
+
+            string codigoDocumento = LblCodigoDoc.Text;
+            string nombreArchivoG = codigoDocumento + "_v" + (versionActual + 1) + ".pdf";
+
             string connArchStr = ConfigurationManager.ConnectionStrings["FirmadorArchivos"].ConnectionString;
             using (SqlConnection conn = new SqlConnection(connArchStr))
             {
@@ -567,7 +1006,7 @@ public partial class Detalle : System.Web.UI.Page
                 {
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@Contenido", archivoPDF);
-                    cmd.Parameters.AddWithValue("@NombreOriginal", FuPdfCorregido.FileName);
+                    cmd.Parameters.AddWithValue("@NombreOriginal", nombreArchivoG);
                     cmd.Parameters.AddWithValue("@TipoArchivo", "PDF_ORIGINAL");
                     cmd.Parameters.AddWithValue("@IDUsuarioCreador", loginActual);
 
@@ -581,19 +1020,9 @@ public partial class Detalle : System.Web.UI.Page
                 }
             }
 
-            int version = 1;
-            string connFirStr = ConfigurationManager.ConnectionStrings["Firmador"].ConnectionString;
             using (SqlConnection conn = new SqlConnection(connFirStr))
             {
                 conn.Open();
-
-                using (SqlCommand cmdVer = new SqlCommand("SELECT Version FROM FIR_Documento WHERE IDDocumento = @IDDocumento", conn))
-                {
-                    cmdVer.Parameters.AddWithValue("@IDDocumento", idDoc);
-                    object result = cmdVer.ExecuteScalar();
-                    if (result != null) version = Convert.ToInt32(result);
-                }
-
                 using (SqlCommand cmd = new SqlCommand("FIR_U_DocumentoCorreccion", conn))
                 {
                     cmd.CommandType = CommandType.StoredProcedure;
@@ -601,9 +1030,33 @@ public partial class Detalle : System.Web.UI.Page
                     cmd.Parameters.AddWithValue("@NuevaRuta", "ARC::" + nuevoIdArchivo);
                     cmd.Parameters.AddWithValue("@LoginUsuario", loginActual);
                     cmd.Parameters.AddWithValue("@IDEquipo", ipEquipo);
-                    cmd.Parameters.AddWithValue("@Motivo", "Corrección v" + version);
+                    cmd.Parameters.AddWithValue("@Motivo", "Corrección v" + versionActual);
                     cmd.ExecuteNonQuery();
                 }
+
+                try
+                {
+                    DataTable dtRevisores = new DataTable();
+                    using (SqlCommand cmdRevisores = new SqlCommand(@"SELECT DISTINCT CorreoRevisor
+                                                                     FROM FIR_DocumentoRevisor
+                                                                     WHERE IDDocumento = @IDDocumento
+                                                                       AND Version = (SELECT Version FROM FIR_Documento WHERE IDDocumento = @IDDocumento)
+                                                                       AND ISNULL(CorreoRevisor, '') <> ''", conn))
+                    {
+                        cmdRevisores.Parameters.AddWithValue("@IDDocumento", idDoc);
+                        SqlDataAdapter da = new SqlDataAdapter(cmdRevisores);
+                        da.Fill(dtRevisores);
+                    }
+
+                    System.Collections.Generic.List<string> correosRevisores = new System.Collections.Generic.List<string>();
+                    foreach (DataRow row in dtRevisores.Rows)
+                    {
+                        correosRevisores.Add(row["CorreoRevisor"].ToString());
+                    }
+
+                    CorreoBLL.NotificarCorreccionReinicio(correosRevisores, LblCodigoDoc.Text, LblAsunto.Text);
+                }
+                catch { }
             }
 
             Response.Redirect("~/Tramites/Detalle.aspx?id=" + idDoc);

@@ -19,9 +19,15 @@ public partial class Bandeja : System.Web.UI.Page
         if (!IsPostBack)
         {
             LblBienvenida.Text = "Bienvenido, " + Session["strNombre"].ToString();
-            ConfigurarSidebar();
+            ManejarAccionMenu();
             CargarTramites();
-            BindCalendario();
+
+            string msg = Request.QueryString["msg"];
+            if (msg == "registrado")
+            {
+                LblExito.Text = "Tramite registrado exitosamente.";
+                LblExito.Visible = true;
+            }
 
             if (Session["AlertasPendientes"] != null)
             {
@@ -33,13 +39,48 @@ public partial class Bandeja : System.Web.UI.Page
         }
     }
 
-    private void ConfigurarSidebar()
+    private void ManejarAccionMenu()
     {
-        string rol = Session["strRol"] != null ? Session["strRol"].ToString() : "";
+        string action = Request.QueryString["action"];
+        if (string.IsNullOrEmpty(action))
+        {
+            string rol = Session["strRol"] != null ? Session["strRol"].ToString() : "";
+            if (rol == "REGISTRADOR") action = "Historial";
+            else if (rol == "FIRMADOR") action = "PendientesRev";
+            else if (rol == "ADMIN") action = "TodosTramites";
+        }
 
-        PnlMenuRegistrador.Visible = (rol == "REGISTRADOR");
-        PnlMenuFirmador.Visible = (rol == "FIRMADOR");
-        PnlMenuAdmin.Visible = (rol == "ADMIN");
+        switch (action)
+        {
+            case "Historial":
+                ViewState["FiltroEstado"] = null;
+                LblTituloBandeja.Text = "Historial";
+                break;
+            case "EnRevision":
+                ViewState["FiltroEstado"] = "EN_REV";
+                LblTituloBandeja.Text = "En Revision";
+                break;
+            case "EnFirma":
+                ViewState["FiltroEstado"] = "APR_FIRMA,EN_FIRMA,FPAR";
+                LblTituloBandeja.Text = "En Firma";
+                break;
+            case "PendientesRev":
+                ViewState["FiltroEstado"] = "EN_REV,OBS";
+                LblTituloBandeja.Text = "Pendientes de Revisión";
+                break;
+            case "PendientesFirma":
+                ViewState["FiltroEstado"] = "APR_FIRMA,EN_FIRMA,FPAR";
+                LblTituloBandeja.Text = "Pendientes de Firma";
+                break;
+            case "Completados":
+                ViewState["FiltroEstado"] = "FIRM_COM";
+                LblTituloBandeja.Text = "Completados";
+                break;
+            case "TodosTramites":
+                ViewState["FiltroEstado"] = null;
+                LblTituloBandeja.Text = "Todos los Trámites";
+                break;
+        }
     }
 
     private void CargarTramites()
@@ -67,7 +108,7 @@ public partial class Bandeja : System.Web.UI.Page
                               FROM FIR_Documento d
                               LEFT JOIN FIR_Maestro m ON m.Tipo='TIPO_DOC' AND m.Codigo=d.CodigoTipoDocumento
                               LEFT JOIN FIR_Maestro me ON me.Tipo='ESTADO_DOC' AND me.Codigo=d.CodigoEstado
-                              ORDER BY d.FechaCreacion DESC";
+                              ORDER BY d.FechaDocumento DESC, d.FechaCreacion DESC";
                 }
                 else if (rol == "FIRMADOR")
                 {
@@ -80,7 +121,7 @@ public partial class Bandeja : System.Web.UI.Page
                               INNER JOIN FIR_DocumentoFirmante df ON df.IDDocumento=d.IDDocumento AND df.LoginUsuario=@LoginUsuario
                               LEFT JOIN FIR_Maestro m ON m.Tipo='TIPO_DOC' AND m.Codigo=d.CodigoTipoDocumento
                               LEFT JOIN FIR_Maestro me ON me.Tipo='ESTADO_DOC' AND me.Codigo=d.CodigoEstado
-                              ORDER BY d.FechaCreacion DESC";
+                              ORDER BY d.FechaDocumento DESC, d.FechaCreacion DESC";
                 }
                 else
                 {
@@ -93,7 +134,7 @@ public partial class Bandeja : System.Web.UI.Page
                               LEFT JOIN FIR_Maestro m ON m.Tipo='TIPO_DOC' AND m.Codigo=d.CodigoTipoDocumento
                               LEFT JOIN FIR_Maestro me ON me.Tipo='ESTADO_DOC' AND me.Codigo=d.CodigoEstado
                               WHERE d.LoginRegistrador = @LoginUsuario
-                              ORDER BY d.FechaCreacion DESC";
+                              ORDER BY d.FechaDocumento DESC, d.FechaCreacion DESC";
                 }
 
                 using (SqlCommand cmd = new SqlCommand(query, conn))
@@ -107,9 +148,13 @@ public partial class Bandeja : System.Web.UI.Page
             if (!string.IsNullOrEmpty(filtroEstado))
             {
                 DataRow[] filas;
-                if (filtroEstado == "APR_FIRMA,EN_FIRMA")
+                if (filtroEstado == "APR_FIRMA,EN_FIRMA,FPAR" || filtroEstado == "APR_FIRMA,EN_FIRMA")
                 {
-                    filas = dt.Select("CodigoEstado = 'APR_FIRMA' OR CodigoEstado = 'EN_FIRMA'");
+                    filas = dt.Select("CodigoEstado = 'APR_FIRMA' OR CodigoEstado = 'EN_FIRMA' OR CodigoEstado = 'FPAR'");
+                }
+                else if (filtroEstado == "EN_REV,OBS")
+                {
+                    filas = dt.Select("CodigoEstado = 'EN_REV' OR CodigoEstado = 'OBS'");
                 }
                 else
                 {
@@ -124,8 +169,24 @@ public partial class Bandeja : System.Web.UI.Page
                 dt = dtFiltrado;
             }
 
-            ViewState["dtTramites"] = dt;
-            GvTramites.DataSource = dt;
+            if (!string.IsNullOrEmpty(TxtBuscar.Text.Trim()))
+            {
+                string termino = TxtBuscar.Text.Trim().Replace("'", "''");
+                DataRow[] filas = dt.Select($"CodigoDocumento LIKE '%{termino}%' OR Asunto LIKE '%{termino}%'");
+                DataTable dtBuscado = dt.Clone();
+                foreach (DataRow fila in filas)
+                {
+                    dtBuscado.ImportRow(fila);
+                }
+                dt = dtBuscado;
+            }
+
+            DataView dv = dt.DefaultView;
+            dv.Sort = "FechaDocumento DESC";
+            DataTable dtOrdenado = dv.ToTable();
+
+            ViewState["dtTramites"] = dtOrdenado;
+            GvTramites.DataSource = dtOrdenado;
             GvTramites.DataBind();
         }
         catch (Exception ex)
@@ -135,95 +196,15 @@ public partial class Bandeja : System.Web.UI.Page
         }
     }
 
-    private void BindCalendario()
+    protected void BtnBuscar_Click(object sender, EventArgs e)
     {
-        DataTable dt = ViewState["dtTramites"] as DataTable;
-        if (dt == null) return;
-
-        List<DateTime> fechas = new List<DateTime>();
-        foreach (DataRow row in dt.Rows)
-        {
-            if (row["FechaDocumento"] != DBNull.Value)
-            {
-                DateTime fecha = Convert.ToDateTime(row["FechaDocumento"]).Date;
-                if (!fechas.Contains(fecha))
-                {
-                    fechas.Add(fecha);
-                }
-            }
-        }
-        ViewState["FechasTramites"] = fechas;
-    }
-
-    protected void CalBandeja_DayRender(object sender, DayRenderEventArgs e)
-    {
-        List<DateTime> fechas = ViewState["FechasTramites"] as List<DateTime>;
-        if (fechas != null && fechas.Contains(e.Day.Date))
-        {
-            e.Cell.CssClass = "cal-highlight";
-            e.Cell.ToolTip = "Hay tramites en esta fecha";
-        }
-
-        DataTable dt = ViewState["dtTramites"] as DataTable;
-        if (dt != null && dt.Columns.Contains("FechaLimiteRevision"))
-        {
-            foreach (DataRow row in dt.Rows)
-            {
-                if (row["FechaLimiteRevision"] != DBNull.Value && row["CodigoEstado"].ToString() == "EN_REV")
-                {
-                    DateTime fechaLimite = Convert.ToDateTime(row["FechaLimiteRevision"]).Date;
-                    if (fechaLimite == e.Day.Date)
-                    {
-                        TimeSpan diff = fechaLimite - DateTime.Now.Date;
-                        string codigo = row["CodigoDocumento"].ToString();
-                        if (diff.Days <= 0)
-                        {
-                            e.Cell.BackColor = Color.Red;
-                            e.Cell.ForeColor = Color.White;
-                            e.Cell.ToolTip = "VENCIDO: " + codigo;
-                        }
-                        else if (diff.Days <= 7)
-                        {
-                            e.Cell.BackColor = Color.LightCoral;
-                            e.Cell.ToolTip = "Vence: " + codigo;
-                        }
-                        else
-                        {
-                            e.Cell.BackColor = Color.LightBlue;
-                            e.Cell.ToolTip = "Limite: " + codigo;
-                        }
-                        break;
-                    }
-                }
-            }
-        }
-    }
-
-    protected void CalBandeja_SelectionChanged(object sender, EventArgs e)
-    {
-        DateTime fechaSeleccionada = CalBandeja.SelectedDate.Date;
-        DataTable dt = ViewState["dtTramites"] as DataTable;
-        if (dt == null) return;
-
-        DataRow[] filas = dt.Select("FechaDocumento = '" + fechaSeleccionada.ToString("yyyy-MM-dd") + "'");
-        DataTable dtFiltrado = dt.Clone();
-        foreach (DataRow fila in filas)
-        {
-            dtFiltrado.ImportRow(fila);
-        }
-
-        GvTramites.DataSource = dtFiltrado;
-        GvTramites.DataBind();
- 
-        LblTituloBandeja.Text = "Tramites del " + fechaSeleccionada.ToString("dd/MM/yyyy");
-    }
-
-    protected void LnkLimpiarFiltroFecha_Click(object sender, EventArgs e)
-    {
-        ViewState["FiltroEstado"] = null;
         CargarTramites();
-        BindCalendario();
-        LblTituloBandeja.Text = "Todos los tramites";
+    }
+
+    protected void BtnLimpiar_Click(object sender, EventArgs e)
+    {
+        TxtBuscar.Text = "";
+        CargarTramites();
     }
 
     protected void GvTramites_RowCommand(object sender, GridViewCommandEventArgs e)
@@ -257,67 +238,5 @@ public partial class Bandeja : System.Web.UI.Page
                 }
             }
         }
-    }
-
-    // ─── SIDEBAR: REGISTRADOR ───
-
-    protected void LnkNuevoTramite_Click(object sender, EventArgs e)
-    {
-        Response.Redirect("~/Tramites/RegistrarTramite.aspx");
-    }
-
-    protected void LnkMisTramites_Click(object sender, EventArgs e)
-    {
-        ViewState["FiltroEstado"] = null;
-        CargarTramites();
-        BindCalendario();
-        LblTituloBandeja.Text = "Mis Trámites";
-    }
-
-    // ─── SIDEBAR: FIRMADOR ───
-
-    protected void LnkPendientesRev_Click(object sender, EventArgs e)
-    {
-        ViewState["FiltroEstado"] = "EN_REV";
-        CargarTramites();
-        BindCalendario();
-        LblTituloBandeja.Text = "Pendientes de Revisión";
-    }
-
-    protected void LnkPendientesFirma_Click(object sender, EventArgs e)
-    {
-        ViewState["FiltroEstado"] = "APR_FIRMA,EN_FIRMA";
-        CargarTramites();
-        BindCalendario();
-        LblTituloBandeja.Text = "Pendientes de Firma";
-    }
-
-    protected void LnkCompletados_Click(object sender, EventArgs e)
-    {
-        ViewState["FiltroEstado"] = "FIRM_COM";
-        CargarTramites();
-        BindCalendario();
-        LblTituloBandeja.Text = "Completados";
-    }
-
-    // ─── SIDEBAR: ADMIN ───
-
-    protected void LnkTodosTramites_Click(object sender, EventArgs e)
-    {
-        ViewState["FiltroEstado"] = null;
-        CargarTramites();
-        BindCalendario();
-        LblTituloBandeja.Text = "Todos los Trámites";
-    }
-
-    protected void LnkGestionarRoles_Click(object sender, EventArgs e)
-    {
-        Response.Redirect("~/Admin/Dashboard.aspx");
-    }
-
-    protected void LnkCerrarSesion_Click(object sender, EventArgs e)
-    {
-        Session.Abandon();
-        Response.Redirect("~/Login.aspx");
     }
 }

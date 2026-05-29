@@ -11,6 +11,7 @@ public class VerPDF : IHttpHandler
     public void ProcessRequest(HttpContext context)
     {
         string idParam = context.Request.QueryString["id"];
+        bool forceDownload = string.Equals(context.Request.QueryString["download"], "1", StringComparison.OrdinalIgnoreCase);
         if (string.IsNullOrEmpty(idParam))
         {
             context.Response.StatusCode = 400;
@@ -47,7 +48,8 @@ public class VerPDF : IHttpHandler
                             string nombreOriginal = dr["NombreOriginal"].ToString();
 
                             context.Response.ContentType = "application/pdf";
-                            context.Response.AddHeader("Content-Disposition", "inline; filename=" + nombreOriginal);
+                            string disposition = forceDownload ? "attachment" : "inline";
+                            context.Response.AddHeader("Content-Disposition", disposition + "; filename=\"" + nombreOriginal + "\"");
                             context.Response.BinaryWrite(contenido);
                             context.Response.Flush();
                         }

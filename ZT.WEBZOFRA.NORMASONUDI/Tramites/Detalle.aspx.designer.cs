@@ -8,11 +8,13 @@ public partial class Detalle
 
     protected global::System.Web.UI.WebControls.Label LblEstadoBadge;
 
-    protected global::System.Web.UI.WebControls.Button BtnVolver;
-
     protected global::System.Web.UI.WebControls.Label LblError;
 
     protected global::System.Web.UI.WebControls.Label LblExito;
+
+    protected global::System.Web.UI.WebControls.Panel PnlDocumentoFinal;
+
+    protected global::System.Web.UI.WebControls.LinkButton BtnDescargarFinal;
 
     protected global::System.Web.UI.WebControls.Label LblAsunto;
 
@@ -30,9 +32,19 @@ public partial class Detalle
 
     protected global::System.Web.UI.WebControls.HiddenField HfRutaPDF;
 
+    protected global::System.Web.UI.WebControls.Panel PnlPdfViewer;
+
     protected global::System.Web.UI.HtmlControls.HtmlIframe IframePDF;
 
+    protected global::System.Web.UI.WebControls.Panel PnlPdfAnnotator;
+
+    protected global::System.Web.UI.WebControls.HiddenField HfPdfAnnotations;
+
     protected global::System.Web.UI.WebControls.GridView GvRevisores;
+
+    protected global::System.Web.UI.WebControls.Panel PnlFirmantesEstado;
+
+    protected global::System.Web.UI.WebControls.GridView GvFirmantesEstado;
 
     protected global::System.Web.UI.WebControls.Panel PnlObservaciones;
 
@@ -57,4 +69,14 @@ public partial class Detalle
     protected global::System.Web.UI.WebControls.FileUpload FuPdfCorregido;
 
     protected global::System.Web.UI.WebControls.Button BtnCorregir;
+
+    protected global::System.Web.UI.WebControls.Panel PnlVersiones;
+
+    protected global::System.Web.UI.WebControls.GridView GvVersiones;
+
+    protected global::System.Web.UI.WebControls.HyperLink LnkFirmarUsb;
+
+    protected global::System.Web.UI.HtmlControls.HtmlGenericControl DivObservacionUI;
+
+    protected global::System.Web.UI.HtmlControls.HtmlGenericControl TituloAcciones;
 }

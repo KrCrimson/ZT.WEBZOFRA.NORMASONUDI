@@ -1,17 +1,101 @@
 <%@ Master Language="C#" AutoEventWireup="true" CodeFile="MasterPage.master.cs" Inherits="Shared_MasterPage" %>
 
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head runat="server">
-    <title>Master Page</title>
-    <asp:ContentPlaceHolder ID="head" runat="server">
-    </asp:ContentPlaceHolder>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title><%: Page.Title %></title>
+    <link runat="server" rel="stylesheet" href="~/styles.css" />
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <asp:ContentPlaceHolder ID="HeadContent" runat="server"></asp:ContentPlaceHolder>
 </head>
-<body>
+<body runat="server" id="BodyTag" class="app-body">
     <form id="form1" runat="server">
-        <div>
-            <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
-            </asp:ContentPlaceHolder>
+        <asp:ScriptManager ID="AppScriptManager" runat="server" />
+        <div class="app-shell">
+            <aside class="app-sidebar">
+                <div class="sidebar-brand">
+                    <div class="brand-icon"><i class="ph ph-buildings"></i></div>
+                    <div>
+                        <span class="brand-title">ZOFRATACNA</span>
+                        <span class="brand-subtitle">Sistema Firmador</span>
+                    </div>
+                </div>
+                <nav class="sidebar-nav">
+                    <asp:ContentPlaceHolder ID="SidebarContent" runat="server">
+                        <asp:Panel ID="PnlMenuRegistrador" runat="server" Visible="false">
+                            <asp:LinkButton ID="LnkHistorial" runat="server" CssClass="nav-link" OnClick="LnkMenu_Click" CommandArgument="Historial" CausesValidation="false">
+                                <i class="ph ph-folders"></i> Historial
+                            </asp:LinkButton>
+                            <asp:LinkButton ID="LnkRegistrarDocumento" runat="server" CssClass="nav-link" OnClick="LnkMenu_Click" CommandArgument="RegistrarDocumento" CausesValidation="false">
+                                <i class="ph ph-file-plus"></i> Registrar Documento
+                            </asp:LinkButton>
+                            <asp:LinkButton ID="LnkEnRevision" runat="server" CssClass="nav-link" OnClick="LnkMenu_Click" CommandArgument="EnRevision" CausesValidation="false">
+                                <i class="ph ph-magnifying-glass"></i> En Revision
+                            </asp:LinkButton>
+                            <asp:LinkButton ID="LnkEnFirma" runat="server" CssClass="nav-link" OnClick="LnkMenu_Click" CommandArgument="EnFirma" CausesValidation="false">
+                                <i class="ph ph-pen-nib"></i> En Firma
+                            </asp:LinkButton>
+                        </asp:Panel>
+
+                        <asp:Panel ID="PnlMenuFirmador" runat="server" Visible="false">
+                            <asp:LinkButton ID="LnkPendientesRev" runat="server" CssClass="nav-link" OnClick="LnkMenu_Click" CommandArgument="PendientesRev" CausesValidation="false">
+                                <i class="ph ph-magnifying-glass"></i> Pendientes de Revision
+                            </asp:LinkButton>
+                            <asp:LinkButton ID="LnkPendientesFirma" runat="server" CssClass="nav-link" OnClick="LnkMenu_Click" CommandArgument="PendientesFirma" CausesValidation="false">
+                                <i class="ph ph-pen-nib"></i> Pendientes de Firma
+                            </asp:LinkButton>
+                            <asp:LinkButton ID="LnkCompletados" runat="server" CssClass="nav-link" OnClick="LnkMenu_Click" CommandArgument="Completados" CausesValidation="false">
+                                <i class="ph ph-check-circle"></i> Completados
+                            </asp:LinkButton>
+                        </asp:Panel>
+
+                        <asp:Panel ID="PnlMenuAdmin" runat="server" Visible="false">
+                            <asp:LinkButton ID="LnkTodosTramites" runat="server" CssClass="nav-link" OnClick="LnkMenu_Click" CommandArgument="TodosTramites" CausesValidation="false">
+                                <i class="ph ph-list"></i> Todos los Tramites
+                            </asp:LinkButton>
+                            <asp:LinkButton ID="LnkGestionarRoles" runat="server" CssClass="nav-link" OnClick="LnkMenu_Click" CommandArgument="GestionarRoles" CausesValidation="false">
+                                <i class="ph ph-users-three"></i> Gestionar Roles
+                            </asp:LinkButton>
+                        </asp:Panel>
+                    </asp:ContentPlaceHolder>
+                </nav>
+                <div class="sidebar-footer">
+                    <asp:ContentPlaceHolder ID="SidebarFooter" runat="server">
+                        <asp:LinkButton ID="LnkCerrarSesion" runat="server" CssClass="nav-link" OnClick="LnkCerrarSesion_Click" CausesValidation="false">
+                            <i class="ph ph-sign-out"></i> Cerrar Sesion
+                        </asp:LinkButton>
+                    </asp:ContentPlaceHolder>
+                </div>
+            </aside>
+
+            <main class="app-main">
+                <div class="app-topline"></div>
+                <header class="app-header">
+                    <div class="header-left">
+                        <asp:ContentPlaceHolder ID="PageTitle" runat="server"></asp:ContentPlaceHolder>
+                        <asp:ContentPlaceHolder ID="PageStatus" runat="server"></asp:ContentPlaceHolder>
+                    </div>
+                    <div class="header-right">
+                        <asp:ContentPlaceHolder ID="HeaderActions" runat="server"></asp:ContentPlaceHolder>
+                        <div class="user-pill">
+                            <span id="UserInitials" runat="server" class="user-initials">US</span>
+                            <div class="user-text">
+                                <span class="user-name">
+                                    <asp:Label ID="LblHeaderUser" runat="server" Text="Usuario"></asp:Label>
+                                </span>
+                                <span class="user-role">
+                                    <asp:Label ID="LblHeaderRole" runat="server" Text="Sesion"></asp:Label>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </header>
+                <div class="app-content">
+                    <asp:ContentPlaceHolder ID="MainContent" runat="server"></asp:ContentPlaceHolder>
+                </div>
+            </main>
         </div>
     </form>
 </body>

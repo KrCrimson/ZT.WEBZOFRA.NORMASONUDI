@@ -1,0 +1,1215 @@
+[2026-05-29 01:22:59] >>> Comando recibido: DNIE
+[2026-05-29 01:22:59] Activando modo: DNIe
+[2026-05-29 01:22:59] Limpiando claves de registro de Bit4id que causan conflicto...
+[2026-05-29 01:22:59] CertPropSvc: Deteniendo...
+[2026-05-29 01:22:59] CertPropSvc: Detenido.
+[2026-05-29 01:22:59] SCardSvr: Deteniendo...
+[2026-05-29 01:23:05] >>> Comando recibido: DNIE
+[2026-05-29 01:23:05] Activando modo: DNIe
+[2026-05-29 01:23:05] Limpiando claves de registro de Bit4id que causan conflicto...
+[2026-05-29 01:23:05] SCardSvr: Deteniendo...
+[2026-05-29 01:23:08] >>> Comando recibido: DNIE
+[2026-05-29 01:23:08] Activando modo: DNIe
+[2026-05-29 01:23:08] Limpiando claves de registro de Bit4id que causan conflicto...
+[2026-05-29 01:23:08] SCardSvr: Deteniendo...
+[2026-05-29 01:23:17] >>> Comando recibido: DNIE
+[2026-05-29 01:23:17] Activando modo: DNIe
+[2026-05-29 01:23:17] Limpiando claves de registro de Bit4id que causan conflicto...
+[2026-05-29 01:23:17] SCardSvr: Deteniendo...
+[2026-05-29 01:23:20] >>> Comando recibido: RESET
+[2026-05-29 01:23:20] Activando modo: Token
+[2026-05-29 01:23:20] No hay backups de claves de registro Bit4id para restaurar.
+[2026-05-29 01:23:20] HKCU: Override eliminado → HKLM de Bit4id dominará.
+[2026-05-29 01:23:20] Estrategia HKCU: OK
+[2026-05-29 01:23:20] SCardSvr: Deteniendo...
+[2026-05-29 01:23:25] >>> Comando recibido: DNIE
+[2026-05-29 01:23:25] Activando modo: DNIe
+[2026-05-29 01:23:25] Limpiando claves de registro de Bit4id que causan conflicto...
+[2026-05-29 01:23:25] SCardSvr: Deteniendo...
+[2026-05-29 01:23:34] >>> Comando recibido: TOKEN
+[2026-05-29 01:23:34] Activando modo: Token
+[2026-05-29 01:23:34] No hay backups de claves de registro Bit4id para restaurar.
+[2026-05-29 01:23:34] HKCU: Override eliminado → HKLM de Bit4id dominará.
+[2026-05-29 01:23:34] Estrategia HKCU: OK
+[2026-05-29 01:23:34] SCardSvr: Deteniendo...
+[2026-05-29 01:23:38] >>> Comando recibido: TOKEN
+[2026-05-29 01:23:38] Activando modo: Token
+[2026-05-29 01:23:38] No hay backups de claves de registro Bit4id para restaurar.
+[2026-05-29 01:23:38] HKCU: Override eliminado → HKLM de Bit4id dominará.
+[2026-05-29 01:23:38] Estrategia HKCU: OK
+[2026-05-29 01:23:38] SCardSvr: Deteniendo...
+[2026-05-29 01:23:44] >>> Comando recibido: TOKEN
+[2026-05-29 01:23:44] Activando modo: Token
+[2026-05-29 01:23:44] No hay backups de claves de registro Bit4id para restaurar.
+[2026-05-29 01:23:44] HKCU: Override eliminado → HKLM de Bit4id dominará.
+[2026-05-29 01:23:44] Estrategia HKCU: OK
+[2026-05-29 01:23:44] SCardSvr: Deteniendo...
+[2026-05-29 01:23:50] >>> Comando recibido: DNIE
+[2026-05-29 01:23:50] Activando modo: DNIe
+[2026-05-29 01:23:50] Limpiando claves de registro de Bit4id que causan conflicto...
+[2026-05-29 01:23:50] SCardSvr: Deteniendo...
+[2026-05-29 01:24:00] SCardSvr ERROR: El tiempo de espera ha transcurrido y no se ha completado la operación.
+[2026-05-29 01:24:00] Backup realizado para: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\   Bit4id ST-SD
+[2026-05-29 01:24:00] Clave eliminada con exito: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\   Bit4id ST-SD (Vista: Registry64)
+[2026-05-29 01:24:00] Backup realizado para: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\   Bit4id TS-ST2021
+[2026-05-29 01:24:00] Clave eliminada con exito: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\   Bit4id TS-ST2021 (Vista: Registry64)
+[2026-05-29 01:24:00] Backup realizado para: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  ACX 2025
+[2026-05-29 01:24:00] Clave eliminada con exito: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  ACX 2025 (Vista: Registry64)
+[2026-05-29 01:24:00] Backup realizado para: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  ACX 2025 CLESS
+[2026-05-29 01:24:00] Clave eliminada con exito: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  ACX 2025 CLESS (Vista: Registry64)
+[2026-05-29 01:24:00] Backup realizado para: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  Bit4id Athena 1
+[2026-05-29 01:24:00] Clave eliminada con exito: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  Bit4id Athena 1 (Vista: Registry64)
+[2026-05-29 01:24:00] Backup realizado para: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  Bit4id ME CC 0
+[2026-05-29 01:24:00] Clave eliminada con exito: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  Bit4id ME CC 0 (Vista: Registry64)
+[2026-05-29 01:24:00] Backup realizado para: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  Bit4id ME CC 1
+[2026-05-29 01:24:00] Clave eliminada con exito: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  Bit4id ME CC 1 (Vista: Registry64)
+[2026-05-29 01:24:00] Backup realizado para: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  Bit4id ME FIPS 0
+[2026-05-29 01:24:00] Clave eliminada con exito: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  Bit4id ME FIPS 0 (Vista: Registry64)
+[2026-05-29 01:24:00] Backup realizado para: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  Bit4id ME FIPS V3
+[2026-05-29 01:24:00] Clave eliminada con exito: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  Bit4id ME FIPS V3 (Vista: Registry64)
+[2026-05-29 01:24:00] Backup realizado para: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  Bit4id ME Iz 0
+[2026-05-29 01:24:00] Clave eliminada con exito: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  Bit4id ME Iz 0 (Vista: Registry64)
+[2026-05-29 01:24:00] Backup realizado para: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  COSMOX ID-A 1
+[2026-05-29 01:24:00] Clave eliminada con exito: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  COSMOX ID-A 1 (Vista: Registry64)
+[2026-05-29 01:24:00] Backup realizado para: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  COSMOX ID-A 2
+[2026-05-29 01:24:00] Clave eliminada con exito: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  COSMOX ID-A 2 (Vista: Registry64)
+[2026-05-29 01:24:00] Backup realizado para: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  COSMOX ID-A 3
+[2026-05-29 01:24:00] Clave eliminada con exito: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  COSMOX ID-A 3 (Vista: Registry64)
+[2026-05-29 01:24:00] Backup realizado para: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  COSMOX ID-A CLESS 1
+[2026-05-29 01:24:00] Clave eliminada con exito: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  COSMOX ID-A CLESS 1 (Vista: Registry64)
+[2026-05-29 01:24:00] Backup realizado para: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  Idemia CNSv2-97
+[2026-05-29 01:24:00] Clave eliminada con exito: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  Idemia CNSv2-97 (Vista: Registry64)
+[2026-05-29 01:24:00] Backup realizado para: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  Idemia COSMO v9
+[2026-05-29 01:24:00] Clave eliminada con exito: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  Idemia COSMO v9 (Vista: Registry64)
+[2026-05-29 01:24:00] Backup realizado para: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  Idemia COSMO v9.1
+[2026-05-29 01:24:00] Clave eliminada con exito: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  Idemia COSMO v9.1 (Vista: Registry64)
+[2026-05-29 01:24:00] Backup realizado para: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  Idemia Io409 CL
+[2026-05-29 01:24:00] Clave eliminada con exito: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  Idemia Io409 CL (Vista: Registry64)
+[2026-05-29 01:24:00] Backup realizado para: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  Idemia TS HPC 1
+[2026-05-29 01:24:00] Clave eliminada con exito: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  Idemia TS HPC 1 (Vista: Registry64)
+[2026-05-29 01:24:00] Backup realizado para: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  Idemia TS OT2015 CL
+[2026-05-29 01:24:00] Clave eliminada con exito: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  Idemia TS OT2015 CL (Vista: Registry64)
+[2026-05-29 01:24:00] Backup realizado para: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  Idemia TSv2 CL
+[2026-05-29 01:24:00] Clave eliminada con exito: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  Idemia TSv2 CL (Vista: Registry64)
+[2026-05-29 01:24:00] Backup realizado para: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  Incard  FFS
+[2026-05-29 01:24:00] Clave eliminada con exito: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  Incard  FFS (Vista: Registry64)
+[2026-05-29 01:24:00] Backup realizado para: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  Incard  JS2048
+[2026-05-29 01:24:00] Clave eliminada con exito: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  Incard  JS2048 (Vista: Registry64)
+[2026-05-29 01:24:00] Backup realizado para: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  Incard  JS2048DSD
+[2026-05-29 01:24:00] Clave eliminada con exito: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  Incard  JS2048DSD (Vista: Registry64)
+[2026-05-29 01:24:00] Backup realizado para: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  NXP BIT 1
+[2026-05-29 01:24:00] Clave eliminada con exito: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  NXP BIT 1 (Vista: Registry64)
+[2026-05-29 01:24:00] Backup realizado para: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  NXP IAS 1
+[2026-05-29 01:24:00] Clave eliminada con exito: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  NXP IAS 1 (Vista: Registry64)
+[2026-05-29 01:24:00] Backup realizado para: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  NXP IAS 2 CR
+[2026-05-29 01:24:00] Clave eliminada con exito: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  NXP IAS 2 CR (Vista: Registry64)
+[2026-05-29 01:24:00] Backup realizado para: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  NXP IAS C18
+[2026-05-29 01:24:00] Clave eliminada con exito: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  NXP IAS C18 (Vista: Registry64)
+[2026-05-29 01:24:00] Backup realizado para: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  NXP JCOP4 P71 18
+[2026-05-29 01:24:00] Clave eliminada con exito: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  NXP JCOP4 P71 18 (Vista: Registry64)
+[2026-05-29 01:24:00] Backup realizado para: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  NXP JCOP4 P71 94
+[2026-05-29 01:24:00] Clave eliminada con exito: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  NXP JCOP4 P71 94 (Vista: Registry64)
+[2026-05-29 01:24:00] Backup realizado para: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  NXP JCOP4 P71 BIT
+[2026-05-29 01:24:00] Clave eliminada con exito: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  NXP JCOP4 P71 BIT (Vista: Registry64)
+[2026-05-29 01:24:00] Backup realizado para: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  NXP JCOP4 P71 CNS
+[2026-05-29 01:24:00] Clave eliminada con exito: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  NXP JCOP4 P71 CNS (Vista: Registry64)
+[2026-05-29 01:24:00] Backup realizado para: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  Oberthur COSMO 0
+[2026-05-29 01:24:00] Clave eliminada con exito: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  Oberthur COSMO 0 (Vista: Registry64)
+[2026-05-29 01:24:00] Backup realizado para: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  Oberthur COSMO 1
+[2026-05-29 01:24:00] Clave eliminada con exito: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  Oberthur COSMO 1 (Vista: Registry64)
+[2026-05-29 01:24:00] Backup realizado para: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  Oberthur COSMO 2
+[2026-05-29 01:24:00] Clave eliminada con exito: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  Oberthur COSMO 2 (Vista: Registry64)
+[2026-05-29 01:24:00] Backup realizado para: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  Oberthur COSMO 2048
+[2026-05-29 01:24:00] Clave eliminada con exito: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  Oberthur COSMO 2048 (Vista: Registry64)
+[2026-05-29 01:24:00] Backup realizado para: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  Oberthur COSMO 2048CIE
+[2026-05-29 01:24:00] Clave eliminada con exito: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  Oberthur COSMO 2048CIE (Vista: Registry64)
+[2026-05-29 01:24:00] Backup realizado para: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  Oberthur COSMO 3
+[2026-05-29 01:24:00] Clave eliminada con exito: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  Oberthur COSMO 3 (Vista: Registry64)
+[2026-05-29 01:24:00] Backup realizado para: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  Oberthur COSMO AR 0
+[2026-05-29 01:24:00] Clave eliminada con exito: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  Oberthur COSMO AR 0 (Vista: Registry64)
+[2026-05-29 01:24:00] Backup realizado para: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  Oberthur COSMO CL 0
+[2026-05-29 01:24:00] Clave eliminada con exito: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  Oberthur COSMO CL 0 (Vista: Registry64)
+[2026-05-29 01:24:00] Backup realizado para: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  Oberthur COSMO CL 1
+[2026-05-29 01:24:00] Clave eliminada con exito: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  Oberthur COSMO CL 1 (Vista: Registry64)
+[2026-05-29 01:24:00] Backup realizado para: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  Oberthur COSMO CL a122
+[2026-05-29 01:24:00] Clave eliminada con exito: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  Oberthur COSMO CL a122 (Vista: Registry64)
+[2026-05-29 01:24:00] Backup realizado para: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  Oberthur COSMO CL a128
+[2026-05-29 01:24:00] Clave eliminada con exito: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  Oberthur COSMO CL a128 (Vista: Registry64)
+[2026-05-29 01:24:00] Backup realizado para: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  Oberthur COSMO CNN 0
+[2026-05-29 01:24:00] Clave eliminada con exito: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  Oberthur COSMO CNN 0 (Vista: Registry64)
+[2026-05-29 01:24:00] Backup realizado para: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  Oberthur COSMO CNSv2
+[2026-05-29 01:24:00] Clave eliminada con exito: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  Oberthur COSMO CNSv2 (Vista: Registry64)
+[2026-05-29 01:24:00] Backup realizado para: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  Oberthur COSMO HPC 0
+[2026-05-29 01:24:00] Clave eliminada con exito: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  Oberthur COSMO HPC 0 (Vista: Registry64)
+[2026-05-29 01:24:00] Backup realizado para: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  Oberthur COSMO HPC 1
+[2026-05-29 01:24:00] Clave eliminada con exito: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  Oberthur COSMO HPC 1 (Vista: Registry64)
+[2026-05-29 01:24:00] Backup realizado para: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  Oberthur COSMO HPC 2023r
+[2026-05-29 01:24:00] Clave eliminada con exito: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  Oberthur COSMO HPC 2023r (Vista: Registry64)
+[2026-05-29 01:24:00] Backup realizado para: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  Oberthur COSMO HPC 2023v
+[2026-05-29 01:24:00] Clave eliminada con exito: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  Oberthur COSMO HPC 2023v (Vista: Registry64)
+[2026-05-29 01:24:00] Backup realizado para: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  Oberthur COSMO HPP 0
+[2026-05-29 01:24:00] Clave eliminada con exito: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  Oberthur COSMO HPP 0 (Vista: Registry64)
+[2026-05-29 01:24:00] Backup realizado para: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  Oberthur COSMO I
+[2026-05-29 01:24:00] Clave eliminada con exito: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  Oberthur COSMO I (Vista: Registry64)
+[2026-05-29 01:24:00] Backup realizado para: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  Oberthur COSMO I 1
+[2026-05-29 01:24:00] Clave eliminada con exito: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  Oberthur COSMO I 1 (Vista: Registry64)
+[2026-05-29 01:24:00] Backup realizado para: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  Oberthur COSMO I 2
+[2026-05-29 01:24:00] Clave eliminada con exito: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  Oberthur COSMO I 2 (Vista: Registry64)
+[2026-05-29 01:24:00] Backup realizado para: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  Oberthur COSMO I G
+[2026-05-29 01:24:00] Clave eliminada con exito: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  Oberthur COSMO I G (Vista: Registry64)
+[2026-05-29 01:24:00] Backup realizado para: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  Oberthur COSMO ICSM 2018
+[2026-05-29 01:24:00] Clave eliminada con exito: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  Oberthur COSMO ICSM 2018 (Vista: Registry64)
+[2026-05-29 01:24:00] Backup realizado para: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  Oberthur COSMO ICSM 2019
+[2026-05-29 01:24:00] Clave eliminada con exito: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  Oberthur COSMO ICSM 2019 (Vista: Registry64)
+[2026-05-29 01:24:00] Backup realizado para: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  Oberthur COSMO SM 0
+[2026-05-29 01:24:00] Clave eliminada con exito: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  Oberthur COSMO SM 0 (Vista: Registry64)
+[2026-05-29 01:24:00] Backup realizado para: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  Oberthur COSMO SMX 0
+[2026-05-29 01:24:00] Clave eliminada con exito: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  Oberthur COSMO SMX 0 (Vista: Registry64)
+[2026-05-29 01:24:00] Backup realizado para: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  PIV  1
+[2026-05-29 01:24:00] Clave eliminada con exito: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  PIV  1 (Vista: Registry64)
+[2026-05-29 01:24:00] Backup realizado para: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  PIV  2
+[2026-05-29 01:24:00] Clave eliminada con exito: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  PIV  2 (Vista: Registry64)
+[2026-05-29 01:24:00] Backup realizado para: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  PIV  8.1
+[2026-05-29 01:24:00] Clave eliminada con exito: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  PIV  8.1 (Vista: Registry64)
+[2026-05-29 01:24:00] Backup realizado para: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  PIV  prod v8.1 CLESS 128U
+[2026-05-29 01:24:00] Clave eliminada con exito: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  PIV  prod v8.1 CLESS 128U (Vista: Registry64)
+[2026-05-29 01:24:00] Backup realizado para: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  PIV  v8.0 CLESS 122
+[2026-05-29 01:24:00] Clave eliminada con exito: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  PIV  v8.0 CLESS 122 (Vista: Registry64)
+[2026-05-29 01:24:00] Backup realizado para: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  PIV  v8.1 CLESS 122
+[2026-05-29 01:24:00] Clave eliminada con exito: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  PIV  v8.1 CLESS 122 (Vista: Registry64)
+[2026-05-29 01:24:00] Backup realizado para: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  PIV  v8.1 CLESS 128U
+[2026-05-29 01:24:00] Clave eliminada con exito: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  PIV  v8.1 CLESS 128U (Vista: Registry64)
+[2026-05-29 01:24:00] Backup realizado para: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  TS-CNS-SIEMENS  0
+[2026-05-29 01:24:00] Clave eliminada con exito: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  TS-CNS-SIEMENS  0 (Vista: Registry64)
+[2026-05-29 01:24:00] Backup realizado para: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\Bit4id AC2014 CL
+[2026-05-29 01:24:00] Clave eliminada con exito: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\Bit4id AC2014 CL (Vista: Registry64)
+[2026-05-29 01:24:00] Backup realizado para: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\Bit4id Athena GEN
+[2026-05-29 01:24:00] Clave eliminada con exito: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\Bit4id Athena GEN (Vista: Registry64)
+[2026-05-29 01:24:00] Backup realizado para: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\   Bit4id ST-SD
+[2026-05-29 01:24:00] Clave eliminada con exito: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\   Bit4id ST-SD (Vista: Registry32)
+[2026-05-29 01:24:00] Backup realizado para: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\   Bit4id TS-ST2021
+[2026-05-29 01:24:00] Clave eliminada con exito: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\   Bit4id TS-ST2021 (Vista: Registry32)
+[2026-05-29 01:24:00] Backup realizado para: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  ACX 2025
+[2026-05-29 01:24:00] Clave eliminada con exito: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  ACX 2025 (Vista: Registry32)
+[2026-05-29 01:24:00] Backup realizado para: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  ACX 2025 CLESS
+[2026-05-29 01:24:00] Clave eliminada con exito: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  ACX 2025 CLESS (Vista: Registry32)
+[2026-05-29 01:24:00] Backup realizado para: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  Bit4id Athena 1
+[2026-05-29 01:24:00] Clave eliminada con exito: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  Bit4id Athena 1 (Vista: Registry32)
+[2026-05-29 01:24:00] Backup realizado para: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  Bit4id ME CC 0
+[2026-05-29 01:24:00] Clave eliminada con exito: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  Bit4id ME CC 0 (Vista: Registry32)
+[2026-05-29 01:24:00] Backup realizado para: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  Bit4id ME CC 1
+[2026-05-29 01:24:00] Clave eliminada con exito: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  Bit4id ME CC 1 (Vista: Registry32)
+[2026-05-29 01:24:00] Backup realizado para: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  Bit4id ME FIPS 0
+[2026-05-29 01:24:00] Clave eliminada con exito: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  Bit4id ME FIPS 0 (Vista: Registry32)
+[2026-05-29 01:24:00] Backup realizado para: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  Bit4id ME FIPS V3
+[2026-05-29 01:24:00] Clave eliminada con exito: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  Bit4id ME FIPS V3 (Vista: Registry32)
+[2026-05-29 01:24:00] Backup realizado para: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  Bit4id ME Iz 0
+[2026-05-29 01:24:00] Clave eliminada con exito: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  Bit4id ME Iz 0 (Vista: Registry32)
+[2026-05-29 01:24:00] Backup realizado para: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  COSMOX ID-A 1
+[2026-05-29 01:24:00] Clave eliminada con exito: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  COSMOX ID-A 1 (Vista: Registry32)
+[2026-05-29 01:24:00] Backup realizado para: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  COSMOX ID-A 2
+[2026-05-29 01:24:00] Clave eliminada con exito: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  COSMOX ID-A 2 (Vista: Registry32)
+[2026-05-29 01:24:00] Backup realizado para: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  COSMOX ID-A 3
+[2026-05-29 01:24:00] Clave eliminada con exito: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  COSMOX ID-A 3 (Vista: Registry32)
+[2026-05-29 01:24:00] Backup realizado para: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  COSMOX ID-A CLESS 1
+[2026-05-29 01:24:00] Clave eliminada con exito: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  COSMOX ID-A CLESS 1 (Vista: Registry32)
+[2026-05-29 01:24:00] Backup realizado para: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  Idemia CNSv2-97
+[2026-05-29 01:24:00] Clave eliminada con exito: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  Idemia CNSv2-97 (Vista: Registry32)
+[2026-05-29 01:24:00] Backup realizado para: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  Idemia COSMO v9
+[2026-05-29 01:24:00] Clave eliminada con exito: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  Idemia COSMO v9 (Vista: Registry32)
+[2026-05-29 01:24:00] Backup realizado para: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  Idemia COSMO v9.1
+[2026-05-29 01:24:00] Clave eliminada con exito: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  Idemia COSMO v9.1 (Vista: Registry32)
+[2026-05-29 01:24:00] Backup realizado para: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  Idemia Io409 CL
+[2026-05-29 01:24:00] Clave eliminada con exito: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  Idemia Io409 CL (Vista: Registry32)
+[2026-05-29 01:24:00] Backup realizado para: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  Idemia TS HPC 1
+[2026-05-29 01:24:00] Clave eliminada con exito: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  Idemia TS HPC 1 (Vista: Registry32)
+[2026-05-29 01:24:00] Backup realizado para: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  Idemia TS OT2015 CL
+[2026-05-29 01:24:00] Clave eliminada con exito: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  Idemia TS OT2015 CL (Vista: Registry32)
+[2026-05-29 01:24:00] Backup realizado para: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  Idemia TSv2 CL
+[2026-05-29 01:24:00] Clave eliminada con exito: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  Idemia TSv2 CL (Vista: Registry32)
+[2026-05-29 01:24:00] Backup realizado para: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  Incard  FFS
+[2026-05-29 01:24:00] Clave eliminada con exito: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  Incard  FFS (Vista: Registry32)
+[2026-05-29 01:24:00] Backup realizado para: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  Incard  JS2048
+[2026-05-29 01:24:00] Clave eliminada con exito: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  Incard  JS2048 (Vista: Registry32)
+[2026-05-29 01:24:00] Backup realizado para: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  Incard  JS2048DSD
+[2026-05-29 01:24:00] Clave eliminada con exito: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  Incard  JS2048DSD (Vista: Registry32)
+[2026-05-29 01:24:00] Backup realizado para: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  NXP BIT 1
+[2026-05-29 01:24:00] Clave eliminada con exito: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  NXP BIT 1 (Vista: Registry32)
+[2026-05-29 01:24:00] Backup realizado para: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  NXP IAS 1
+[2026-05-29 01:24:00] Clave eliminada con exito: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  NXP IAS 1 (Vista: Registry32)
+[2026-05-29 01:24:00] Backup realizado para: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  NXP IAS 2 CR
+[2026-05-29 01:24:00] Clave eliminada con exito: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  NXP IAS 2 CR (Vista: Registry32)
+[2026-05-29 01:24:00] Backup realizado para: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  NXP IAS C18
+[2026-05-29 01:24:00] Clave eliminada con exito: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  NXP IAS C18 (Vista: Registry32)
+[2026-05-29 01:24:00] Backup realizado para: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  NXP JCOP4 P71 18
+[2026-05-29 01:24:00] Clave eliminada con exito: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  NXP JCOP4 P71 18 (Vista: Registry32)
+[2026-05-29 01:24:00] Backup realizado para: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  NXP JCOP4 P71 94
+[2026-05-29 01:24:00] Clave eliminada con exito: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  NXP JCOP4 P71 94 (Vista: Registry32)
+[2026-05-29 01:24:00] Backup realizado para: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  NXP JCOP4 P71 BIT
+[2026-05-29 01:24:00] Clave eliminada con exito: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  NXP JCOP4 P71 BIT (Vista: Registry32)
+[2026-05-29 01:24:00] Backup realizado para: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  NXP JCOP4 P71 CNS
+[2026-05-29 01:24:00] Clave eliminada con exito: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  NXP JCOP4 P71 CNS (Vista: Registry32)
+[2026-05-29 01:24:00] Backup realizado para: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  Oberthur COSMO 0
+[2026-05-29 01:24:00] Clave eliminada con exito: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  Oberthur COSMO 0 (Vista: Registry32)
+[2026-05-29 01:24:00] Backup realizado para: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  Oberthur COSMO 1
+[2026-05-29 01:24:00] Clave eliminada con exito: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  Oberthur COSMO 1 (Vista: Registry32)
+[2026-05-29 01:24:00] Backup realizado para: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  Oberthur COSMO 2
+[2026-05-29 01:24:00] Clave eliminada con exito: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  Oberthur COSMO 2 (Vista: Registry32)
+[2026-05-29 01:24:00] Backup realizado para: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  Oberthur COSMO 2048
+[2026-05-29 01:24:00] Clave eliminada con exito: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  Oberthur COSMO 2048 (Vista: Registry32)
+[2026-05-29 01:24:00] Backup realizado para: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  Oberthur COSMO 2048CIE
+[2026-05-29 01:24:00] Clave eliminada con exito: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  Oberthur COSMO 2048CIE (Vista: Registry32)
+[2026-05-29 01:24:00] Backup realizado para: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  Oberthur COSMO 3
+[2026-05-29 01:24:00] Clave eliminada con exito: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  Oberthur COSMO 3 (Vista: Registry32)
+[2026-05-29 01:24:00] Backup realizado para: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  Oberthur COSMO AR 0
+[2026-05-29 01:24:00] Clave eliminada con exito: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  Oberthur COSMO AR 0 (Vista: Registry32)
+[2026-05-29 01:24:00] Backup realizado para: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  Oberthur COSMO CL 0
+[2026-05-29 01:24:00] Clave eliminada con exito: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  Oberthur COSMO CL 0 (Vista: Registry32)
+[2026-05-29 01:24:00] Backup realizado para: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  Oberthur COSMO CL 1
+[2026-05-29 01:24:00] Clave eliminada con exito: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  Oberthur COSMO CL 1 (Vista: Registry32)
+[2026-05-29 01:24:00] Backup realizado para: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  Oberthur COSMO CL a122
+[2026-05-29 01:24:00] Clave eliminada con exito: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  Oberthur COSMO CL a122 (Vista: Registry32)
+[2026-05-29 01:24:00] Backup realizado para: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  Oberthur COSMO CL a128
+[2026-05-29 01:24:00] Clave eliminada con exito: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  Oberthur COSMO CL a128 (Vista: Registry32)
+[2026-05-29 01:24:00] Backup realizado para: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  Oberthur COSMO CNN 0
+[2026-05-29 01:24:00] Clave eliminada con exito: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  Oberthur COSMO CNN 0 (Vista: Registry32)
+[2026-05-29 01:24:00] Backup realizado para: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  Oberthur COSMO CNSv2
+[2026-05-29 01:24:00] Clave eliminada con exito: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  Oberthur COSMO CNSv2 (Vista: Registry32)
+[2026-05-29 01:24:00] Backup realizado para: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  Oberthur COSMO HPC 0
+[2026-05-29 01:24:00] Clave eliminada con exito: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  Oberthur COSMO HPC 0 (Vista: Registry32)
+[2026-05-29 01:24:00] Backup realizado para: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  Oberthur COSMO HPC 1
+[2026-05-29 01:24:00] Clave eliminada con exito: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  Oberthur COSMO HPC 1 (Vista: Registry32)
+[2026-05-29 01:24:00] Backup realizado para: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  Oberthur COSMO HPC 2023r
+[2026-05-29 01:24:00] Clave eliminada con exito: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  Oberthur COSMO HPC 2023r (Vista: Registry32)
+[2026-05-29 01:24:00] Backup realizado para: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  Oberthur COSMO HPC 2023v
+[2026-05-29 01:24:00] Clave eliminada con exito: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  Oberthur COSMO HPC 2023v (Vista: Registry32)
+[2026-05-29 01:24:00] Backup realizado para: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  Oberthur COSMO HPP 0
+[2026-05-29 01:24:00] Clave eliminada con exito: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  Oberthur COSMO HPP 0 (Vista: Registry32)
+[2026-05-29 01:24:00] Backup realizado para: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  Oberthur COSMO I
+[2026-05-29 01:24:00] Clave eliminada con exito: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  Oberthur COSMO I (Vista: Registry32)
+[2026-05-29 01:24:00] Backup realizado para: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  Oberthur COSMO I 1
+[2026-05-29 01:24:00] Clave eliminada con exito: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  Oberthur COSMO I 1 (Vista: Registry32)
+[2026-05-29 01:24:00] Backup realizado para: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  Oberthur COSMO I 2
+[2026-05-29 01:24:00] Clave eliminada con exito: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  Oberthur COSMO I 2 (Vista: Registry32)
+[2026-05-29 01:24:00] Backup realizado para: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  Oberthur COSMO I G
+[2026-05-29 01:24:00] Clave eliminada con exito: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  Oberthur COSMO I G (Vista: Registry32)
+[2026-05-29 01:24:00] Backup realizado para: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  Oberthur COSMO ICSM 2018
+[2026-05-29 01:24:00] Clave eliminada con exito: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  Oberthur COSMO ICSM 2018 (Vista: Registry32)
+[2026-05-29 01:24:00] Backup realizado para: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  Oberthur COSMO ICSM 2019
+[2026-05-29 01:24:00] Clave eliminada con exito: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  Oberthur COSMO ICSM 2019 (Vista: Registry32)
+[2026-05-29 01:24:00] Backup realizado para: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  Oberthur COSMO SM 0
+[2026-05-29 01:24:00] Clave eliminada con exito: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  Oberthur COSMO SM 0 (Vista: Registry32)
+[2026-05-29 01:24:00] Backup realizado para: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  Oberthur COSMO SMX 0
+[2026-05-29 01:24:00] Clave eliminada con exito: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  Oberthur COSMO SMX 0 (Vista: Registry32)
+[2026-05-29 01:24:00] Backup realizado para: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  PIV  1
+[2026-05-29 01:24:00] Clave eliminada con exito: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  PIV  1 (Vista: Registry32)
+[2026-05-29 01:24:00] Backup realizado para: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  PIV  2
+[2026-05-29 01:24:00] Clave eliminada con exito: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  PIV  2 (Vista: Registry32)
+[2026-05-29 01:24:00] Backup realizado para: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  PIV  8.1
+[2026-05-29 01:24:00] Clave eliminada con exito: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  PIV  8.1 (Vista: Registry32)
+[2026-05-29 01:24:00] Backup realizado para: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  PIV  prod v8.1 CLESS 128U
+[2026-05-29 01:24:00] Clave eliminada con exito: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  PIV  prod v8.1 CLESS 128U (Vista: Registry32)
+[2026-05-29 01:24:00] Backup realizado para: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  PIV  v8.0 CLESS 122
+[2026-05-29 01:24:00] Clave eliminada con exito: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  PIV  v8.0 CLESS 122 (Vista: Registry32)
+[2026-05-29 01:24:00] Backup realizado para: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  PIV  v8.1 CLESS 122
+[2026-05-29 01:24:00] Clave eliminada con exito: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  PIV  v8.1 CLESS 122 (Vista: Registry32)
+[2026-05-29 01:24:00] Backup realizado para: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  PIV  v8.1 CLESS 128U
+[2026-05-29 01:24:00] Clave eliminada con exito: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  PIV  v8.1 CLESS 128U (Vista: Registry32)
+[2026-05-29 01:24:00] Backup realizado para: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  TS-CNS-SIEMENS  0
+[2026-05-29 01:24:00] Clave eliminada con exito: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\  TS-CNS-SIEMENS  0 (Vista: Registry32)
+[2026-05-29 01:24:00] Backup realizado para: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\Bit4id AC2014 CL
+[2026-05-29 01:24:00] Clave eliminada con exito: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\Bit4id AC2014 CL (Vista: Registry32)
+[2026-05-29 01:24:00] Backup realizado para: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\Bit4id Athena GEN
+[2026-05-29 01:24:00] Clave eliminada con exito: LocalMachine\SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\Bit4id Athena GEN (Vista: Registry32)
+[2026-05-29 01:24:00] SCardSvr: Deteniendo...
+[2026-05-29 01:24:10] SCardSvr ERROR: El tiempo de espera ha transcurrido y no se ha completado la operación.
+[2026-05-29 01:24:10] CertPropSvc: En ejecución.
+[2026-05-29 01:24:10] HKCU: Escrito modo DNIe → ciamd.dll
+[2026-05-29 01:24:10] Estrategia HKCU: OK
+[2026-05-29 01:24:10] SCardSvr: Deteniendo...
+[2026-05-29 01:24:21] SCardSvr ERROR: El tiempo de espera ha transcurrido y no se ha completado la operación.
+[2026-05-29 01:24:21] HKLM [Registry64]: Clave no encontrada.
+[2026-05-29 01:24:21] HKLM [Registry32]: Clave no encontrada.
+[2026-05-29 01:24:21] SCardSvr: Deteniendo...
+[2026-05-29 01:24:31] SCardSvr ERROR: El tiempo de espera ha transcurrido y no se ha completado la operación.
+[2026-05-29 01:24:37] >>> Comando recibido: DNIE
+[2026-05-29 01:24:37] Activando modo: DNIe
+[2026-05-29 01:24:37] Limpiando claves de registro de Bit4id que causan conflicto...
+[2026-05-29 01:24:37] CertPropSvc: Deteniendo...
+[2026-05-29 01:24:37] CertPropSvc: Detenido.
+[2026-05-29 01:24:37] SCardSvr: Deteniendo...
+[2026-05-29 01:24:39] >>> Comando recibido: RESET
+[2026-05-29 01:24:39] Activando modo: Token
+[2026-05-29 01:24:39] No hay backups de claves de registro Bit4id para restaurar.
+[2026-05-29 01:24:39] HKCU: Override eliminado → HKLM de Bit4id dominará.
+[2026-05-29 01:24:39] Estrategia HKCU: OK
+[2026-05-29 01:24:39] SCardSvr: Deteniendo...
+[2026-05-29 01:24:49] SCardSvr ERROR: El tiempo de espera ha transcurrido y no se ha completado la operación.
+[2026-05-29 01:24:49] HKLM [Registry64]: Clave no encontrada.
+[2026-05-29 01:24:49] HKLM [Registry32]: Clave no encontrada.
+[2026-05-29 01:24:49] SCardSvr: Deteniendo...
+[2026-05-29 01:24:59] SCardSvr ERROR: El tiempo de espera ha transcurrido y no se ha completado la operación.
+[2026-05-29 01:36:00] >>> Comando recibido: DNIE
+[2026-05-29 01:36:00] Activando modo: DNIe
+[2026-05-29 01:36:00] Limpiando claves de registro de Bit4id que causan conflicto...
+[2026-05-29 01:36:00] SCardSvr: Deteniendo...
+[2026-05-29 01:36:06] >>> Comando recibido: DNIE
+[2026-05-29 01:36:06] Activando modo: DNIe
+[2026-05-29 01:36:06] Limpiando claves de registro de Bit4id que causan conflicto...
+[2026-05-29 01:36:06] SCardSvr: Deteniendo...
+[2026-05-29 01:36:11] >>> Comando recibido: DNIE
+[2026-05-29 01:36:11] Activando modo: DNIe
+[2026-05-29 01:36:11] Limpiando claves de registro de Bit4id que causan conflicto...
+[2026-05-29 01:36:11] SCardSvr: Deteniendo...
+[2026-05-29 01:36:12] >>> Comando recibido: DNIE
+[2026-05-29 01:36:12] Activando modo: DNIe
+[2026-05-29 01:36:12] Limpiando claves de registro de Bit4id que causan conflicto...
+[2026-05-29 01:36:12] SCardSvr: Deteniendo...
+[2026-05-29 01:36:21] >>> Comando recibido: DNIE
+[2026-05-29 01:36:21] Activando modo: DNIe
+[2026-05-29 01:36:21] Limpiando claves de registro de Bit4id que causan conflicto...
+[2026-05-29 01:36:21] SCardSvr: Deteniendo...
+[2026-05-29 01:36:28] >>> Comando recibido: DNIE
+[2026-05-29 01:36:28] Activando modo: DNIe
+[2026-05-29 01:36:28] Limpiando claves de registro de Bit4id que causan conflicto...
+[2026-05-29 01:36:28] SCardSvr: Deteniendo...
+[2026-05-29 01:36:30] >>> Comando recibido: RESET
+[2026-05-29 01:36:30] Activando modo: Token
+[2026-05-29 01:36:30] No hay backups de claves de registro Bit4id para restaurar.
+[2026-05-29 01:36:30] HKCU: Override eliminado → HKLM de Bit4id dominará.
+[2026-05-29 01:36:30] Estrategia HKCU: OK
+[2026-05-29 01:36:30] SCardSvr: Deteniendo...
+[2026-05-29 01:36:35] >>> Comando recibido: DNIE
+[2026-05-29 01:36:35] Activando modo: DNIe
+[2026-05-29 01:36:35] Limpiando claves de registro de Bit4id que causan conflicto...
+[2026-05-29 01:36:35] SCardSvr: Deteniendo...
+[2026-05-29 01:36:39] >>> Comando recibido: DNIE
+[2026-05-29 01:36:39] Activando modo: DNIe
+[2026-05-29 01:36:39] Limpiando claves de registro de Bit4id que causan conflicto...
+[2026-05-29 01:36:39] SCardSvr: Deteniendo...
+[2026-05-29 01:36:45] >>> Comando recibido: DNIE
+[2026-05-29 01:36:45] Activando modo: DNIe
+[2026-05-29 01:36:45] Limpiando claves de registro de Bit4id que causan conflicto...
+[2026-05-29 01:36:45] SCardSvr: Deteniendo...
+[2026-05-29 01:36:50] >>> Comando recibido: DNIE
+[2026-05-29 01:36:50] Activando modo: DNIe
+[2026-05-29 01:36:50] Limpiando claves de registro de Bit4id que causan conflicto...
+[2026-05-29 01:36:50] SCardSvr: Deteniendo...
+[2026-05-29 01:36:52] >>> Comando recibido: RESET
+[2026-05-29 01:36:52] Activando modo: Token
+[2026-05-29 01:36:52] No hay backups de claves de registro Bit4id para restaurar.
+[2026-05-29 01:36:52] HKCU: Override eliminado → HKLM de Bit4id dominará.
+[2026-05-29 01:36:52] Estrategia HKCU: OK
+[2026-05-29 01:36:52] SCardSvr: Deteniendo...
+[2026-05-29 01:37:02] SCardSvr ERROR: El tiempo de espera ha transcurrido y no se ha completado la operación.
+[2026-05-29 01:37:02] HKLM [Registry64]: Clave no encontrada.
+[2026-05-29 01:37:02] HKLM [Registry32]: Clave no encontrada.
+[2026-05-29 01:37:02] SCardSvr: Deteniendo...
+[2026-05-29 01:37:07] >>> Comando recibido: DNIE
+[2026-05-29 01:37:07] Activando modo: DNIe
+[2026-05-29 01:37:07] Limpiando claves de registro de Bit4id que causan conflicto...
+[2026-05-29 01:37:07] SCardSvr: Deteniendo...
+[2026-05-29 01:37:18] SCardSvr ERROR: El tiempo de espera ha transcurrido y no se ha completado la operación.
+[2026-05-29 01:37:18] SCardSvr: Deteniendo...
+[2026-05-29 01:37:28] SCardSvr ERROR: El tiempo de espera ha transcurrido y no se ha completado la operación.
+[2026-05-29 01:37:28] CertPropSvc: En ejecución.
+[2026-05-29 01:37:28] HKCU: Escrito modo DNIe → ciamd.dll
+[2026-05-29 01:37:28] Estrategia HKCU: OK
+[2026-05-29 01:37:28] SCardSvr: Deteniendo...
+[2026-05-29 01:37:31] >>> Comando recibido: DNIE
+[2026-05-29 01:37:31] Activando modo: DNIe
+[2026-05-29 01:37:31] Limpiando claves de registro de Bit4id que causan conflicto...
+[2026-05-29 01:37:31] CertPropSvc: Deteniendo...
+[2026-05-29 01:37:33] CertPropSvc: Detenido.
+[2026-05-29 01:37:33] SCardSvr: Deteniendo...
+[2026-05-29 01:37:35] >>> Comando recibido: DNIE
+[2026-05-29 01:37:35] Activando modo: DNIe
+[2026-05-29 01:37:35] Limpiando claves de registro de Bit4id que causan conflicto...
+[2026-05-29 01:37:35] SCardSvr: Deteniendo...
+[2026-05-29 01:37:39] >>> Comando recibido: DNIE
+[2026-05-29 01:37:39] Activando modo: DNIe
+[2026-05-29 01:37:39] Limpiando claves de registro de Bit4id que causan conflicto...
+[2026-05-29 01:37:39] SCardSvr: Deteniendo...
+[2026-05-29 01:37:42] >>> Comando recibido: DNIE
+[2026-05-29 01:37:42] Activando modo: DNIe
+[2026-05-29 01:37:42] Limpiando claves de registro de Bit4id que causan conflicto...
+[2026-05-29 01:37:42] SCardSvr: Deteniendo...
+[2026-05-29 01:37:47] >>> Comando recibido: RESET
+[2026-05-29 01:37:47] Activando modo: Token
+[2026-05-29 01:37:47] No hay backups de claves de registro Bit4id para restaurar.
+[2026-05-29 01:37:47] HKCU: Override eliminado → HKLM de Bit4id dominará.
+[2026-05-29 01:37:47] Estrategia HKCU: OK
+[2026-05-29 01:37:47] SCardSvr: Deteniendo...
+[2026-05-29 01:37:50] >>> Comando recibido: DNIE
+[2026-05-29 01:37:50] Activando modo: DNIe
+[2026-05-29 01:37:50] Limpiando claves de registro de Bit4id que causan conflicto...
+[2026-05-29 01:37:50] SCardSvr: Deteniendo...
+[2026-05-29 01:37:54] >>> Comando recibido: DNIE
+[2026-05-29 01:37:54] Activando modo: DNIe
+[2026-05-29 01:37:54] Limpiando claves de registro de Bit4id que causan conflicto...
+[2026-05-29 01:37:54] SCardSvr: Deteniendo...
+[2026-05-29 01:38:00] >>> Comando recibido: DNIE
+[2026-05-29 01:38:00] Activando modo: DNIe
+[2026-05-29 01:38:00] Limpiando claves de registro de Bit4id que causan conflicto...
+[2026-05-29 01:38:00] SCardSvr: Deteniendo...
+[2026-05-29 01:38:02] >>> Comando recibido: RESET
+[2026-05-29 01:38:02] Activando modo: Token
+[2026-05-29 01:38:02] No hay backups de claves de registro Bit4id para restaurar.
+[2026-05-29 01:38:02] HKCU: Override eliminado → HKLM de Bit4id dominará.
+[2026-05-29 01:38:02] Estrategia HKCU: OK
+[2026-05-29 01:38:02] SCardSvr: Deteniendo...
+[2026-05-29 01:38:11] >>> Comando recibido: DNIE
+[2026-05-29 01:38:11] Activando modo: DNIe
+[2026-05-29 01:38:11] Limpiando claves de registro de Bit4id que causan conflicto...
+[2026-05-29 01:38:11] SCardSvr: Deteniendo...
+[2026-05-29 01:38:20] >>> Comando recibido: DNIE
+[2026-05-29 01:38:20] Activando modo: DNIe
+[2026-05-29 01:38:20] Limpiando claves de registro de Bit4id que causan conflicto...
+[2026-05-29 01:38:20] SCardSvr: Deteniendo...
+[2026-05-29 01:38:23] >>> Comando recibido: DNIE
+[2026-05-29 01:38:23] Activando modo: DNIe
+[2026-05-29 01:38:23] Limpiando claves de registro de Bit4id que causan conflicto...
+[2026-05-29 01:38:23] SCardSvr: Deteniendo...
+[2026-05-29 01:38:27] >>> Comando recibido: RESET
+[2026-05-29 01:38:27] Activando modo: Token
+[2026-05-29 01:38:27] No hay backups de claves de registro Bit4id para restaurar.
+[2026-05-29 01:38:27] HKCU: Override eliminado → HKLM de Bit4id dominará.
+[2026-05-29 01:38:27] Estrategia HKCU: OK
+[2026-05-29 01:38:27] SCardSvr: Deteniendo...
+[2026-05-29 01:38:32] >>> Comando recibido: DNIE
+[2026-05-29 01:38:32] Activando modo: DNIe
+[2026-05-29 01:38:32] Limpiando claves de registro de Bit4id que causan conflicto...
+[2026-05-29 01:38:32] SCardSvr: Deteniendo...
+[2026-05-29 01:38:40] >>> Comando recibido: DNIE
+[2026-05-29 01:38:40] Activando modo: DNIe
+[2026-05-29 01:38:40] Limpiando claves de registro de Bit4id que causan conflicto...
+[2026-05-29 01:38:40] SCardSvr: Deteniendo...
+[2026-05-29 01:38:44] >>> Comando recibido: DNIE
+[2026-05-29 01:38:44] Activando modo: DNIe
+[2026-05-29 01:38:44] Limpiando claves de registro de Bit4id que causan conflicto...
+[2026-05-29 01:38:44] SCardSvr: Deteniendo...
+[2026-05-29 01:38:54] SCardSvr ERROR: El tiempo de espera ha transcurrido y no se ha completado la operación.
+[2026-05-29 01:38:54] SCardSvr: Deteniendo...
+[2026-05-29 01:39:04] SCardSvr ERROR: El tiempo de espera ha transcurrido y no se ha completado la operación.
+[2026-05-29 01:39:05] CertPropSvc: En ejecución.
+[2026-05-29 01:39:05] HKCU: Escrito modo DNIe → ciamd.dll
+[2026-05-29 01:39:05] Estrategia HKCU: OK
+[2026-05-29 01:39:05] SCardSvr: Deteniendo...
+[2026-05-29 01:39:15] SCardSvr ERROR: El tiempo de espera ha transcurrido y no se ha completado la operación.
+[2026-05-29 01:39:15] HKLM [Registry64]: Clave no encontrada.
+[2026-05-29 01:39:15] HKLM [Registry32]: Clave no encontrada.
+[2026-05-29 01:39:15] SCardSvr: Deteniendo...
+[2026-05-29 01:39:25] SCardSvr ERROR: El tiempo de espera ha transcurrido y no se ha completado la operación.
+[2026-05-29 01:39:58] >>> Comando recibido: DNIE
+[2026-05-29 01:39:58] Activando modo: DNIe
+[2026-05-29 01:39:58] Limpiando claves de registro de Bit4id que causan conflicto...
+[2026-05-29 01:39:58] CertPropSvc: Deteniendo...
+[2026-05-29 01:39:58] CertPropSvc: Detenido.
+[2026-05-29 01:39:58] SCardSvr: Deteniendo...
+[2026-05-29 01:39:58] SCardSvr: Detenido.
+[2026-05-29 01:39:58] Backup realizado para: CurrentUser\Software\Microsoft\Cryptography\Calais\SmartCards\  NXP IAS C18
+[2026-05-29 01:39:58] Clave eliminada con exito: CurrentUser\Software\Microsoft\Cryptography\Calais\SmartCards\  NXP IAS C18 (Vista: Default)
+[2026-05-29 01:39:58] SCardSvr: Iniciando...
+[2026-05-29 01:39:58] SCardSvr: En ejecución.
+[2026-05-29 01:39:59] CertPropSvc: En ejecución.
+[2026-05-29 01:39:59] HKCU: Escrito modo DNIe → ciamd.dll
+[2026-05-29 01:39:59] Estrategia HKCU: OK
+[2026-05-29 01:39:59] SCardSvr: Deteniendo...
+[2026-05-29 01:40:09] SCardSvr ERROR: El tiempo de espera ha transcurrido y no se ha completado la operación.
+[2026-05-29 01:40:09] HKLM [Registry64]: Clave no encontrada.
+[2026-05-29 01:40:09] HKLM [Registry32]: Clave no encontrada.
+[2026-05-29 01:40:09] SCardSvr: Deteniendo...
+[2026-05-29 01:40:19] SCardSvr ERROR: El tiempo de espera ha transcurrido y no se ha completado la operación.
+[2026-05-29 01:40:20] >>> Comando recibido: DNIE
+[2026-05-29 01:40:20] Activando modo: DNIe
+[2026-05-29 01:40:20] Limpiando claves de registro de Bit4id que causan conflicto...
+[2026-05-29 01:40:20] CertPropSvc: Deteniendo...
+[2026-05-29 01:40:20] CertPropSvc: Detenido.
+[2026-05-29 01:40:20] SCardSvr: Deteniendo...
+[2026-05-29 01:40:22] >>> Comando recibido: RESET
+[2026-05-29 01:40:22] Activando modo: Token
+[2026-05-29 01:40:22] No hay backups de claves de registro Bit4id para restaurar.
+[2026-05-29 01:40:22] HKCU: Override eliminado → HKLM de Bit4id dominará.
+[2026-05-29 01:40:22] Estrategia HKCU: OK
+[2026-05-29 01:40:22] SCardSvr: Deteniendo...
+[2026-05-29 01:40:22] SCardSvr: Detenido.
+[2026-05-29 01:40:22] HKLM [Registry64]: Clave no encontrada.
+[2026-05-29 01:40:22] HKLM [Registry32]: Clave no encontrada.
+[2026-05-29 01:40:22] SCardSvr: Iniciando...
+[2026-05-29 01:40:22] SCardSvr: En ejecución.
+[2026-05-29 01:40:49] >>> Comando recibido: DNIE
+[2026-05-29 01:40:49] Activando modo: DNIe
+[2026-05-29 01:40:49] Limpiando claves de registro de Bit4id que causan conflicto...
+[2026-05-29 01:40:49] SCardSvr: Deteniendo...
+[2026-05-29 01:40:49] SCardSvr: Detenido.
+[2026-05-29 01:40:49] SCardSvr: Iniciando...
+[2026-05-29 01:40:49] SCardSvr: En ejecución.
+[2026-05-29 01:40:50] CertPropSvc: En ejecución.
+[2026-05-29 01:40:50] HKCU: Escrito modo DNIe → ciamd.dll
+[2026-05-29 01:40:50] Estrategia HKCU: OK
+[2026-05-29 01:40:50] SCardSvr: Deteniendo...
+[2026-05-29 01:41:00] SCardSvr ERROR: El tiempo de espera ha transcurrido y no se ha completado la operación.
+[2026-05-29 01:41:00] HKLM [Registry64]: Clave no encontrada.
+[2026-05-29 01:41:00] HKLM [Registry32]: Clave no encontrada.
+[2026-05-29 01:41:00] SCardSvr: Deteniendo...
+[2026-05-29 01:41:00] SCardSvr: Detenido.
+[2026-05-29 01:41:00] SCardSvr: Iniciando...
+[2026-05-29 01:41:00] SCardSvr: En ejecución.
+[2026-05-29 01:41:07] >>> Comando recibido: DNIE
+[2026-05-29 01:41:07] Activando modo: DNIe
+[2026-05-29 01:41:07] Limpiando claves de registro de Bit4id que causan conflicto...
+[2026-05-29 01:41:07] CertPropSvc: Deteniendo...
+[2026-05-29 01:41:07] CertPropSvc: Detenido.
+[2026-05-29 01:41:07] SCardSvr: Deteniendo...
+[2026-05-29 01:41:07] SCardSvr: Detenido.
+[2026-05-29 01:41:07] Backup realizado para: CurrentUser\Software\Microsoft\Cryptography\Calais\SmartCards\  NXP IAS C18
+[2026-05-29 01:41:07] Clave eliminada con exito: CurrentUser\Software\Microsoft\Cryptography\Calais\SmartCards\  NXP IAS C18 (Vista: Default)
+[2026-05-29 01:41:07] SCardSvr: Iniciando...
+[2026-05-29 01:41:07] SCardSvr: En ejecución.
+[2026-05-29 01:41:08] CertPropSvc: En ejecución.
+[2026-05-29 01:41:08] HKCU: Escrito modo DNIe → ciamd.dll
+[2026-05-29 01:41:08] Estrategia HKCU: OK
+[2026-05-29 01:41:08] SCardSvr: Deteniendo...
+[2026-05-29 01:41:11] >>> Comando recibido: DNIE
+[2026-05-29 01:41:11] Activando modo: DNIe
+[2026-05-29 01:41:11] Limpiando claves de registro de Bit4id que causan conflicto...
+[2026-05-29 01:41:11] CertPropSvc: Deteniendo...
+[2026-05-29 01:41:11] CertPropSvc: Detenido.
+[2026-05-29 01:41:11] SCardSvr: Deteniendo...
+[2026-05-29 01:41:15] >>> Comando recibido: DNIE
+[2026-05-29 01:41:15] Activando modo: DNIe
+[2026-05-29 01:41:15] Limpiando claves de registro de Bit4id que causan conflicto...
+[2026-05-29 01:41:15] SCardSvr: Deteniendo...
+[2026-05-29 01:41:16] SCardSvr: Detenido.
+[2026-05-29 01:41:16] Backup realizado para: CurrentUser\Software\Microsoft\Cryptography\Calais\SmartCards\  NXP IAS C18
+[2026-05-29 01:41:16] Clave eliminada con exito: CurrentUser\Software\Microsoft\Cryptography\Calais\SmartCards\  NXP IAS C18 (Vista: Default)
+[2026-05-29 01:41:16] SCardSvr: Iniciando...
+[2026-05-29 01:41:16] SCardSvr: En ejecución.
+[2026-05-29 01:41:16] CertPropSvc: En ejecución.
+[2026-05-29 01:41:16] HKCU: Escrito modo DNIe → ciamd.dll
+[2026-05-29 01:41:16] Estrategia HKCU: OK
+[2026-05-29 01:41:16] SCardSvr: Deteniendo...
+[2026-05-29 01:41:21] >>> Comando recibido: DNIE
+[2026-05-29 01:41:21] Activando modo: DNIe
+[2026-05-29 01:41:21] Limpiando claves de registro de Bit4id que causan conflicto...
+[2026-05-29 01:41:21] CertPropSvc: Deteniendo...
+[2026-05-29 01:41:21] CertPropSvc: Detenido.
+[2026-05-29 01:41:21] SCardSvr: Deteniendo...
+[2026-05-29 01:41:21] SCardSvr: Detenido.
+[2026-05-29 01:41:21] Backup realizado para: CurrentUser\Software\Microsoft\Cryptography\Calais\SmartCards\  NXP IAS C18
+[2026-05-29 01:41:21] Clave eliminada con exito: CurrentUser\Software\Microsoft\Cryptography\Calais\SmartCards\  NXP IAS C18 (Vista: Default)
+[2026-05-29 01:41:21] SCardSvr: Iniciando...
+[2026-05-29 01:41:21] SCardSvr: En ejecución.
+[2026-05-29 01:41:22] CertPropSvc: En ejecución.
+[2026-05-29 01:41:22] HKCU: Escrito modo DNIe → ciamd.dll
+[2026-05-29 01:41:22] Estrategia HKCU: OK
+[2026-05-29 01:41:22] SCardSvr: Deteniendo...
+[2026-05-29 01:41:32] SCardSvr ERROR: El tiempo de espera ha transcurrido y no se ha completado la operación.
+[2026-05-29 01:41:32] HKLM [Registry64]: Clave no encontrada.
+[2026-05-29 01:41:32] HKLM [Registry32]: Clave no encontrada.
+[2026-05-29 01:41:32] SCardSvr: Deteniendo...
+[2026-05-29 01:41:42] SCardSvr ERROR: El tiempo de espera ha transcurrido y no se ha completado la operación.
+[2026-05-29 01:41:44] >>> Comando recibido: DNIE
+[2026-05-29 01:41:44] Activando modo: DNIe
+[2026-05-29 01:41:44] Limpiando claves de registro de Bit4id que causan conflicto...
+[2026-05-29 01:41:44] CertPropSvc: Deteniendo...
+[2026-05-29 01:41:45] CertPropSvc: Detenido.
+[2026-05-29 01:41:45] SCardSvr: Deteniendo...
+[2026-05-29 01:41:46] >>> Comando recibido: RESET
+[2026-05-29 01:41:46] Activando modo: Token
+[2026-05-29 01:41:46] No hay backups de claves de registro Bit4id para restaurar.
+[2026-05-29 01:41:46] HKCU: Override eliminado → HKLM de Bit4id dominará.
+[2026-05-29 01:41:46] Estrategia HKCU: OK
+[2026-05-29 01:41:46] SCardSvr: Deteniendo...
+[2026-05-29 01:41:47] SCardSvr: Detenido.
+[2026-05-29 01:41:47] HKLM [Registry64]: Clave no encontrada.
+[2026-05-29 01:41:47] HKLM [Registry32]: Clave no encontrada.
+[2026-05-29 01:41:47] SCardSvr: Iniciando...
+[2026-05-29 01:41:47] SCardSvr: En ejecución.
+[2026-05-29 01:41:59] >>> Comando recibido: TOKEN
+[2026-05-29 01:41:59] Activando modo: Token
+[2026-05-29 01:41:59] No hay backups de claves de registro Bit4id para restaurar.
+[2026-05-29 01:41:59] HKCU: Override eliminado → HKLM de Bit4id dominará.
+[2026-05-29 01:41:59] Estrategia HKCU: OK
+[2026-05-29 01:41:59] SCardSvr: Deteniendo...
+[2026-05-29 01:42:05] >>> Comando recibido: TOKEN
+[2026-05-29 01:42:05] Activando modo: Token
+[2026-05-29 01:42:05] No hay backups de claves de registro Bit4id para restaurar.
+[2026-05-29 01:42:05] HKCU: Override eliminado → HKLM de Bit4id dominará.
+[2026-05-29 01:42:05] Estrategia HKCU: OK
+[2026-05-29 01:42:05] SCardSvr: Deteniendo...
+[2026-05-29 01:42:05] SCardSvr: Detenido.
+[2026-05-29 01:42:05] HKLM [Registry64]: Clave no encontrada.
+[2026-05-29 01:42:05] HKLM [Registry32]: Clave no encontrada.
+[2026-05-29 01:42:05] SCardSvr: Iniciando...
+[2026-05-29 01:42:05] SCardSvr: En ejecución.
+[2026-05-29 01:42:11] >>> Comando recibido: TOKEN
+[2026-05-29 01:42:11] Activando modo: Token
+[2026-05-29 01:42:11] No hay backups de claves de registro Bit4id para restaurar.
+[2026-05-29 01:42:11] HKCU: Override eliminado → HKLM de Bit4id dominará.
+[2026-05-29 01:42:11] Estrategia HKCU: OK
+[2026-05-29 01:42:11] SCardSvr: Deteniendo...
+[2026-05-29 01:42:11] SCardSvr: Detenido.
+[2026-05-29 01:42:11] HKLM [Registry64]: Clave no encontrada.
+[2026-05-29 01:42:11] HKLM [Registry32]: Clave no encontrada.
+[2026-05-29 01:42:11] SCardSvr: Iniciando...
+[2026-05-29 01:42:11] SCardSvr: En ejecución.
+[2026-05-29 01:42:15] >>> Comando recibido: TOKEN
+[2026-05-29 01:42:15] Activando modo: Token
+[2026-05-29 01:42:15] No hay backups de claves de registro Bit4id para restaurar.
+[2026-05-29 01:42:15] HKCU: Override eliminado → HKLM de Bit4id dominará.
+[2026-05-29 01:42:15] Estrategia HKCU: OK
+[2026-05-29 01:42:15] SCardSvr: Deteniendo...
+[2026-05-29 01:42:16] SCardSvr: Detenido.
+[2026-05-29 01:42:16] HKLM [Registry64]: Clave no encontrada.
+[2026-05-29 01:42:16] HKLM [Registry32]: Clave no encontrada.
+[2026-05-29 01:42:16] SCardSvr: Iniciando...
+[2026-05-29 01:42:16] SCardSvr: En ejecución.
+[2026-05-29 01:42:25] >>> Comando recibido: RESET
+[2026-05-29 01:42:25] Activando modo: Token
+[2026-05-29 01:42:25] No hay backups de claves de registro Bit4id para restaurar.
+[2026-05-29 01:42:25] HKCU: Override eliminado → HKLM de Bit4id dominará.
+[2026-05-29 01:42:25] Estrategia HKCU: OK
+[2026-05-29 01:42:25] SCardSvr: Deteniendo...
+[2026-05-29 01:42:25] SCardSvr: Detenido.
+[2026-05-29 01:42:25] HKLM [Registry64]: Clave no encontrada.
+[2026-05-29 01:42:25] HKLM [Registry32]: Clave no encontrada.
+[2026-05-29 01:42:25] SCardSvr: Iniciando...
+[2026-05-29 01:42:25] SCardSvr: En ejecución.
+[2026-05-29 01:42:34] >>> Comando recibido: DNIE
+[2026-05-29 01:42:34] Activando modo: DNIe
+[2026-05-29 01:42:34] Limpiando claves de registro de Bit4id que causan conflicto...
+[2026-05-29 01:42:34] SCardSvr: Deteniendo...
+[2026-05-29 01:42:34] SCardSvr: Detenido.
+[2026-05-29 01:42:34] SCardSvr: Iniciando...
+[2026-05-29 01:42:35] SCardSvr: En ejecución.
+[2026-05-29 01:42:35] CertPropSvc: En ejecución.
+[2026-05-29 01:42:35] HKCU: Escrito modo DNIe → ciamd.dll
+[2026-05-29 01:42:35] Estrategia HKCU: OK
+[2026-05-29 01:42:35] SCardSvr: Deteniendo...
+[2026-05-29 01:42:45] SCardSvr ERROR: El tiempo de espera ha transcurrido y no se ha completado la operación.
+[2026-05-29 01:42:45] HKLM [Registry64]: Clave no encontrada.
+[2026-05-29 01:42:45] HKLM [Registry32]: Clave no encontrada.
+[2026-05-29 01:42:45] SCardSvr: Deteniendo...
+[2026-05-29 01:42:50] >>> Comando recibido: DNIE
+[2026-05-29 01:42:50] Activando modo: DNIe
+[2026-05-29 01:42:50] Limpiando claves de registro de Bit4id que causan conflicto...
+[2026-05-29 01:42:50] CertPropSvc: Deteniendo...
+[2026-05-29 01:42:50] CertPropSvc: Detenido.
+[2026-05-29 01:42:50] SCardSvr: Deteniendo...
+[2026-05-29 01:42:50] SCardSvr: Detenido.
+[2026-05-29 01:42:50] Backup realizado para: CurrentUser\Software\Microsoft\Cryptography\Calais\SmartCards\  NXP IAS C18
+[2026-05-29 01:42:50] Clave eliminada con exito: CurrentUser\Software\Microsoft\Cryptography\Calais\SmartCards\  NXP IAS C18 (Vista: Default)
+[2026-05-29 01:42:50] SCardSvr: Iniciando...
+[2026-05-29 01:42:50] SCardSvr: En ejecución.
+[2026-05-29 01:42:51] CertPropSvc: En ejecución.
+[2026-05-29 01:42:51] HKCU: Escrito modo DNIe → ciamd.dll
+[2026-05-29 01:42:51] Estrategia HKCU: OK
+[2026-05-29 01:42:51] SCardSvr: Deteniendo...
+[2026-05-29 01:42:56] >>> Comando recibido: RESET
+[2026-05-29 01:42:56] Activando modo: Token
+[2026-05-29 01:42:56] No hay backups de claves de registro Bit4id para restaurar.
+[2026-05-29 01:42:56] HKCU: Override eliminado → HKLM de Bit4id dominará.
+[2026-05-29 01:42:56] Estrategia HKCU: OK
+[2026-05-29 01:42:56] SCardSvr: Deteniendo...
+[2026-05-29 01:43:04] >>> Comando recibido: DNIE
+[2026-05-29 01:43:04] Activando modo: DNIe
+[2026-05-29 01:43:04] Limpiando claves de registro de Bit4id que causan conflicto...
+[2026-05-29 01:43:04] CertPropSvc: Deteniendo...
+[2026-05-29 01:43:04] CertPropSvc: Detenido.
+[2026-05-29 01:43:04] SCardSvr: Deteniendo...
+[2026-05-29 01:43:04] SCardSvr: Detenido.
+[2026-05-29 01:43:04] SCardSvr: Iniciando...
+[2026-05-29 01:43:04] SCardSvr: En ejecución.
+[2026-05-29 01:43:05] CertPropSvc: En ejecución.
+[2026-05-29 01:43:05] HKCU: Escrito modo DNIe → ciamd.dll
+[2026-05-29 01:43:05] Estrategia HKCU: OK
+[2026-05-29 01:43:05] SCardSvr: Deteniendo...
+[2026-05-29 01:43:15] SCardSvr ERROR: El tiempo de espera ha transcurrido y no se ha completado la operación.
+[2026-05-29 01:43:15] HKLM [Registry64]: Clave no encontrada.
+[2026-05-29 01:43:15] HKLM [Registry32]: Clave no encontrada.
+[2026-05-29 01:43:15] SCardSvr: Deteniendo...
+[2026-05-29 01:43:15] SCardSvr: Detenido.
+[2026-05-29 01:43:15] SCardSvr: Iniciando...
+[2026-05-29 01:43:15] SCardSvr: En ejecución.
+[2026-05-29 01:43:27] >>> Comando recibido: DNIE
+[2026-05-29 01:43:27] Activando modo: DNIe
+[2026-05-29 01:43:27] Limpiando claves de registro de Bit4id que causan conflicto...
+[2026-05-29 01:43:27] CertPropSvc: Deteniendo...
+[2026-05-29 01:43:27] CertPropSvc: Detenido.
+[2026-05-29 01:43:27] SCardSvr: Deteniendo...
+[2026-05-29 01:43:27] SCardSvr: Detenido.
+[2026-05-29 01:43:27] Backup realizado para: CurrentUser\Software\Microsoft\Cryptography\Calais\SmartCards\  NXP IAS C18
+[2026-05-29 01:43:27] Clave eliminada con exito: CurrentUser\Software\Microsoft\Cryptography\Calais\SmartCards\  NXP IAS C18 (Vista: Default)
+[2026-05-29 01:43:27] SCardSvr: Iniciando...
+[2026-05-29 01:43:27] SCardSvr: En ejecución.
+[2026-05-29 01:43:28] CertPropSvc: En ejecución.
+[2026-05-29 01:43:28] HKCU: Escrito modo DNIe → ciamd.dll
+[2026-05-29 01:43:28] Estrategia HKCU: OK
+[2026-05-29 01:43:28] SCardSvr: Deteniendo...
+[2026-05-29 01:43:29] >>> Comando recibido: RESET
+[2026-05-29 01:43:29] Activando modo: Token
+[2026-05-29 01:43:29] No hay backups de claves de registro Bit4id para restaurar.
+[2026-05-29 01:43:29] HKCU: Override eliminado → HKLM de Bit4id dominará.
+[2026-05-29 01:43:29] Estrategia HKCU: OK
+[2026-05-29 01:43:29] SCardSvr: Deteniendo...
+[2026-05-29 01:43:29] SCardSvr: Detenido.
+[2026-05-29 01:43:29] HKLM [Registry64]: Clave no encontrada.
+[2026-05-29 01:43:29] HKLM [Registry32]: Clave no encontrada.
+[2026-05-29 01:43:29] SCardSvr: Iniciando...
+[2026-05-29 01:43:30] SCardSvr: En ejecución.
+[2026-05-29 01:43:53] >>> Comando recibido: DNIE
+[2026-05-29 01:43:53] Activando modo: DNIe
+[2026-05-29 01:43:53] Limpiando claves de registro de Bit4id que causan conflicto...
+[2026-05-29 01:43:53] CertPropSvc: Deteniendo...
+[2026-05-29 01:43:53] CertPropSvc: Detenido.
+[2026-05-29 01:43:53] SCardSvr: Deteniendo...
+[2026-05-29 01:43:54] SCardSvr: Detenido.
+[2026-05-29 01:43:54] SCardSvr: Iniciando...
+[2026-05-29 01:43:54] SCardSvr: En ejecución.
+[2026-05-29 01:43:54] CertPropSvc: En ejecución.
+[2026-05-29 01:43:54] HKCU: Escrito modo DNIe → ciamd.dll
+[2026-05-29 01:43:54] Estrategia HKCU: OK
+[2026-05-29 01:43:54] SCardSvr: Deteniendo...
+[2026-05-29 01:44:01] >>> Comando recibido: TOKEN
+[2026-05-29 01:44:01] Activando modo: Token
+[2026-05-29 01:44:01] No hay backups de claves de registro Bit4id para restaurar.
+[2026-05-29 01:44:01] HKCU: Override eliminado → HKLM de Bit4id dominará.
+[2026-05-29 01:44:01] Estrategia HKCU: OK
+[2026-05-29 01:44:01] SCardSvr: Deteniendo...
+[2026-05-29 01:44:02] SCardSvr: Detenido.
+[2026-05-29 01:44:02] HKLM [Registry64]: Clave no encontrada.
+[2026-05-29 01:44:02] HKLM [Registry32]: Clave no encontrada.
+[2026-05-29 01:44:02] SCardSvr: Iniciando...
+[2026-05-29 01:44:02] SCardSvr: En ejecución.
+[2026-05-29 01:44:35] >>> Comando recibido: TOKEN
+[2026-05-29 01:44:35] Activando modo: Token
+[2026-05-29 01:44:35] No hay backups de claves de registro Bit4id para restaurar.
+[2026-05-29 01:44:35] HKCU: Override eliminado → HKLM de Bit4id dominará.
+[2026-05-29 01:44:35] Estrategia HKCU: OK
+[2026-05-29 01:44:35] SCardSvr: Deteniendo...
+[2026-05-29 01:44:35] SCardSvr: Detenido.
+[2026-05-29 01:44:35] HKLM [Registry64]: Clave no encontrada.
+[2026-05-29 01:44:35] HKLM [Registry32]: Clave no encontrada.
+[2026-05-29 01:44:35] SCardSvr: Iniciando...
+[2026-05-29 01:44:35] SCardSvr: En ejecución.
+[2026-05-29 01:44:43] >>> Comando recibido: TOKEN
+[2026-05-29 01:44:43] Activando modo: Token
+[2026-05-29 01:44:43] No hay backups de claves de registro Bit4id para restaurar.
+[2026-05-29 01:44:43] HKCU: Override eliminado → HKLM de Bit4id dominará.
+[2026-05-29 01:44:43] Estrategia HKCU: OK
+[2026-05-29 01:44:43] SCardSvr: Deteniendo...
+[2026-05-29 01:44:43] SCardSvr: Detenido.
+[2026-05-29 01:44:43] HKLM [Registry64]: Clave no encontrada.
+[2026-05-29 01:44:43] HKLM [Registry32]: Clave no encontrada.
+[2026-05-29 01:44:43] SCardSvr: Iniciando...
+[2026-05-29 01:44:43] SCardSvr: En ejecución.
+[2026-05-29 01:46:38] HKCU: Override eliminado → HKLM de Bit4id dominará.
+[2026-05-29 01:47:56] >>> Comando recibido: DNIE
+[2026-05-29 01:47:56] Activando modo: DNIe
+[2026-05-29 01:47:56] Limpiando claves de registro de Bit4id que causan conflicto...
+[2026-05-29 01:47:56] CertPropSvc: Deteniendo...
+[2026-05-29 01:47:57] CertPropSvc: Detenido.
+[2026-05-29 01:47:57] SCardSvr: Deteniendo...
+[2026-05-29 01:47:57] SCardSvr: Detenido.
+[2026-05-29 01:47:57] SCardSvr: Iniciando...
+[2026-05-29 01:47:57] SCardSvr: En ejecución.
+[2026-05-29 01:47:57] CertPropSvc: En ejecución.
+[2026-05-29 01:47:57] HKCU: Escrito modo DNIe → ciamd.dll
+[2026-05-29 01:47:57] Estrategia HKCU: OK
+[2026-05-29 01:47:57] SCardSvr: Deteniendo...
+[2026-05-29 01:48:07] SCardSvr ERROR: El tiempo de espera ha transcurrido y no se ha completado la operación.
+[2026-05-29 01:48:07] HKLM [Registry64]: Clave no encontrada.
+[2026-05-29 01:48:07] HKLM [Registry32]: Clave no encontrada.
+[2026-05-29 01:48:07] SCardSvr: Deteniendo...
+[2026-05-29 01:48:08] SCardSvr: Detenido.
+[2026-05-29 01:48:08] SCardSvr: Iniciando...
+[2026-05-29 01:48:08] SCardSvr: En ejecución.
+[2026-05-29 01:48:16] >>> Comando recibido: DNIE
+[2026-05-29 01:48:16] Activando modo: DNIe
+[2026-05-29 01:48:16] Limpiando claves de registro de Bit4id que causan conflicto...
+[2026-05-29 01:48:16] CertPropSvc: Deteniendo...
+[2026-05-29 01:48:17] CertPropSvc: Detenido.
+[2026-05-29 01:48:17] SCardSvr: Deteniendo...
+[2026-05-29 01:48:17] SCardSvr: Detenido.
+[2026-05-29 01:48:17] Backup realizado para: CurrentUser\Software\Microsoft\Cryptography\Calais\SmartCards\  NXP IAS C18
+[2026-05-29 01:48:17] Clave eliminada con exito: CurrentUser\Software\Microsoft\Cryptography\Calais\SmartCards\  NXP IAS C18 (Vista: Default)
+[2026-05-29 01:48:17] SCardSvr: Iniciando...
+[2026-05-29 01:48:17] SCardSvr: En ejecución.
+[2026-05-29 01:48:17] CertPropSvc: En ejecución.
+[2026-05-29 01:48:17] HKCU: Escrito modo DNIe → ciamd.dll
+[2026-05-29 01:48:17] Estrategia HKCU: OK
+[2026-05-29 01:48:17] SCardSvr: Deteniendo...
+[2026-05-29 01:48:22] >>> Comando recibido: RESET
+[2026-05-29 01:48:22] Activando modo: Token
+[2026-05-29 01:48:22] No hay backups de claves de registro Bit4id para restaurar.
+[2026-05-29 01:48:22] HKCU: Override eliminado → HKLM de Bit4id dominará.
+[2026-05-29 01:48:22] Estrategia HKCU: OK
+[2026-05-29 01:48:22] SCardSvr: Deteniendo...
+[2026-05-29 01:48:32] SCardSvr ERROR: El tiempo de espera ha transcurrido y no se ha completado la operación.
+[2026-05-29 01:48:32] HKLM [Registry64]: Clave no encontrada.
+[2026-05-29 01:48:32] HKLM [Registry32]: Clave no encontrada.
+[2026-05-29 01:48:32] SCardSvr: Deteniendo...
+[2026-05-29 01:48:32] SCardSvr: Detenido.
+[2026-05-29 01:48:32] SCardSvr: Iniciando...
+[2026-05-29 01:48:32] SCardSvr: En ejecución.
+[2026-05-29 01:48:45] >>> Comando recibido: DNIE
+[2026-05-29 01:48:45] Activando modo: DNIe
+[2026-05-29 01:48:45] Limpiando claves de registro de Bit4id que causan conflicto...
+[2026-05-29 01:48:45] CertPropSvc: Deteniendo...
+[2026-05-29 01:48:45] CertPropSvc: Detenido.
+[2026-05-29 01:48:45] SCardSvr: Deteniendo...
+[2026-05-29 01:48:45] SCardSvr: Detenido.
+[2026-05-29 01:48:45] SCardSvr: Iniciando...
+[2026-05-29 01:48:46] SCardSvr: En ejecución.
+[2026-05-29 01:48:46] CertPropSvc: En ejecución.
+[2026-05-29 01:48:46] HKCU: Escrito modo DNIe → ciamd.dll
+[2026-05-29 01:48:46] Estrategia HKCU: OK
+[2026-05-29 01:48:46] SCardSvr: Deteniendo...
+[2026-05-29 01:48:51] >>> Comando recibido: DNIE
+[2026-05-29 01:48:51] Activando modo: DNIe
+[2026-05-29 01:48:51] Limpiando claves de registro de Bit4id que causan conflicto...
+[2026-05-29 01:48:51] CertPropSvc: Deteniendo...
+[2026-05-29 01:48:51] CertPropSvc: Detenido.
+[2026-05-29 01:48:51] SCardSvr: Deteniendo...
+[2026-05-29 01:48:51] SCardSvr: Detenido.
+[2026-05-29 01:48:51] Backup realizado para: CurrentUser\Software\Microsoft\Cryptography\Calais\SmartCards\  NXP IAS C18
+[2026-05-29 01:48:51] Clave eliminada con exito: CurrentUser\Software\Microsoft\Cryptography\Calais\SmartCards\  NXP IAS C18 (Vista: Default)
+[2026-05-29 01:48:51] SCardSvr: Iniciando...
+[2026-05-29 01:48:51] SCardSvr: En ejecución.
+[2026-05-29 01:48:52] CertPropSvc: En ejecución.
+[2026-05-29 01:48:52] HKCU: Escrito modo DNIe → ciamd.dll
+[2026-05-29 01:48:52] Estrategia HKCU: OK
+[2026-05-29 01:48:52] SCardSvr: Deteniendo...
+[2026-05-29 01:48:54] >>> Comando recibido: DNIE
+[2026-05-29 01:48:54] Activando modo: DNIe
+[2026-05-29 01:48:54] Limpiando claves de registro de Bit4id que causan conflicto...
+[2026-05-29 01:48:54] CertPropSvc: Deteniendo...
+[2026-05-29 01:48:55] CertPropSvc: Detenido.
+[2026-05-29 01:48:55] SCardSvr: Deteniendo...
+[2026-05-29 01:49:06] SCardSvr ERROR: El tiempo de espera ha transcurrido y no se ha completado la operación.
+[2026-05-29 01:49:06] Backup realizado para: CurrentUser\Software\Microsoft\Cryptography\Calais\SmartCards\  NXP IAS C18
+[2026-05-29 01:49:06] Clave eliminada con exito: CurrentUser\Software\Microsoft\Cryptography\Calais\SmartCards\  NXP IAS C18 (Vista: Default)
+[2026-05-29 01:49:06] SCardSvr: Deteniendo...
+[2026-05-29 01:49:06] SCardSvr: Detenido.
+[2026-05-29 01:49:06] SCardSvr: Iniciando...
+[2026-05-29 01:49:06] SCardSvr: En ejecución.
+[2026-05-29 01:49:06] CertPropSvc: En ejecución.
+[2026-05-29 01:49:06] HKCU: Escrito modo DNIe → ciamd.dll
+[2026-05-29 01:49:06] Estrategia HKCU: OK
+[2026-05-29 01:49:06] SCardSvr: Deteniendo...
+[2026-05-29 01:49:07] >>> Comando recibido: DNIE
+[2026-05-29 01:49:07] Activando modo: DNIe
+[2026-05-29 01:49:07] Limpiando claves de registro de Bit4id que causan conflicto...
+[2026-05-29 01:49:07] CertPropSvc: Deteniendo...
+[2026-05-29 01:49:08] CertPropSvc: Detenido.
+[2026-05-29 01:49:08] SCardSvr: Deteniendo...
+[2026-05-29 01:49:11] >>> Comando recibido: RESET
+[2026-05-29 01:49:11] Activando modo: Token
+[2026-05-29 01:49:11] No hay backups de claves de registro Bit4id para restaurar.
+[2026-05-29 01:49:11] HKCU: Override eliminado → HKLM de Bit4id dominará.
+[2026-05-29 01:49:11] Estrategia HKCU: OK
+[2026-05-29 01:49:11] SCardSvr: Deteniendo...
+[2026-05-29 01:49:11] SCardSvr: Detenido.
+[2026-05-29 01:49:11] HKLM [Registry64]: Clave no encontrada.
+[2026-05-29 01:49:11] HKLM [Registry32]: Clave no encontrada.
+[2026-05-29 01:49:11] SCardSvr: Iniciando...
+[2026-05-29 01:49:11] SCardSvr: En ejecución.
+[2026-05-29 01:49:16] >>> Comando recibido: TOKEN
+[2026-05-29 01:49:16] Activando modo: Token
+[2026-05-29 01:49:16] No hay backups de claves de registro Bit4id para restaurar.
+[2026-05-29 01:49:16] HKCU: Override eliminado → HKLM de Bit4id dominará.
+[2026-05-29 01:49:16] Estrategia HKCU: OK
+[2026-05-29 01:49:16] SCardSvr: Deteniendo...
+[2026-05-29 01:49:17] SCardSvr: Detenido.
+[2026-05-29 01:49:17] HKLM [Registry64]: Clave no encontrada.
+[2026-05-29 01:49:17] HKLM [Registry32]: Clave no encontrada.
+[2026-05-29 01:49:17] SCardSvr: Iniciando...
+[2026-05-29 01:49:17] SCardSvr: En ejecución.
+[2026-05-29 01:49:23] >>> Comando recibido: TOKEN
+[2026-05-29 01:49:23] Activando modo: Token
+[2026-05-29 01:49:23] No hay backups de claves de registro Bit4id para restaurar.
+[2026-05-29 01:49:23] HKCU: Override eliminado → HKLM de Bit4id dominará.
+[2026-05-29 01:49:23] Estrategia HKCU: OK
+[2026-05-29 01:49:23] SCardSvr: Deteniendo...
+[2026-05-29 01:49:23] SCardSvr: Detenido.
+[2026-05-29 01:49:23] HKLM [Registry64]: Clave no encontrada.
+[2026-05-29 01:49:23] HKLM [Registry32]: Clave no encontrada.
+[2026-05-29 01:49:23] SCardSvr: Iniciando...
+[2026-05-29 01:49:23] SCardSvr: En ejecución.
+[2026-05-29 01:49:26] >>> Comando recibido: TOKEN
+[2026-05-29 01:49:26] Activando modo: Token
+[2026-05-29 01:49:26] No hay backups de claves de registro Bit4id para restaurar.
+[2026-05-29 01:49:26] HKCU: Override eliminado → HKLM de Bit4id dominará.
+[2026-05-29 01:49:26] Estrategia HKCU: OK
+[2026-05-29 01:49:26] SCardSvr: Deteniendo...
+[2026-05-29 01:49:26] SCardSvr: Detenido.
+[2026-05-29 01:49:26] HKLM [Registry64]: Clave no encontrada.
+[2026-05-29 01:49:26] HKLM [Registry32]: Clave no encontrada.
+[2026-05-29 01:49:26] SCardSvr: Iniciando...
+[2026-05-29 01:49:27] SCardSvr: En ejecución.
+[2026-05-29 01:54:45] >>> Comando recibido: TOKEN
+[2026-05-29 01:54:45] Activando modo: Token
+[2026-05-29 01:54:45] No hay backups de claves de registro Bit4id para restaurar.
+[2026-05-29 01:54:45] HKCU: Override eliminado → HKLM de Bit4id dominará.
+[2026-05-29 01:54:45] Estrategia HKCU: OK
+[2026-05-29 01:54:45] SCardSvr: Deteniendo...
+[2026-05-29 01:54:45] SCardSvr: Detenido.
+[2026-05-29 01:54:45] HKLM [Registry64]: Clave no encontrada.
+[2026-05-29 01:54:45] HKLM [Registry32]: Clave no encontrada.
+[2026-05-29 01:54:45] SCardSvr: Iniciando...
+[2026-05-29 01:54:45] SCardSvr: En ejecución.
+[2026-05-29 01:55:00] >>> Comando recibido: TOKEN
+[2026-05-29 01:55:00] Activando modo: Token
+[2026-05-29 01:55:00] No hay backups de claves de registro Bit4id para restaurar.
+[2026-05-29 01:55:00] HKCU: Override eliminado → HKLM de Bit4id dominará.
+[2026-05-29 01:55:00] Estrategia HKCU: OK
+[2026-05-29 01:55:00] SCardSvr: Deteniendo...
+[2026-05-29 01:55:00] SCardSvr: Detenido.
+[2026-05-29 01:55:00] HKLM [Registry64]: Clave no encontrada.
+[2026-05-29 01:55:00] HKLM [Registry32]: Clave no encontrada.
+[2026-05-29 01:55:00] SCardSvr: Iniciando...
+[2026-05-29 01:55:01] SCardSvr: En ejecución.
+[2026-05-29 01:55:02] >>> Comando recibido: RESET
+[2026-05-29 01:55:02] Activando modo: Token
+[2026-05-29 01:55:02] No hay backups de claves de registro Bit4id para restaurar.
+[2026-05-29 01:55:02] HKCU: Override eliminado → HKLM de Bit4id dominará.
+[2026-05-29 01:55:02] Estrategia HKCU: OK
+[2026-05-29 01:55:02] SCardSvr: Deteniendo...
+[2026-05-29 01:55:02] SCardSvr: Detenido.
+[2026-05-29 01:55:02] HKLM [Registry64]: Clave no encontrada.
+[2026-05-29 01:55:02] HKLM [Registry32]: Clave no encontrada.
+[2026-05-29 01:55:02] SCardSvr: Iniciando...
+[2026-05-29 01:55:02] SCardSvr: En ejecución.
+[2026-05-29 01:57:13] >>> Comando recibido: TOKEN
+[2026-05-29 01:57:13] Activando modo: Token
+[2026-05-29 01:57:13] No hay backups de claves de registro Bit4id para restaurar.
+[2026-05-29 01:57:13] HKCU: Override eliminado → HKLM de Bit4id dominará.
+[2026-05-29 01:57:13] Estrategia HKCU: OK
+[2026-05-29 01:57:13] SCardSvr: Deteniendo...
+[2026-05-29 01:57:13] SCardSvr: Detenido.
+[2026-05-29 01:57:13] HKLM [Registry64]: Clave no encontrada.
+[2026-05-29 01:57:13] HKLM [Registry32]: Clave no encontrada.
+[2026-05-29 01:57:13] SCardSvr: Iniciando...
+[2026-05-29 01:57:14] SCardSvr: En ejecución.
+[2026-05-29 01:57:23] >>> Comando recibido: TOKEN
+[2026-05-29 01:57:23] Activando modo: Token
+[2026-05-29 01:57:23] No hay backups de claves de registro Bit4id para restaurar.
+[2026-05-29 01:57:23] HKCU: Override eliminado → HKLM de Bit4id dominará.
+[2026-05-29 01:57:23] Estrategia HKCU: OK
+[2026-05-29 01:57:23] SCardSvr: Deteniendo...
+[2026-05-29 01:57:23] SCardSvr: Detenido.
+[2026-05-29 01:57:23] HKLM [Registry64]: Clave no encontrada.
+[2026-05-29 01:57:23] HKLM [Registry32]: Clave no encontrada.
+[2026-05-29 01:57:23] SCardSvr: Iniciando...
+[2026-05-29 01:57:24] SCardSvr: En ejecución.
+[2026-05-29 01:57:26] >>> Comando recibido: RESET
+[2026-05-29 01:57:26] Activando modo: Token
+[2026-05-29 01:57:26] No hay backups de claves de registro Bit4id para restaurar.
+[2026-05-29 01:57:26] HKCU: Override eliminado → HKLM de Bit4id dominará.
+[2026-05-29 01:57:26] Estrategia HKCU: OK
+[2026-05-29 01:57:26] SCardSvr: Deteniendo...
+[2026-05-29 01:57:26] SCardSvr: Detenido.
+[2026-05-29 01:57:26] HKLM [Registry64]: Clave no encontrada.
+[2026-05-29 01:57:26] HKLM [Registry32]: Clave no encontrada.
+[2026-05-29 01:57:26] SCardSvr: Iniciando...
+[2026-05-29 01:57:26] SCardSvr: En ejecución.
+[2026-05-29 12:49:49] >>> Comando recibido: DNIE
+[2026-05-29 12:49:49] Activando modo: DNIe
+[2026-05-29 12:49:49] Limpiando claves de registro de Bit4id que causan conflicto...
+[2026-05-29 12:49:49] SCardSvr: Deteniendo...
+[2026-05-29 12:49:59] SCardSvr ERROR: El tiempo de espera ha transcurrido y no se ha completado la operación.
+[2026-05-29 12:49:59] SCardSvr: Deteniendo...
+[2026-05-29 12:50:08] >>> Comando recibido: DNIE
+[2026-05-29 12:50:08] Activando modo: DNIe
+[2026-05-29 12:50:08] Limpiando claves de registro de Bit4id que causan conflicto...
+[2026-05-29 12:50:08] SCardSvr: Deteniendo...
+[2026-05-29 12:50:11] >>> Comando recibido: DNIE
+[2026-05-29 12:50:11] Activando modo: DNIe
+[2026-05-29 12:50:11] Limpiando claves de registro de Bit4id que causan conflicto...
+[2026-05-29 12:50:11] SCardSvr: Deteniendo...
+[2026-05-29 12:50:21] SCardSvr ERROR: El tiempo de espera ha transcurrido y no se ha completado la operación.
+[2026-05-29 12:50:21] SCardSvr: Deteniendo...
+[2026-05-29 12:50:31] SCardSvr ERROR: El tiempo de espera ha transcurrido y no se ha completado la operación.
+[2026-05-29 12:50:32] CertPropSvc: En ejecución.
+[2026-05-29 12:50:32] HKCU: Escrito modo DNIe → ciamd.dll
+[2026-05-29 12:50:32] Estrategia HKCU: OK
+[2026-05-29 12:50:32] SCardSvr: Deteniendo...
+[2026-05-29 12:50:42] SCardSvr ERROR: El tiempo de espera ha transcurrido y no se ha completado la operación.
+[2026-05-29 12:50:42] HKLM [Registry64]: Clave no encontrada.
+[2026-05-29 12:50:42] HKLM [Registry32]: Clave no encontrada.
+[2026-05-29 12:50:42] SCardSvr: Deteniendo...
+[2026-05-29 12:50:52] SCardSvr ERROR: El tiempo de espera ha transcurrido y no se ha completado la operación.
+[2026-05-29 12:51:12] >>> Comando recibido: DNIE
+[2026-05-29 12:51:12] Activando modo: DNIe
+[2026-05-29 12:51:12] Limpiando claves de registro de Bit4id que causan conflicto...
+[2026-05-29 12:51:12] CertPropSvc: Deteniendo...
+[2026-05-29 12:51:12] CertPropSvc: Detenido.
+[2026-05-29 12:51:12] SCardSvr: Deteniendo...
+[2026-05-29 12:51:17] >>> Comando recibido: DNIE
+[2026-05-29 12:51:17] Activando modo: DNIe
+[2026-05-29 12:51:17] Limpiando claves de registro de Bit4id que causan conflicto...
+[2026-05-29 12:51:17] SCardSvr: Deteniendo...
+[2026-05-29 12:51:22] >>> Comando recibido: DNIE
+[2026-05-29 12:51:22] Activando modo: DNIe
+[2026-05-29 12:51:22] Limpiando claves de registro de Bit4id que causan conflicto...
+[2026-05-29 12:51:22] SCardSvr: Deteniendo...
+[2026-05-29 12:51:28] >>> Comando recibido: RESET
+[2026-05-29 12:51:28] Activando modo: Token
+[2026-05-29 12:51:28] No hay backups de claves de registro Bit4id para restaurar.
+[2026-05-29 12:51:28] HKCU: Override eliminado → HKLM de Bit4id dominará.
+[2026-05-29 12:51:28] Estrategia HKCU: OK
+[2026-05-29 12:51:28] SCardSvr: Deteniendo...
+[2026-05-29 12:51:35] >>> Comando recibido: DNIE
+[2026-05-29 12:51:35] Activando modo: DNIe
+[2026-05-29 12:51:35] Limpiando claves de registro de Bit4id que causan conflicto...
+[2026-05-29 12:51:35] SCardSvr: Deteniendo...
+[2026-05-29 12:51:42] >>> Comando recibido: DNIE
+[2026-05-29 12:51:42] Activando modo: DNIe
+[2026-05-29 12:51:42] Limpiando claves de registro de Bit4id que causan conflicto...
+[2026-05-29 12:51:42] SCardSvr: Deteniendo...
+[2026-05-29 12:51:44] >>> Comando recibido: DNIE
+[2026-05-29 12:51:44] Activando modo: DNIe
+[2026-05-29 12:51:44] Limpiando claves de registro de Bit4id que causan conflicto...
+[2026-05-29 12:51:44] SCardSvr: Deteniendo...
+[2026-05-29 12:51:50] >>> Comando recibido: DNIE
+[2026-05-29 12:51:50] Activando modo: DNIe
+[2026-05-29 12:51:50] Limpiando claves de registro de Bit4id que causan conflicto...
+[2026-05-29 12:51:50] SCardSvr: Deteniendo...
+[2026-05-29 12:51:53] >>> Comando recibido: DNIE
+[2026-05-29 12:51:53] Activando modo: DNIe
+[2026-05-29 12:51:53] Limpiando claves de registro de Bit4id que causan conflicto...
+[2026-05-29 12:51:53] SCardSvr: Deteniendo...
+[2026-05-29 12:51:57] >>> Comando recibido: DNIE
+[2026-05-29 12:51:57] Activando modo: DNIe
+[2026-05-29 12:51:57] Limpiando claves de registro de Bit4id que causan conflicto...
+[2026-05-29 12:51:57] SCardSvr: Deteniendo...
+[2026-05-29 12:52:01] >>> Comando recibido: RESET
+[2026-05-29 12:52:01] Activando modo: Token
+[2026-05-29 12:52:02] No hay backups de claves de registro Bit4id para restaurar.
+[2026-05-29 12:52:02] HKCU: Override eliminado → HKLM de Bit4id dominará.
+[2026-05-29 12:52:02] Estrategia HKCU: OK
+[2026-05-29 12:52:02] SCardSvr: Deteniendo...
+[2026-05-29 12:52:07] >>> Comando recibido: DNIE
+[2026-05-29 12:52:07] Activando modo: DNIe
+[2026-05-29 12:52:07] Limpiando claves de registro de Bit4id que causan conflicto...
+[2026-05-29 12:52:07] SCardSvr: Deteniendo...
+[2026-05-29 12:52:17] SCardSvr ERROR: El tiempo de espera ha transcurrido y no se ha completado la operación.
+[2026-05-29 12:52:17] SCardSvr: Deteniendo...
+[2026-05-29 12:52:25] >>> Comando recibido: DNIE
+[2026-05-29 12:52:25] Activando modo: DNIe
+[2026-05-29 12:52:25] Limpiando claves de registro de Bit4id que causan conflicto...
+[2026-05-29 12:52:25] CertPropSvc: Deteniendo...
+[2026-05-29 12:52:25] CertPropSvc: Detenido.
+[2026-05-29 12:52:25] SCardSvr: Deteniendo...
+[2026-05-29 12:52:35] >>> Comando recibido: DNIE
+[2026-05-29 12:52:35] Activando modo: DNIe
+[2026-05-29 12:52:35] Limpiando claves de registro de Bit4id que causan conflicto...
+[2026-05-29 12:52:35] SCardSvr: Deteniendo...
+[2026-05-29 12:52:38] >>> Comando recibido: RESET
+[2026-05-29 12:52:38] Activando modo: Token
+[2026-05-29 12:52:38] No hay backups de claves de registro Bit4id para restaurar.
+[2026-05-29 12:52:38] HKCU: Override eliminado → HKLM de Bit4id dominará.
+[2026-05-29 12:52:38] Estrategia HKCU: OK
+[2026-05-29 12:52:38] SCardSvr: Deteniendo...
+[2026-05-29 12:52:48] SCardSvr ERROR: El tiempo de espera ha transcurrido y no se ha completado la operación.
+[2026-05-29 12:52:48] HKLM [Registry64]: Clave no encontrada.
+[2026-05-29 12:52:48] HKLM [Registry32]: Clave no encontrada.
+[2026-05-29 12:52:48] SCardSvr: Deteniendo...
+[2026-05-29 12:52:58] SCardSvr ERROR: El tiempo de espera ha transcurrido y no se ha completado la operación.
+[2026-05-29 12:55:15] >>> Comando recibido: DNIE
+[2026-05-29 12:55:15] Activando modo: DNIe
+[2026-05-29 12:55:15] Limpiando claves de registro de Bit4id que causan conflicto...
+[2026-05-29 12:55:15] SCardSvr: Deteniendo...
+[2026-05-29 12:55:25] SCardSvr ERROR: El tiempo de espera ha transcurrido y no se ha completado la operación.
+[2026-05-29 12:55:25] SCardSvr: Deteniendo...
+[2026-05-29 12:55:36] SCardSvr ERROR: El tiempo de espera ha transcurrido y no se ha completado la operación.
+[2026-05-29 12:55:36] CertPropSvc: En ejecución.
+[2026-05-29 12:55:36] HKCU: Escrito modo DNIe → ciamd.dll
+[2026-05-29 12:55:36] Estrategia HKCU: OK
+[2026-05-29 12:55:36] SCardSvr: Deteniendo...
+[2026-05-29 12:55:46] >>> Comando recibido: DNIE
+[2026-05-29 12:55:46] Activando modo: DNIe
+[2026-05-29 12:55:46] Limpiando claves de registro de Bit4id que causan conflicto...
+[2026-05-29 12:55:46] CertPropSvc: Deteniendo...
+[2026-05-29 12:55:46] CertPropSvc: Detenido.
+[2026-05-29 12:55:46] SCardSvr: Deteniendo...
+[2026-05-29 12:55:52] >>> Comando recibido: DNIE
+[2026-05-29 12:55:52] Activando modo: DNIe
+[2026-05-29 12:55:52] Limpiando claves de registro de Bit4id que causan conflicto...
+[2026-05-29 12:55:52] SCardSvr: Deteniendo...
+[2026-05-29 12:55:55] >>> Comando recibido: DNIE
+[2026-05-29 12:55:55] Activando modo: DNIe
+[2026-05-29 12:55:55] Limpiando claves de registro de Bit4id que causan conflicto...
+[2026-05-29 12:55:55] SCardSvr: Deteniendo...
+[2026-05-29 12:56:06] SCardSvr ERROR: El tiempo de espera ha transcurrido y no se ha completado la operación.
+[2026-05-29 12:56:06] Backup realizado para: CurrentUser\Software\Microsoft\Cryptography\Calais\SmartCards\  NXP IAS C18
+[2026-05-29 12:56:06] Clave eliminada con exito: CurrentUser\Software\Microsoft\Cryptography\Calais\SmartCards\  NXP IAS C18 (Vista: Default)
+[2026-05-29 12:56:06] SCardSvr: Deteniendo...
+[2026-05-29 12:56:10] >>> Comando recibido: DNIE
+[2026-05-29 12:56:10] Activando modo: DNIe
+[2026-05-29 12:56:10] Limpiando claves de registro de Bit4id que causan conflicto...
+[2026-05-29 12:56:10] SCardSvr: Deteniendo...
+[2026-05-29 12:56:20] SCardSvr ERROR: El tiempo de espera ha transcurrido y no se ha completado la operación.
+[2026-05-29 12:56:20] SCardSvr: Deteniendo...
+[2026-05-29 12:56:29] >>> Comando recibido: DNIE
+[2026-05-29 12:56:29] Activando modo: DNIe
+[2026-05-29 12:56:29] Limpiando claves de registro de Bit4id que causan conflicto...
+[2026-05-29 12:56:29] SCardSvr: Deteniendo...
+[2026-05-29 12:56:29] SCardSvr: Detenido.
+[2026-05-29 12:56:29] SCardSvr: Iniciando...
+[2026-05-29 12:56:29] SCardSvr: En ejecución.
+[2026-05-29 12:56:30] CertPropSvc: En ejecución.
+[2026-05-29 12:56:30] HKCU: Escrito modo DNIe → ciamd.dll
+[2026-05-29 12:56:30] Estrategia HKCU: OK
+[2026-05-29 12:56:30] SCardSvr: Deteniendo...
+[2026-05-29 12:56:32] >>> Comando recibido: RESET
+[2026-05-29 12:56:32] Activando modo: Token
+[2026-05-29 12:56:32] No hay backups de claves de registro Bit4id para restaurar.
+[2026-05-29 12:56:32] HKCU: Override eliminado → HKLM de Bit4id dominará.
+[2026-05-29 12:56:32] Estrategia HKCU: OK
+[2026-05-29 12:56:32] SCardSvr: Deteniendo...
+[2026-05-29 12:56:32] SCardSvr: Detenido.
+[2026-05-29 12:56:32] HKLM [Registry64]: Clave no encontrada.
+[2026-05-29 12:56:32] HKLM [Registry32]: Clave no encontrada.
+[2026-05-29 12:56:32] SCardSvr: Iniciando...
+[2026-05-29 12:56:32] SCardSvr: En ejecución.
+[2026-05-29 12:57:05] >>> Comando recibido: DNIE
+[2026-05-29 12:57:05] Activando modo: DNIe
+[2026-05-29 12:57:05] Limpiando claves de registro de Bit4id que causan conflicto...
+[2026-05-29 12:57:05] CertPropSvc: Deteniendo...
+[2026-05-29 12:57:06] CertPropSvc: Detenido.
+[2026-05-29 12:57:06] SCardSvr: Deteniendo...
+[2026-05-29 12:57:16] SCardSvr ERROR: El tiempo de espera ha transcurrido y no se ha completado la operación.
+[2026-05-29 12:57:16] SCardSvr: Deteniendo...
+[2026-05-29 12:57:26] SCardSvr ERROR: El tiempo de espera ha transcurrido y no se ha completado la operación.
+[2026-05-29 12:57:26] CertPropSvc: En ejecución.
+[2026-05-29 12:57:26] HKCU: Escrito modo DNIe → ciamd.dll
+[2026-05-29 12:57:26] Estrategia HKCU: OK
+[2026-05-29 12:57:26] SCardSvr: Deteniendo...
+[2026-05-29 12:57:36] SCardSvr ERROR: El tiempo de espera ha transcurrido y no se ha completado la operación.
+[2026-05-29 12:57:36] HKLM [Registry64]: Clave no encontrada.
+[2026-05-29 12:57:36] HKLM [Registry32]: Clave no encontrada.
+[2026-05-29 12:57:36] SCardSvr: Deteniendo...
+[2026-05-29 12:57:46] SCardSvr ERROR: El tiempo de espera ha transcurrido y no se ha completado la operación.
+[2026-05-29 12:57:49] >>> Comando recibido: DNIE
+[2026-05-29 12:57:49] Activando modo: DNIe
+[2026-05-29 12:57:49] Limpiando claves de registro de Bit4id que causan conflicto...
+[2026-05-29 12:57:49] CertPropSvc: Deteniendo...
+[2026-05-29 12:57:49] CertPropSvc: Detenido.
+[2026-05-29 12:57:49] SCardSvr: Deteniendo...
+[2026-05-29 12:57:59] SCardSvr ERROR: El tiempo de espera ha transcurrido y no se ha completado la operación.
+[2026-05-29 12:57:59] Backup realizado para: CurrentUser\Software\Microsoft\Cryptography\Calais\SmartCards\  NXP IAS C18
+[2026-05-29 12:57:59] Clave eliminada con exito: CurrentUser\Software\Microsoft\Cryptography\Calais\SmartCards\  NXP IAS C18 (Vista: Default)
+[2026-05-29 12:57:59] SCardSvr: Deteniendo...
+[2026-05-29 12:58:09] >>> Comando recibido: RESET
+[2026-05-29 12:58:09] Activando modo: Token
+[2026-05-29 12:58:09] No hay backups de claves de registro Bit4id para restaurar.
+[2026-05-29 12:58:09] HKCU: Override eliminado → HKLM de Bit4id dominará.
+[2026-05-29 12:58:09] Estrategia HKCU: OK
+[2026-05-29 12:58:09] SCardSvr: Deteniendo...
+[2026-05-29 12:58:19] SCardSvr ERROR: El tiempo de espera ha transcurrido y no se ha completado la operación.
+[2026-05-29 12:58:19] HKLM [Registry64]: Clave no encontrada.
+[2026-05-29 12:58:19] HKLM [Registry32]: Clave no encontrada.
+[2026-05-29 12:58:19] SCardSvr: Deteniendo...
+[2026-05-29 12:58:30] SCardSvr ERROR: El tiempo de espera ha transcurrido y no se ha completado la operación.

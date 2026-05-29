@@ -10,13 +10,17 @@ public partial class RegistrarTramite
 
     protected global::System.Web.UI.WebControls.FileUpload FuPdf;
 
+    protected global::System.Web.UI.WebControls.TextBox TxtCodigoDocumento;
+
+    protected global::System.Web.UI.WebControls.DropDownList DdlAreaResponsable;
+
     protected global::System.Web.UI.WebControls.TextBox TxtAreaResponsable;
 
     protected global::System.Web.UI.WebControls.RegularExpressionValidator RevArea;
 
-    protected global::System.Web.UI.WebControls.DropDownList CbxTipoDocumento;
+    protected global::System.Web.UI.WebControls.Panel UpClasificacion;
 
-    protected global::System.Web.UI.WebControls.Label LblCodigoDocumento;
+    protected global::System.Web.UI.WebControls.DropDownList CbxTipoDocumento;
 
     protected global::System.Web.UI.WebControls.Label LblFechaDocumento;
 
@@ -26,9 +30,13 @@ public partial class RegistrarTramite
 
     protected global::System.Web.UI.WebControls.TextBox TxtFechaLimite;
 
+    protected global::System.Web.UI.WebControls.Panel UpFirmantes;
+
     protected global::System.Web.UI.WebControls.GridView GvFirmantes;
 
     protected global::System.Web.UI.WebControls.Button BtnAgregarFirmante;
 
     protected global::System.Web.UI.WebControls.Button BtnRegistrar;
+
+    protected global::System.Web.UI.WebControls.HiddenField HfFirmantesJSON;
 }

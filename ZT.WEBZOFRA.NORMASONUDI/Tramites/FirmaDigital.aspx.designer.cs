@@ -14,17 +14,37 @@ public partial class FirmaDigital
 
     protected global::System.Web.UI.WebControls.Label LblError;
 
-    protected global::System.Web.UI.WebControls.Button BtnDescargar;
+    protected global::System.Web.UI.WebControls.DropDownList DdlCertificados;
 
-    protected global::System.Web.UI.WebControls.FileUpload FuPdfFirmado;
+    protected global::System.Web.UI.WebControls.Button BtnRefrescar;
 
-    protected global::System.Web.UI.WebControls.TextBox TxtMotivo;
+    protected global::System.Web.UI.WebControls.Label LblCertInfo;
 
-    protected global::System.Web.UI.WebControls.Button BtnSubirFirma;
+    protected global::System.Web.UI.WebControls.Button BtnFirmarDni;
+
+    protected global::System.Web.UI.WebControls.Panel PnlResultado;
+
+    protected global::System.Web.UI.WebControls.Label LblMensaje;
 
     protected global::System.Web.UI.WebControls.Panel PnlExito;
 
     protected global::System.Web.UI.WebControls.Label LblMensajeExito;
 
     protected global::System.Web.UI.WebControls.Button BtnIrBandeja;
+
+    protected global::System.Web.UI.WebControls.HiddenField HfPdfId;
+
+    protected global::System.Web.UI.WebControls.HiddenField HfSigPage;
+
+    protected global::System.Web.UI.WebControls.HiddenField HfSigX;
+
+    protected global::System.Web.UI.WebControls.HiddenField HfSigY;
+
+    protected global::System.Web.UI.WebControls.HiddenField HfSigW;
+
+    protected global::System.Web.UI.WebControls.HiddenField HfSigH;
+
+    protected global::System.Web.UI.WebControls.HiddenField HfSigOrient;
+
+    protected global::System.Web.UI.WebControls.HiddenField HfSigRects;
 }

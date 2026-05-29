@@ -1,163 +1,72 @@
-<%@ Page Language="C#" AutoEventWireup="true" CodeFile="Dashboard.aspx.cs" Inherits="Dashboard" Title="Panel de Administrador" %>
+<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/Shared/MasterPage.master" CodeFile="Dashboard.aspx.cs" Inherits="Dashboard" Title="Panel de Administrador" %>
 
-<!DOCTYPE html>
-<html>
-<head runat="server">
-    <meta charset="utf-8" />
-    <title>Administracion - ZOFRATACNA</title>
-    <link rel="stylesheet" href="../styles.css" />
-    <style>
-        body { display: block; padding: 0; background: #f1f5f9; }
-        .admin-layout { display: flex; min-height: 100vh; }
-        
-        /* SIDEBAR */
-        .sidebar {
-            width: 240px;
-            min-width: 240px;
-            background: #1e3a8a;
-            color: white;
-            display: flex;
-            flex-direction: column;
-        }
-        .sidebar-header {
-            padding: 1.5rem;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
-            text-align: center;
-        }
-        .sidebar-user {
-            padding: 1rem;
-            background: rgba(0,0,0,0.1);
-            font-size: 0.85rem;
-            text-align: center;
-        }
-        .sidebar-nav { flex: 1; padding: 1rem 0; }
-        .nav-btn {
-            display: block;
-            width: 100%;
-            padding: 0.8rem 1.5rem;
-            color: #cbd5e1;
-            text-decoration: none;
-            background: none;
-            border: none;
-            text-align: left;
-            cursor: pointer;
-            font-size: 0.9rem;
-            transition: all 0.2s;
-            border-left: 4px solid transparent;
-        }
-        .nav-btn:hover { background: rgba(255,255,255,0.05); color: white; }
-        .nav-btn.active {
-            background: rgba(255,255,255,0.1);
-            color: white;
-            border-left-color: #fbbf24;
-            font-weight: 600;
-        }
-        
-        /* MAIN */
-        .main-panel { flex: 1; padding: 2rem; overflow-y: auto; }
-        .card-stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-            gap: 1rem;
-            margin-bottom: 2rem;
-        }
-        .stat-card {
-            background: white;
-            padding: 1.5rem;
-            border-radius: 10px;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-            text-align: center;
-            border-bottom: 4px solid #cbd5e1;
-        }
-        .stat-val { font-size: 1.8rem; font-weight: 700; display: block; }
-        .stat-lbl { font-size: 0.75rem; color: #64748b; text-transform: uppercase; margin-top: 5px; }
-        
-        /* Colors */
-        .border-blue { border-bottom-color: #3b82f6; color: #3b82f6; }
-        .border-yellow { border-bottom-color: #eab308; color: #eab308; }
-        .border-red { border-bottom-color: #ef4444; color: #ef4444; }
-        .border-purple { border-bottom-color: #a855f7; color: #a855f7; }
-        .border-orange { border-bottom-color: #f97316; color: #f97316; }
-        .border-green { border-bottom-color: #22c55e; color: #22c55e; }
+<asp:Content ID="PageTitle" ContentPlaceHolderID="PageTitle" runat="server">
+    <h1 class="page-title">Panel de Administrador</h1>
+</asp:Content>
 
-        .filter-bar {
-            background: white;
-            padding: 1rem;
-            border-radius: 8px;
-            margin-bottom: 1rem;
-            display: flex;
-            gap: 1rem;
-            align-items: flex-end;
-            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
-        }
-        
-        .badge-ya-firmo { background: #dcfce7; color: #166534; padding: 2px 8px; border-radius: 4px; font-size: 0.7rem; font-weight: 600; }
-        .badge-pendiente { background: #fef9c3; color: #854d0e; padding: 2px 8px; border-radius: 4px; font-size: 0.7rem; font-weight: 600; }
-    </style>
-</head>
-<body>
-    <form id="form1" runat="server">
-        <div class="admin-layout">
-            
-            <div class="sidebar">
-                <div class="sidebar-header">
-                    <h2 style="color:white; margin:0; border:none; padding:0; font-size:1.2rem;">Panel Admin</h2>
+<asp:Content ID="SidebarContent" ContentPlaceHolderID="SidebarContent" runat="server">
+    <div class="sidebar-user">
+        Hola, <asp:Label ID="LblAdminName" runat="server" Font-Bold="true"></asp:Label>
+    </div>
+    <asp:LinkButton ID="BtnNavStats" runat="server" CssClass="nav-btn active" OnClick="Nav_Click" CommandArgument="Stats">
+        <i class="ph ph-chart-bar"></i> Estadisticas
+    </asp:LinkButton>
+    <asp:LinkButton ID="BtnNavOrden" runat="server" CssClass="nav-btn" OnClick="Nav_Click" CommandArgument="Orden">
+        <i class="ph ph-list-numbers"></i> Modificar Orden
+    </asp:LinkButton>
+    <asp:LinkButton ID="BtnNavAuditoria" runat="server" CssClass="nav-btn" OnClick="Nav_Click" CommandArgument="Auditoria">
+        <i class="ph ph-clipboard-text"></i> Auditoria
+    </asp:LinkButton>
+</asp:Content>
+
+<asp:Content ID="SidebarFooter" ContentPlaceHolderID="SidebarFooter" runat="server">
+    <asp:LinkButton ID="BtnLogout" runat="server" CssClass="nav-btn" OnClick="BtnLogout_Click" style="color:#fca5a5;">
+        <i class="ph ph-sign-out"></i> Cerrar Sesion
+    </asp:LinkButton>
+</asp:Content>
+
+<asp:Content ID="MainContent" ContentPlaceHolderID="MainContent" runat="server">
+    <div class="container container-wide">
+        <asp:Label ID="LblGlobalMsg" runat="server" CssClass="alert alert-success" Visible="false" style="display:block; margin-bottom:1rem;"></asp:Label>
+
+        <asp:Panel ID="PnlStats" runat="server">
+            <h2>Resumen del Sistema</h2>
+            <div class="card-stats-grid">
+                <div class="stat-card border-blue">
+                    <asp:Label ID="LblTotal" runat="server" CssClass="stat-val">0</asp:Label>
+                    <span class="stat-lbl">Total Documentos</span>
                 </div>
-                <div class="sidebar-user">
-                    Hola, <asp:Label ID="LblAdminName" runat="server" Font-Bold="true"></asp:Label>
+                <div class="stat-card border-yellow">
+                    <asp:Label ID="LblEnRev" runat="server" CssClass="stat-val">0</asp:Label>
+                    <span class="stat-lbl">En Revision</span>
                 </div>
-                <div class="sidebar-nav">
-                    <asp:LinkButton ID="BtnNavStats" runat="server" CssClass="nav-btn active" OnClick="Nav_Click" CommandArgument="Stats">Estadisticas</asp:LinkButton>
-                    <asp:LinkButton ID="BtnNavTramites" runat="server" CssClass="nav-btn" OnClick="Nav_Click" CommandArgument="Tramites">Todos los Tramites</asp:LinkButton>
-                    <asp:LinkButton ID="BtnNavRoles" runat="server" CssClass="nav-btn" OnClick="Nav_Click" CommandArgument="Roles">Gestionar Roles</asp:LinkButton>
-                    <asp:LinkButton ID="BtnNavOrden" runat="server" CssClass="nav-btn" OnClick="Nav_Click" CommandArgument="Orden">Modificar Orden</asp:LinkButton>
-                    <asp:LinkButton ID="BtnNavAuditoria" runat="server" CssClass="nav-btn" OnClick="Nav_Click" CommandArgument="Auditoria">Auditoria</asp:LinkButton>
-                    <hr style="opacity:0.1; margin: 1rem 0;" />
-                    <asp:LinkButton ID="BtnLogout" runat="server" CssClass="nav-btn" OnClick="BtnLogout_Click" style="color:#f87171;">Cerrar Sesion</asp:LinkButton>
+                <div class="stat-card border-red">
+                    <asp:Label ID="LblObs" runat="server" CssClass="stat-val">0</asp:Label>
+                    <span class="stat-lbl">Observados</span>
+                </div>
+                <div class="stat-card border-purple">
+                    <asp:Label ID="LblAprFirma" runat="server" CssClass="stat-val">0</asp:Label>
+                    <span class="stat-lbl">Aprob. Firma</span>
+                </div>
+                <div class="stat-card border-orange">
+                    <asp:Label ID="LblEnFirma" runat="server" CssClass="stat-val">0</asp:Label>
+                    <span class="stat-lbl">En Firma</span>
+                </div>
+                <div class="stat-card border-orange" style="border-left-color:#fdba74;">
+                    <asp:Label ID="LblFPar" runat="server" CssClass="stat-val">0</asp:Label>
+                    <span class="stat-lbl">Firm. Parcial</span>
+                </div>
+                <div class="stat-card border-green">
+                    <asp:Label ID="LblCompletos" runat="server" CssClass="stat-val">0</asp:Label>
+                    <span class="stat-lbl">Completados</span>
                 </div>
             </div>
 
-            <div class="main-panel">
-                <asp:Label ID="LblGlobalMsg" runat="server" CssClass="alert alert-success" Visible="false" style="display:block; margin-bottom:1rem;"></asp:Label>
+            <hr style="margin: 2rem 0; opacity: 0.2; border-color:#cbd5e1" />
 
-                <!-- PANEL: ESTADISTICAS -->
-                <asp:Panel ID="PnlStats" runat="server">
-                    <h2 style="border:none;">Resumen del Sistema</h2>
-                    <div class="card-stats-grid">
-                        <div class="stat-card border-blue">
-                            <asp:Label ID="LblTotal" runat="server" CssClass="stat-val">0</asp:Label>
-                            <span class="stat-lbl">Total Documentos</span>
-                        </div>
-                        <div class="stat-card border-yellow">
-                            <asp:Label ID="LblEnRev" runat="server" CssClass="stat-val">0</asp:Label>
-                            <span class="stat-lbl">En Revision</span>
-                        </div>
-                        <div class="stat-card border-red">
-                            <asp:Label ID="LblObs" runat="server" CssClass="stat-val">0</asp:Label>
-                            <span class="stat-lbl">Observados</span>
-                        </div>
-                        <div class="stat-card border-purple">
-                            <asp:Label ID="LblAprFirma" runat="server" CssClass="stat-val">0</asp:Label>
-                            <span class="stat-lbl">Aprob. Firma</span>
-                        </div>
-                        <div class="stat-card border-orange">
-                            <asp:Label ID="LblEnFirma" runat="server" CssClass="stat-val">0</asp:Label>
-                            <span class="stat-lbl">En Firma</span>
-                        </div>
-                        <div class="stat-card border-orange" style="border-bottom-color:#fdba74;">
-                            <asp:Label ID="LblFPar" runat="server" CssClass="stat-val">0</asp:Label>
-                            <span class="stat-lbl">Firm. Parcial</span>
-                        </div>
-                        <div class="stat-card border-green">
-                            <asp:Label ID="LblCompletos" runat="server" CssClass="stat-val">0</asp:Label>
-                            <span class="stat-lbl">Completados</span>
-                        </div>
-                    </div>
-                </asp:Panel>
-
-                <!-- PANEL: TODOS LOS TRAMITES -->
-                <asp:Panel ID="PnlTramites" runat="server" Visible="false">
-                    <h2>Listado General de Tramites</h2>
+            <h2>Listado General de Tramites</h2>
+            <asp:UpdatePanel ID="UpTodosTramites" runat="server" UpdateMode="Conditional">
+                <ContentTemplate>
                     <div class="filter-bar">
                         <div style="flex:1;">
                             <label>Filtrar por Estado:</label>
@@ -168,127 +77,266 @@
                         <Columns>
                             <asp:BoundField DataField="CodigoDocumento" HeaderText="Codigo" />
                             <asp:BoundField DataField="Asunto" HeaderText="Asunto" />
+                            <asp:BoundField DataField="TipoDocumento" HeaderText="Tipo" />
                             <asp:BoundField DataField="AreaResponsable" HeaderText="Area" />
                             <asp:BoundField DataField="FechaDocumento" HeaderText="Fecha" DataFormatString="{0:dd/MM/yyyy}" />
-                            <asp:BoundField DataField="Estado" HeaderText="Estado" />
+                            <asp:TemplateField HeaderText="Estado">
+                                <ItemTemplate>
+                                    <span class='<%# "badge-estado badge-" + Eval("CodigoEstado") %>'>
+                                        <%# Eval("Estado") %>
+                                    </span>
+                                </ItemTemplate>
+                            </asp:TemplateField>
                             <asp:BoundField DataField="LoginRegistrador" HeaderText="Registrador" />
                             <asp:TemplateField HeaderText="Accion">
                                 <ItemTemplate>
-                                    <asp:LinkButton ID="LnkVer" runat="server" CommandName="VerDetalle" CommandArgument='<%# Eval("IDDocumento") %>'>Ver Detalle</asp:LinkButton>
+                                    <asp:LinkButton ID="LnkVer" runat="server" CommandName="VerDetalle" CommandArgument='<%# Eval("IDDocumento") %>' CssClass="btn-zf">
+                                        <i class="ph ph-eye"></i> Detalle
+                                    </asp:LinkButton>
                                 </ItemTemplate>
                             </asp:TemplateField>
                         </Columns>
                     </asp:GridView>
-                </asp:Panel>
+                </ContentTemplate>
+            </asp:UpdatePanel>
+        </asp:Panel>
 
-                <!-- PANEL: GESTIONAR ROLES -->
-                <asp:Panel ID="PnlRoles" runat="server" Visible="false">
-                    <h2>Gestion de Roles de Usuario</h2>
-                    <asp:GridView ID="GvUsuarios" runat="server" AutoGenerateColumns="false" CssClass="grid-view" OnRowCommand="GvUsuarios_RowCommand">
-                        <Columns>
-                            <asp:BoundField DataField="LoginUsuario" HeaderText="Usuario" />
-                            <asp:BoundField DataField="NombreCompleto" HeaderText="Nombre" />
-                            <asp:BoundField DataField="Email" HeaderText="Email" />
-                            <asp:BoundField DataField="CodigoRol" HeaderText="Rol Actual" />
-                            <asp:TemplateField HeaderText="Nuevo Rol">
-                                <ItemTemplate>
-                                    <asp:DropDownList ID="DdlNuevoRol" runat="server" style="margin:0; width:auto;">
-                                        <asp:ListItem Text="ADMIN" Value="ADMIN"></asp:ListItem>
-                                        <asp:ListItem Text="REGISTRADOR" Value="REGISTRADOR"></asp:ListItem>
-                                        <asp:ListItem Text="FIRMADOR" Value="FIRMADOR"></asp:ListItem>
-                                    </asp:DropDownList>
-                                    <asp:Button ID="BtnCambiar" runat="server" Text="Cambiar" CommandName="CambiarRol" CommandArgument='<%# Container.DataItemIndex %>' CssClass="btn" style="padding: 0.4rem 1rem; font-size: 0.8rem;" />
-                                </ItemTemplate>
-                            </asp:TemplateField>
-                        </Columns>
-                    </asp:GridView>
-                </asp:Panel>
-
-                <!-- PANEL: MODIFICAR ORDEN -->
-                <asp:Panel ID="PnlOrden" runat="server" Visible="false">
-                    <h2>Modificar Orden de Firma</h2>
-                    <div class="filter-bar">
-                        <div style="flex:1;">
-                            <label>Buscar Documento (Codigo o ID):</label>
-                            <asp:TextBox ID="TxtBuscarDoc" runat="server" placeholder="Ej: ACT-2026-0001" style="margin:0;"></asp:TextBox>
-                        </div>
-                        <asp:Button ID="BtnBuscarDoc" runat="server" Text="Buscar" OnClick="BtnBuscarDoc_Click" CssClass="btn" />
-                    </div>
-
-                    <asp:GridView ID="GvDocsBusqueda" runat="server" AutoGenerateColumns="false" CssClass="grid-view" Visible="false" OnRowCommand="GvDocsBusqueda_RowCommand">
-                        <Columns>
-                            <asp:BoundField DataField="CodigoDocumento" HeaderText="Codigo" />
-                            <asp:BoundField DataField="Asunto" HeaderText="Asunto" />
-                            <asp:BoundField DataField="CodigoEstado" HeaderText="Estado" />
-                            <asp:TemplateField HeaderText="Accion">
-                                <ItemTemplate>
-                                    <asp:LinkButton ID="LnkEditarFirmantes" runat="server" CommandName="EditarF" CommandArgument='<%# Eval("IDDocumento") %>'>Editar Firmantes</asp:LinkButton>
-                                </ItemTemplate>
-                            </asp:TemplateField>
-                        </Columns>
-                    </asp:GridView>
-
-                    <asp:Panel ID="PnlEditarFirmantes" runat="server" Visible="false" style="background:white; padding:1.5rem; border-radius:8px;">
-                        <h3>Editando Orden para: <asp:Label ID="LblDocEdicion" runat="server" ForeColor="#1e3a8a"></asp:Label></h3>
-                        <asp:GridView ID="GvFirmantesEditar" runat="server" AutoGenerateColumns="false" CssClass="grid-view" OnRowDataBound="GvFirmantesEditar_RowDataBound">
-                            <Columns>
-                                <asp:BoundField DataField="NombreFirmante" HeaderText="Firmante" />
-                                <asp:BoundField DataField="CorreoFirmante" HeaderText="Correo" />
-                                <asp:TemplateField HeaderText="Estado">
-                                    <ItemTemplate>
-                                        <asp:Label ID="LblEstadoFirma" runat="server" Text='<%# Eval("CodigoEstadoFirma") %>'></asp:Label>
-                                    </ItemTemplate>
-                                </asp:TemplateField>
-                                <asp:TemplateField HeaderText="Orden Actual">
-                                    <ItemTemplate><%# Eval("OrdenFirma") %></ItemTemplate>
-                                </asp:TemplateField>
-                                <asp:TemplateField HeaderText="Nuevo Orden">
-                                    <ItemTemplate>
-                                        <asp:HiddenField ID="HfIDFirmante" runat="server" Value='<%# Eval("IDDocumentoFirmante") %>' />
-                                        <asp:HiddenField ID="HfEstadoFirma" runat="server" Value='<%# Eval("CodigoEstadoFirma") %>' />
-                                        <asp:TextBox ID="TxtNuevoOrden" runat="server" Text='<%# Eval("OrdenFirma") %>' Width="50px" style="margin:0; text-align:center;" TextMode="Number"></asp:TextBox>
-                                    </ItemTemplate>
-                                </asp:TemplateField>
-                            </Columns>
-                        </asp:GridView>
-                        <div style="text-align:right;">
-                            <asp:Button ID="BtnGuardarOrden" runat="server" Text="Guardar Nuevo Orden" OnClick="BtnGuardarOrden_Click" CssClass="btn" />
-                        </div>
-                    </asp:Panel>
-                </asp:Panel>
-
-                <!-- PANEL: AUDITORIA -->
-                <asp:Panel ID="PnlAuditoria" runat="server" Visible="false">
-                    <h2>Auditoria de Documentos</h2>
-                    <div class="filter-bar">
-                        <div>
-                            <label>Desde:</label>
-                            <asp:TextBox ID="TxtFechaDesde" runat="server" TextMode="Date" style="margin:0;"></asp:TextBox>
-                        </div>
-                        <div>
-                            <label>Hasta:</label>
-                            <asp:TextBox ID="TxtFechaHasta" runat="server" TextMode="Date" style="margin:0;"></asp:TextBox>
-                        </div>
-                        <div style="flex:1;">
-                            <label>Codigo Documento:</label>
-                            <asp:TextBox ID="TxtFiltroDocAuditoria" runat="server" placeholder="Codigo..." style="margin:0;"></asp:TextBox>
-                        </div>
-                        <asp:Button ID="BtnFiltrarAuditoria" runat="server" Text="Filtrar" OnClick="BtnFiltrarAuditoria_Click" CssClass="btn" />
-                    </div>
-                    <asp:GridView ID="GvAuditoria" runat="server" AutoGenerateColumns="false" CssClass="grid-view" AllowPaging="true" PageSize="50" OnPageIndexChanging="GvAuditoria_PageIndexChanging">
-                        <Columns>
-                            <asp:BoundField DataField="FechaCambio" HeaderText="Fecha" DataFormatString="{0:dd/MM/yyyy HH:mm}" />
-                            <asp:BoundField DataField="CodigoDocumento" HeaderText="Documento" />
-                            <asp:BoundField DataField="NombreUsuario" HeaderText="Usuario" />
-                            <asp:BoundField DataField="TipoAccion" HeaderText="Accion" />
-                            <asp:BoundField DataField="Descripcion" HeaderText="Descripcion" />
-                            <asp:BoundField DataField="IDEquipo" HeaderText="IP" />
-                        </Columns>
-                    </asp:GridView>
-                </asp:Panel>
-
+        <asp:Panel ID="PnlOrden" runat="server" Visible="false">
+            <h2>Modificar Orden de Firma</h2>
+            <div class="filter-bar">
+                <div style="flex:1;">
+                    <label>Buscar Documento (Codigo o ID):</label>
+                    <asp:TextBox ID="TxtBuscarDoc" runat="server" placeholder="Ej: ACT-2026-0001" style="margin:0;"></asp:TextBox>
+                </div>
+                <asp:Button ID="BtnBuscarDoc" runat="server" Text="Buscar" OnClick="BtnBuscarDoc_Click" CssClass="btn" />
             </div>
-        </div>
-    </form>
-</body>
-</html>
+
+            <asp:GridView ID="GvDocsBusqueda" runat="server" AutoGenerateColumns="false" CssClass="grid-view" Visible="false" OnRowCommand="GvDocsBusqueda_RowCommand">
+                <Columns>
+                    <asp:BoundField DataField="CodigoDocumento" HeaderText="Codigo" />
+                    <asp:BoundField DataField="Asunto" HeaderText="Asunto" />
+                    <asp:BoundField DataField="CodigoEstado" HeaderText="Estado" />
+                    <asp:TemplateField HeaderText="Accion">
+                        <ItemTemplate>
+                            <asp:LinkButton ID="LnkEditarFirmantes" runat="server" CommandName="EditarF" CommandArgument='<%# Eval("IDDocumento") %>'>Editar Firmantes</asp:LinkButton>
+                        </ItemTemplate>
+                    </asp:TemplateField>
+                </Columns>
+            </asp:GridView>
+
+            <asp:Panel ID="PnlEditarFirmantes" runat="server" Visible="false" style="background:white; padding:1.5rem; border-radius:8px;">
+                <h3>Editando Orden para: <asp:Label ID="LblDocEdicion" runat="server" ForeColor="#1e3a8a"></asp:Label></h3>
+                <asp:GridView ID="GvFirmantesEditar" runat="server" AutoGenerateColumns="false" CssClass="grid-view" OnRowDataBound="GvFirmantesEditar_RowDataBound">
+                    <Columns>
+                        <asp:TemplateField HeaderText="Mover">
+                            <ItemTemplate>
+                                <button type="button" class="drag-handle" title="Arrastrar para reordenar" aria-label="Arrastrar para reordenar">
+                                    <i class="ph ph-dots-six-vertical"></i>
+                                </button>
+                            </ItemTemplate>
+                            <ItemStyle Width="50px" HorizontalAlign="Center" />
+                        </asp:TemplateField>
+                        <asp:BoundField DataField="NombreFirmante" HeaderText="Firmante" />
+                        <asp:BoundField DataField="CorreoFirmante" HeaderText="Correo" />
+                        <asp:TemplateField HeaderText="Estado">
+                            <ItemTemplate>
+                                <asp:Label ID="LblEstadoFirma" runat="server" Text='<%# Eval("CodigoEstadoFirma") %>'></asp:Label>
+                            </ItemTemplate>
+                        </asp:TemplateField>
+                        <asp:TemplateField HeaderText="Orden Actual">
+                            <ItemTemplate>
+                                <asp:Label ID="LblOrdenActual" runat="server"></asp:Label>
+                            </ItemTemplate>
+                        </asp:TemplateField>
+                        <asp:TemplateField HeaderText="Nuevo Orden">
+                            <ItemTemplate>
+                                <asp:HiddenField ID="HfIDFirmante" runat="server" Value='<%# Eval("IDDocumentoFirmante") %>' />
+                                <asp:HiddenField ID="HfEstadoFirma" runat="server" Value='<%# Eval("CodigoEstadoFirma") %>' />
+                                <asp:HiddenField ID="HfOrdenAnterior" runat="server" Value='<%# Eval("OrdenDisplay") %>' />
+                                <asp:Label ID="LblOrdenNuevo" runat="server" CssClass="orden-admin-badge badge bg-light text-primary border fw-bold" style="min-width: 40px; text-align: center; padding: 0.5rem;"></asp:Label>
+                                <asp:DropDownList ID="DdlNuevoOrden" runat="server" CssClass="ddl-orden-admin orden-admin-select" style="margin:0; text-align:center; padding: 4px;"></asp:DropDownList>
+                            </ItemTemplate>
+                        </asp:TemplateField>
+                    </Columns>
+                </asp:GridView>
+                <div style="text-align:right;">
+                    <asp:Button ID="BtnGuardarOrden" runat="server" Text="Guardar Nuevo Orden" OnClick="BtnGuardarOrden_Click" CssClass="btn" />
+                </div>
+            </asp:Panel>
+        </asp:Panel>
+
+        <asp:Panel ID="PnlAuditoria" runat="server" Visible="false">
+            <h2>Auditoria de Documentos</h2>
+            <div class="filter-bar">
+                <div>
+                    <label>Desde:</label>
+                    <asp:TextBox ID="TxtFechaDesde" runat="server" TextMode="Date" style="margin:0;"></asp:TextBox>
+                </div>
+                <div>
+                    <label>Hasta:</label>
+                    <asp:TextBox ID="TxtFechaHasta" runat="server" TextMode="Date" style="margin:0;"></asp:TextBox>
+                </div>
+                <div style="flex:1;">
+                    <label>Codigo Documento:</label>
+                    <asp:TextBox ID="TxtFiltroDocAuditoria" runat="server" placeholder="Codigo..." style="margin:0;"></asp:TextBox>
+                </div>
+                <asp:Button ID="BtnFiltrarAuditoria" runat="server" Text="Filtrar" OnClick="BtnFiltrarAuditoria_Click" CssClass="btn" />
+            </div>
+            <asp:GridView ID="GvAuditoria" runat="server" AutoGenerateColumns="false" CssClass="grid-view" AllowPaging="true" PageSize="50" OnPageIndexChanging="GvAuditoria_PageIndexChanging">
+                <Columns>
+                    <asp:BoundField DataField="FechaCambio" HeaderText="Fecha" DataFormatString="{0:dd/MM/yyyy HH:mm}" />
+                    <asp:BoundField DataField="CodigoDocumento" HeaderText="Documento" />
+                    <asp:TemplateField HeaderText="Usuario">
+                        <ItemTemplate>
+                            <strong><%# Eval("IDUsuario") %></strong><br />
+                            <small><%# Eval("NombreUsuario") %></small>
+                        </ItemTemplate>
+                    </asp:TemplateField>
+                    <asp:BoundField DataField="TipoAccion" HeaderText="Accion" />
+                    <asp:BoundField DataField="Descripcion" HeaderText="Descripcion" />
+                    <asp:BoundField DataField="IDEquipo" HeaderText="IP" />
+                </Columns>
+            </asp:GridView>
+        </asp:Panel>
+    </div>
+
+    <script type="text/javascript">
+        function initAdminOrdenDragAndDrop() {
+            var table = document.getElementById('<%= GvFirmantesEditar.ClientID %>');
+            if (!table || !table.tBodies || table.tBodies.length === 0) {
+                return;
+            }
+
+            var tbody = table.tBodies[0];
+            var dragRow = null;
+
+            function getDataRows() {
+                return Array.prototype.slice.call(tbody.querySelectorAll('tr'));
+            }
+
+            function syncOrdenAdmin() {
+                var rows = getDataRows();
+                var lockedOrders = new Set();
+
+                rows.forEach(function(row) {
+                    if (!row.classList.contains('row-locked')) {
+                        return;
+                    }
+                    var lockedOrderInput = row.querySelector('input[type="hidden"][id$="HfOrdenAnterior"]');
+                    if (lockedOrderInput && lockedOrderInput.value) {
+                        var lockedValue = parseInt(lockedOrderInput.value, 10);
+                        if (!isNaN(lockedValue) && lockedValue > 0) {
+                            lockedOrders.add(lockedValue);
+                        }
+                    }
+                });
+
+                var nextOrder = 1;
+                rows.forEach(function(row, index) {
+                    var ddl = row.querySelector('.ddl-orden-admin');
+                    var badge = row.querySelector('.orden-admin-badge');
+                    var lockedOrderInput = row.querySelector('input[type="hidden"][id$="HfOrdenAnterior"]');
+                    if (!ddl || ddl.disabled) {
+                        if (badge && lockedOrderInput && lockedOrderInput.value) {
+                            badge.textContent = lockedOrderInput.value;
+                        }
+                        return;
+                    }
+                    while (lockedOrders.has(nextOrder)) {
+                        nextOrder += 1;
+                    }
+                    var value = nextOrder.toString();
+                    if (ddl.querySelector('option[value="' + value + '"]')) {
+                        ddl.value = value;
+                    }
+                    if (badge) {
+                        badge.textContent = value;
+                    }
+                    nextOrder += 1;
+                });
+            }
+
+            function bindRow(row) {
+                if (row.dataset.dragBound) {
+                    return;
+                }
+                row.dataset.dragBound = 'true';
+
+                row.addEventListener('dragover', function(e) {
+                    if (!dragRow || dragRow === row) {
+                        return;
+                    }
+                    if (row.classList.contains('row-locked') || dragRow.classList.contains('row-locked')) {
+                        return;
+                    }
+                    e.preventDefault();
+
+                    var rect = row.getBoundingClientRect();
+                    var shouldInsertAfter = (e.clientY - rect.top) > (rect.height / 2);
+                    tbody.insertBefore(dragRow, shouldInsertAfter ? row.nextSibling : row);
+                    syncOrdenAdmin();
+                });
+
+                row.addEventListener('dragenter', function() {
+                    if (dragRow && dragRow !== row && !row.classList.contains('row-locked')) {
+                        row.classList.add('drag-target');
+                    }
+                });
+
+                row.addEventListener('dragleave', function() {
+                    row.classList.remove('drag-target');
+                });
+
+                row.addEventListener('drop', function(e) {
+                    e.preventDefault();
+                    row.classList.remove('drag-target');
+                });
+            }
+
+            function bindHandle(handle) {
+                if (handle.dataset.dragHandleBound) {
+                    return;
+                }
+                handle.dataset.dragHandleBound = 'true';
+
+                var row = handle.closest('tr');
+                if (row && row.classList.contains('row-locked')) {
+                    handle.setAttribute('aria-disabled', 'true');
+                    return;
+                }
+
+                handle.setAttribute('draggable', 'true');
+                handle.addEventListener('dragstart', function(e) {
+                    dragRow = handle.closest('tr');
+                    if (!dragRow || dragRow.classList.contains('row-locked')) {
+                        dragRow = null;
+                        return;
+                    }
+                    dragRow.classList.add('is-dragging');
+                    e.dataTransfer.effectAllowed = 'move';
+                    e.dataTransfer.setData('text/plain', '');
+                });
+
+                handle.addEventListener('dragend', function() {
+                    if (dragRow) {
+                        dragRow.classList.remove('is-dragging');
+                    }
+                    dragRow = null;
+                    var targets = tbody.querySelectorAll('.drag-target');
+                    targets.forEach(function(target) {
+                        target.classList.remove('drag-target');
+                    });
+                });
+            }
+
+            getDataRows().forEach(bindRow);
+            Array.prototype.slice.call(tbody.querySelectorAll('.drag-handle')).forEach(bindHandle);
+            syncOrdenAdmin();
+        }
+
+        document.addEventListener('DOMContentLoaded', initAdminOrdenDragAndDrop);
+        if (window.Sys && Sys.Application) {
+            Sys.Application.add_load(initAdminOrdenDragAndDrop);
+        }
+    </script>
+</asp:Content>

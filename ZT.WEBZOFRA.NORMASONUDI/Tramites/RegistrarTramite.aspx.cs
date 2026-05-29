@@ -6,6 +6,8 @@ using System.Configuration;
 using System.Web;
 using System.Web.UI.WebControls;
 using System.IO;
+using ZT.WEBZOFRA.NORMASONUDI;
+using iTextSharp.text.pdf;
 
 public partial class RegistrarTramite : System.Web.UI.Page
 {
@@ -31,9 +33,21 @@ public partial class RegistrarTramite : System.Web.UI.Page
             ViewState["FechaDocumento"] = fechaActual;
             
             GenerarCodigoDocumento();
-            
-            InicializarGridView();
         }
+
+        // CARGAR EMPLEADOS SIEMPRE (incluso en postback) para que el javascript no pierda la lista si hay error
+        DataTable dtEmpleados = CargarEmpleados();
+        var lstEmpleados = new System.Collections.Generic.List<object>();
+        foreach(DataRow row in dtEmpleados.Rows)
+        {
+            lstEmpleados.Add(new { 
+                LoginUsuario = row["LoginUsuario"].ToString(), 
+                NombreCompleto = row["NombreCompleto"].ToString(),
+                Email = row["Email"].ToString()
+            });
+        }
+        string jsonEmpleados = new System.Web.Script.Serialization.JavaScriptSerializer().Serialize(lstEmpleados);
+        ClientScript.RegisterStartupScript(this.GetType(), "empleadosArr", $"window.EmpleadosDisponibles = {jsonEmpleados};", true);
     }
 
     private void GenerarCodigoDocumento()
@@ -74,7 +88,7 @@ public partial class RegistrarTramite : System.Web.UI.Page
         string numeroSecuencial = siguienteId.ToString().PadLeft(4, '0');
         
         string codigoGenerado = codigoTipo + "-" + anio + "-" + numeroSecuencial;
-        LblCodigoDocumento.Text = codigoGenerado;
+        TxtCodigoDocumento.Text = codigoGenerado;
         ViewState["CodigoDocumento"] = codigoGenerado;
     }
 
@@ -95,6 +109,7 @@ public partial class RegistrarTramite : System.Web.UI.Page
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@Tipo", "TIPO_DOC");
 
+                    conn.Open();
                     SqlDataAdapter da = new SqlDataAdapter(cmd);
                     DataTable dt = new DataTable();
                     da.Fill(dt);
@@ -122,7 +137,8 @@ public partial class RegistrarTramite : System.Web.UI.Page
 
         using (SqlConnection conn = new SqlConnection(connStr))
         {
-            string query = "SELECT LoginUsuario, NombreCompleto, Email FROM FIR_VW_EmpleadosActivos WHERE LoginUsuario != @UsuarioActual ORDER BY NombreCompleto";
+            // Filtra solo empleados con Rol ID = 3 (FIRMADOR) y excluye el usuario actual
+            string query = "SELECT LoginUsuario, NombreCompleto, Email FROM FIR_VW_EmpleadosActivos WHERE LoginUsuario != @UsuarioActual AND IdRol = 3 ORDER BY NombreCompleto";
             using (SqlCommand cmd = new SqlCommand(query, conn))
             {
                 cmd.Parameters.AddWithValue("@UsuarioActual", usuarioActual);
@@ -157,116 +173,17 @@ public partial class RegistrarTramite : System.Web.UI.Page
 
     private void InicializarGridView()
     {
-        DataTable dt = new DataTable();
-        dt.Columns.Add("LoginUsuario");
-        dt.Columns.Add("CorreoFirmante");
-        dt.Columns.Add("OrdenFirma");
-
-        dt.Rows.Add(dt.NewRow()); // Fila vacía inicial
-        ViewState["Firmantes"] = dt;
-        GvFirmantes.DataSource = dt;
-        GvFirmantes.DataBind();
+        // Ya no es necesario inicializar el GridView ya que fue reemplazado por la interfaz javascript
     }
 
     private DataTable ObtenerDatosFirmantes()
     {
-        DataTable dt = new DataTable();
-        dt.Columns.Add("LoginUsuario");
-        dt.Columns.Add("CorreoFirmante");
-        dt.Columns.Add("OrdenFirma");
-
-        foreach (GridViewRow row in GvFirmantes.Rows)
-        {
-            DropDownList DdlFirmante = (DropDownList)row.FindControl("DdlFirmante");
-            Label LblCorreo = (Label)row.FindControl("LblCorreo");
-            DropDownList DdlOrden = (DropDownList)row.FindControl("DdlOrden");
-
-            DataRow dr = dt.NewRow();
-            dr["LoginUsuario"] = DdlFirmante.SelectedValue;
-            dr["CorreoFirmante"] = LblCorreo.Text;
-            dr["OrdenFirma"] = DdlOrden.SelectedValue;
-            dt.Rows.Add(dr);
-        }
-        return dt;
+        // Este método ya no es necesario
+        return new DataTable();
     }
 
-    protected void GvFirmantes_RowDataBound(object sender, GridViewRowEventArgs e)
-    {
-        if (e.Row.RowType == DataControlRowType.DataRow)
-        {
-            DropDownList DdlFirmante = (DropDownList)e.Row.FindControl("DdlFirmante");
-            HiddenField HfLoginUsuario = (HiddenField)e.Row.FindControl("HfLoginUsuario");
-            DropDownList DdlOrden = (DropDownList)e.Row.FindControl("DdlOrden");
-            HiddenField HfOrdenFirma = (HiddenField)e.Row.FindControl("HfOrdenFirma");
-
-            if (DdlFirmante != null)
-            {
-                DataTable dtEmpleados = CargarEmpleados();
-                DdlFirmante.DataSource = dtEmpleados;
-                DdlFirmante.DataTextField = "NombreCompleto";
-                DdlFirmante.DataValueField = "LoginUsuario";
-                DdlFirmante.DataBind();
-                DdlFirmante.Items.Insert(0, new ListItem("-- Seleccione empleado --", ""));
-
-                if (HfLoginUsuario != null && !string.IsNullOrWhiteSpace(HfLoginUsuario.Value))
-                {
-                    DdlFirmante.SelectedValue = HfLoginUsuario.Value;
-                }
-            }
-
-            if (DdlOrden != null)
-            {
-                DdlOrden.Items.Insert(0, new ListItem("-- Seleccione --", ""));
-                for (int i = 1; i <= 15; i++)
-                {
-                    DdlOrden.Items.Add(new ListItem(i.ToString(), i.ToString()));
-                }
-
-                if (HfOrdenFirma != null && !string.IsNullOrWhiteSpace(HfOrdenFirma.Value))
-                {
-                    DdlOrden.SelectedValue = HfOrdenFirma.Value;
-                }
-            }
-        }
-    }
-
-    protected void DdlFirmante_SelectedIndexChanged(object sender, EventArgs e)
-    {
-        DropDownList ddl = (DropDownList)sender;
-        GridViewRow row = (GridViewRow)ddl.NamingContainer;
-        Label lblCorreo = (Label)row.FindControl("LblCorreo");
-        
-        string login = ddl.SelectedValue;
-        if (!string.IsNullOrWhiteSpace(login))
-        {
-            lblCorreo.Text = ObtenerEmailPorLogin(login);
-        }
-        else
-        {
-            lblCorreo.Text = "";
-        }
-        
-        DataTable dt = ObtenerDatosFirmantes();
-        ViewState["Firmantes"] = dt;
-    }
-
-    protected void BtnAgregarFirmante_Click(object sender, EventArgs e)
-    {
-        LblError.Visible = false;
-        DataTable dt = ObtenerDatosFirmantes();
-
-        if (dt.Rows.Count >= 15)
-        {
-            LblError.Text = "Máximo 15 firmantes.";
-            LblError.Visible = true;
-            return;
-        }
-
-        dt.Rows.Add(dt.NewRow());
-        ViewState["Firmantes"] = dt;
-        GvFirmantes.DataSource = dt;
-        GvFirmantes.DataBind();
-    }
+    // Los métodos GvFirmantes_RowDataBound, DdlFirmante_SelectedIndexChanged, BtnAgregarFirmante_Click y GvFirmantes_RowDeleting 
+    // han quedado obsoletos y vacíos debido a que ya no usamos GridView.
 
     protected void BtnRegistrar_Click(object sender, EventArgs e)
     {
@@ -275,19 +192,28 @@ public partial class RegistrarTramite : System.Web.UI.Page
 
         if (string.IsNullOrWhiteSpace(TxtAsunto.Text) ||
             string.IsNullOrWhiteSpace(CbxTipoDocumento.SelectedValue) ||
-            string.IsNullOrWhiteSpace(TxtAreaResponsable.Text))
+            string.IsNullOrWhiteSpace(DdlAreaResponsable.SelectedValue))
         {
             LblError.Text = "Debe completar todos los campos del documento.";
             LblError.Visible = true;
             return;
         }
 
-        if (ViewState["CodigoDocumento"] == null || ViewState["FechaDocumento"] == null)
+        if (ViewState["FechaDocumento"] == null)
         {
             LblError.Text = "Faltan datos internos del documento.";
             LblError.Visible = true;
             return;
         }
+
+        string codigoDocumento = TxtCodigoDocumento.Text != null ? TxtCodigoDocumento.Text.Trim() : "";
+        if (string.IsNullOrWhiteSpace(codigoDocumento))
+        {
+            LblError.Text = "Debe ingresar el codigo de documento.";
+            LblError.Visible = true;
+            return;
+        }
+        ViewState["CodigoDocumento"] = codigoDocumento;
 
         if (!FuPdf.HasFile || Path.GetExtension(FuPdf.FileName).ToLower() != ".pdf")
         {
@@ -296,65 +222,32 @@ public partial class RegistrarTramite : System.Web.UI.Page
             return;
         }
 
-        if (GvFirmantes.Rows.Count == 0)
+        const int maxPdfBytes = 50 * 1024 * 1024;
+        if (FuPdf.PostedFile == null || FuPdf.PostedFile.ContentLength > maxPdfBytes)
         {
-            LblError.Text = "Debe agregar al menos un firmante.";
+            LblError.Text = "El PDF supera el tamaño máximo permitido de 50 MB.";
             LblError.Visible = true;
             return;
         }
 
-        List<int> ordenes = new List<int>();
-        List<string> logins = new List<string>();
-
-        foreach (GridViewRow row in GvFirmantes.Rows)
+        if (PdfTieneFirma(FuPdf.FileBytes))
         {
-            DropDownList DdlFirmante = (DropDownList)row.FindControl("DdlFirmante");
-            DropDownList DdlOrden = (DropDownList)row.FindControl("DdlOrden");
-
-            string login = DdlFirmante.SelectedValue;
-            string ordenStr = DdlOrden.SelectedValue;
-
-            if (string.IsNullOrWhiteSpace(login))
-            {
-                LblError.Text = "Debe seleccionar un empleado para todos los firmantes.";
-                LblError.Visible = true;
-                return;
-            }
-
-            if (string.IsNullOrWhiteSpace(ordenStr))
-            {
-                LblError.Text = "Debe asignar un orden de firma a cada empleado.";
-                LblError.Visible = true;
-                return;
-            }
-
-            if (logins.Contains(login))
-            {
-                LblError.Text = "Un empleado no puede ser firmante dos veces en el mismo trámite.";
-                LblError.Visible = true;
-                return;
-            }
-            logins.Add(login);
-
-            int orden = Convert.ToInt32(ordenStr);
-            if (ordenes.Contains(orden))
-            {
-                LblError.Text = "No puede haber números de orden de firma duplicados.";
-                LblError.Visible = true;
-                return;
-            }
-            ordenes.Add(orden);
+            LblError.Text = "Debe seleccionar un archivo PDF sin firmas digitales previas.";
+            LblError.Visible = true;
+            return;
         }
 
-        ordenes.Sort();
-        for (int i = 0; i < ordenes.Count; i++)
+        var jss = new System.Web.Script.Serialization.JavaScriptSerializer();
+        string jsonFirmantes = HfFirmantesJSON.Value;
+        if (string.IsNullOrWhiteSpace(jsonFirmantes)) jsonFirmantes = "[]";
+        
+        var timelineList = jss.Deserialize<List<Dictionary<string, string>>>(jsonFirmantes);
+
+        if (timelineList == null || timelineList.Count == 0)
         {
-            if (ordenes[i] != i + 1)
-            {
-                LblError.Text = "El orden de firmas debe ser secuencial y sin saltos empezando desde 1 (ej: 1, 2, 3...).";
-                LblError.Visible = true;
-                return;
-            }
+            LblError.Text = "Debe agregar al menos un firmante.";
+            LblError.Visible = true;
+            return;
         }
 
         try
@@ -399,11 +292,10 @@ public partial class RegistrarTramite : System.Web.UI.Page
                     cmd.Parameters.AddWithValue("@CodigoTipoDocumento", 
                         CbxTipoDocumento.SelectedValue);
                     cmd.Parameters.AddWithValue("@AreaResponsable", 
-                        TxtAreaResponsable.Text.Trim());
+                        DdlAreaResponsable.SelectedValue.Trim());
                     cmd.Parameters.AddWithValue("@FechaDocumento", 
                         (DateTime)ViewState["FechaDocumento"]);
-                    cmd.Parameters.AddWithValue("@CodigoDocumento", 
-                        ViewState["CodigoDocumento"].ToString());
+                    cmd.Parameters.AddWithValue("@CodigoDocumento", codigoDocumento);
                     cmd.Parameters.AddWithValue("@RutaArchivoPDF", 
                         "ARC::" + idArchivo);
                     cmd.Parameters.AddWithValue("@Orientacion", "V");
@@ -427,19 +319,37 @@ public partial class RegistrarTramite : System.Web.UI.Page
                     idDocumento = Convert.ToInt32(paramIDDocumento.Value);
                 }
 
+                var correosFirmantes = new System.Collections.Generic.List<string>();
+
                 // (El registrador ya no se inserta automáticamente como revisor/firmante)
 
-                foreach (GridViewRow row in GvFirmantes.Rows)
-                {
-                    DropDownList DdlFirmante = (DropDownList)row.FindControl("DdlFirmante");
-                    DropDownList DdlOrden = (DropDownList)row.FindControl("DdlOrden");
+                var listaFirmantes = new System.Collections.Generic.List<Tuple<int, string, string, string>>();
 
-                    string loginFirmante = DdlFirmante.SelectedValue;
-                    string nombreFirmante = DdlFirmante.SelectedItem.Text;
+                // Extraemos el orden ya convertido a diccionario desde el Javascript oculto (timelineList)
+                int orderIndex = 1;
+                foreach (var firmanteDict in timelineList)
+                {
+                    string loginFirmante = firmanteDict["LoginUsuario"];
+                    string nombreFirmante = firmanteDict["NombreCompleto"];
+                    string correoFirmante = firmanteDict["Email"];
+
+                    if (!string.IsNullOrWhiteSpace(correoFirmante))
+                    {
+                        correosFirmantes.Add(correoFirmante);
+                    }
                     
-                    string correoFirmante = ObtenerEmailPorLogin(loginFirmante);
-                    
-                    int ordenFirma = Convert.ToInt32(DdlOrden.SelectedValue);
+                    listaFirmantes.Add(new Tuple<int, string, string, string>(orderIndex, loginFirmante, nombreFirmante, correoFirmante));
+                    orderIndex++;
+                }
+
+                // (No necesitamos order.Sort ya que los recolectamos exactamente en el orden del DOM)
+
+                foreach (var f in listaFirmantes)
+                {
+                    int ordenFirma = f.Item1;
+                    string loginFirmante = f.Item2;
+                    string nombreFirmante = f.Item3;
+                    string correoFirmante = f.Item4;
 
                     using (SqlCommand cmdRev = new SqlCommand("FIR_I_DocumentoRevisor", conn))
                     {
@@ -468,6 +378,21 @@ public partial class RegistrarTramite : System.Web.UI.Page
                     }
                 }
 
+                try
+                {
+                    CorreoBLL.NotificarDocumentoCreado(correosFirmantes,
+                        codigoDocumento,
+                        TxtAsunto.Text.Trim(),
+                        usuarioActivo);
+                }
+                catch { }
+
+                using (SqlCommand cmdStatus = new SqlCommand("UPDATE FIR_Documento SET CodigoEstado = 'EN_REV' WHERE IDDocumento = @IDD", conn))
+                {
+                    cmdStatus.Parameters.AddWithValue("@IDD", idDocumento);
+                    cmdStatus.ExecuteNonQuery();
+                }
+
                 using (SqlCommand cmdInit = new SqlCommand("FIR_U_IniciarRevision", conn))
                 {
                     cmdInit.CommandType = CommandType.StoredProcedure;
@@ -476,14 +401,145 @@ public partial class RegistrarTramite : System.Web.UI.Page
                     cmdInit.Parameters.AddWithValue("@IDEquipo", ipEquipo);
                     cmdInit.ExecuteNonQuery();
                 }
+
+                try
+                {
+                    CorreoBLL.NotificarInicioRevision(correosFirmantes,
+                        codigoDocumento,
+                        TxtAsunto.Text.Trim());
+                }
+                catch { }
             }
 
-            Response.Redirect("~/Tramites/Bandeja.aspx");
+            Response.Redirect("Bandeja.aspx?msg=registrado");
         }
         catch (Exception ex)
         {
             LblError.Text = "Error en el registro: " + ex.Message;
             LblError.Visible = true;
+        }
+    }
+
+    private string PlantillaCorreo(string contenido) {
+        return @"
+<!DOCTYPE html>
+<html>
+<body style='margin:0;padding:0;font-family:Arial,sans-serif;background:#f5f5f5;'>
+  <table width='100%' cellpadding='0' cellspacing='0'>
+    <tr>
+      <td align='center' style='padding:20px;'>
+        <table width='600' cellpadding='0' cellspacing='0' 
+               style='background:#fff;border-radius:8px;overflow:hidden;'>
+          
+          <!-- HEADER -->
+          <tr>
+            <td style='background:#1a5c38;padding:24px;text-align:center;'>
+              <h1 style='color:#fff;margin:0;font-size:18px;
+                         letter-spacing:2px;'>
+                SISTEMA DE FIRMA ZOFRATACNA
+              </h1>
+            </td>
+          </tr>
+          
+          <!-- BODY -->
+          <tr>
+            <td style='padding:32px;color:#333;'>
+              <p>Estimado(a),</p>
+              " + contenido + @"
+              <br/>
+              <p>Atentamente,</p>
+              <p><b>Oficina de Tecnologías de la Información</b><br/>
+              ZOFRATACNA</p>
+            </td>
+          </tr>
+          
+          <!-- FOOTER -->
+          <tr>
+            <td style='background:#222;padding:16px;text-align:center;'>
+              <p style='color:#aaa;margin:0;font-size:12px;'>
+                Este es un correo automático del Sistema Firmador ZOFRATACNA. 
+                Por favor no responda este mensaje.
+              </p>
+            </td>
+          </tr>
+          
+        </table>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>";
+    }
+
+    private void EnviarCorreoInvolucrados(int idDocumento, string asunto, string mensaje)
+    {
+        string connStr = ConfigurationManager.ConnectionStrings["Firmador"].ConnectionString;
+        try
+        {
+            System.Collections.Generic.List<string> correos = new System.Collections.Generic.List<string>();
+            using (SqlConnection conn = new SqlConnection(connStr))
+            {
+                conn.Open();
+                string query = @"SELECT DISTINCT e.Email
+                                 FROM FIR_VW_EmpleadosActivos e
+                                 INNER JOIN FIR_DocumentoFirmante df 
+                                     ON df.LoginUsuario = e.LoginUsuario
+                                 WHERE df.IDDocumento = @IDDocumento";
+
+                using (SqlCommand cmd = new SqlCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@IDDocumento", idDocumento);
+                    using (SqlDataReader dr = cmd.ExecuteReader())
+                    {
+                        while (dr.Read())
+                        {
+                            string email = dr["Email"].ToString();
+                            if (!string.IsNullOrWhiteSpace(email))
+                            {
+                                correos.Add(email);
+                            }
+                        }
+                    }
+                }
+
+                string mensajeCompleto = PlantillaCorreo(mensaje);
+
+                foreach (string email in correos)
+                {
+                    try
+                    {
+                        using (SqlCommand cmdMail = new SqlCommand("GEN_X_EnviarMail", conn))
+                        {
+                            cmdMail.CommandType = CommandType.StoredProcedure;
+                            cmdMail.Parameters.AddWithValue("@Para", email);
+                            cmdMail.Parameters.AddWithValue("@Asunto", asunto);
+                            cmdMail.Parameters.AddWithValue("@Mensaje", mensajeCompleto);
+                            cmdMail.ExecuteNonQuery();
+                        }
+                    }
+                    catch { }
+                }
+            }
+        }
+        catch { }
+    }
+
+    private bool PdfTieneFirma(byte[] pdfBytes)
+    {
+        if (pdfBytes == null || pdfBytes.Length == 0) return false;
+        try
+        {
+            using (PdfReader reader = new PdfReader(pdfBytes))
+            {
+                var acro = reader.AcroFields;
+                if (acro == null) return false;
+                var firmas = acro.GetSignatureNames();
+                return firmas != null && firmas.Count > 0;
+            }
+        }
+        catch
+        {
+            return true; // Si no se puede leer, tratamos como no valido
         }
     }
 }

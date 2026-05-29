@@ -36,6 +36,12 @@ public partial class Bandeja
 
     protected global::System.Web.UI.WebControls.Label LblTituloBandeja;
 
+    protected global::System.Web.UI.WebControls.TextBox TxtBuscar;
+
+    protected global::System.Web.UI.WebControls.Button BtnBuscar;
+
+    protected global::System.Web.UI.WebControls.Button BtnLimpiar;
+
     protected global::System.Web.UI.WebControls.GridView GvTramites;
 
     protected global::System.Web.UI.WebControls.Calendar CalBandeja;
